@@ -48,7 +48,35 @@ border-collapse: collapse;
 border-spacing: 0;
 }
 
-/*////////////////END RESET STYLES////////////*/
+/*////////////////END OF RESET STYLES////////////*/
+
+/************************SPRITE************************/
+#close_btn
+, #min_btn
+, #max_btn
+, #menu_btn
+, #stick_btn
+, #journal_btn
+, #left_progress_arrow
+, #right_progress_arrow
+, #btn_result
+, #btn_plus
+, #btn_minus
+, #btn_multiply
+, #btn_division
+, #btn_remove
+, #btn_plus_minus
+, #btn_2x
+, #btn_x2
+, #btn_one_x
+{ display: inline-block; 
+	background: url("../assets/sprite_calculator.png") center no-repeat; 
+	overflow: hidden; 
+	text-indent: -9999px; 
+	text-align: center; }
+
+
+/*****************END OF SPRITE************************/
 body{
 	background-image: url("../assets/img2@1x.jpg");
 }
@@ -82,18 +110,11 @@ button {
 .full_width{
 	width: 100%;
 }
-
-
 section#input{
 	width: 100%;
 	height: 335px;
 	
 }
-
-
-
-
-
 div#progress{
 	height: 30px;
 	overflow: hidden;
@@ -114,13 +135,10 @@ div#viewer{
 	float: left;
 	
 }
-
-
 .main_controls {
 	width: 43px;
 	height: 30px;
 }
-
 #field_controls {
 	margin: 0;
 	padding: 0;
@@ -128,16 +146,15 @@ div#viewer{
 }
 
 #close_btn {
-	background: no-repeat url( "../assets/close.png");
-	border: 0;
+	background-position: -0px -0px; width: 43px; height: 30px;
 }
 
 #min_btn {
-	background: url("../assets/minimize.png");
+	background-position: -0px -60px; width: 43px; height: 30px;
 }
 
 #max_btn {
-	background: url("../assets/maximize.png")
+	background-position: -0px -30px; width: 43px; height: 30px;
 }
 
 .subtitle_controls {
@@ -147,7 +164,7 @@ div#viewer{
 }
 
 #menu_btn {
-	background: url("../assets/menu.png");
+	background-position: -0px -130px; width: 43px; height: 30px;
 	float: left;
 }
 
@@ -160,11 +177,11 @@ div#viewer{
 }
 
 #stick_btn {
-	background: url("../assets/stick.png");
+	background-position: -0px -170px; width: 43px; height: 30px;
 }
 
 #journal_btn {
-	background: url("../assets/journal.png");
+	background-position: -0px -90px; width: 43px; height: 30px;
 	float: right;
 }
 
@@ -175,28 +192,22 @@ div#viewer{
 	display: inline-block;
 	white-space: nowrap;
 }
-
-
 #left_progress_arrow {
-	background: no-repeat url("../assets/left_arrow.png") 0px 0px;
+	background-position: -0px -540px; width: 18px; height: 17px;
 	float: left;
-	
-	
-	
+}
+
+#right_progress_arrow {
+	background-position: -18px -540px; width: 18px; height: 17px;
+	float: right;
 }
 
 .progress_arrows {
 	height: 30px;
 	width: 20px;
-	visibility: hidden;
+/*	visibility: hidden;*/
 	
 }
-
-#right_progress_arrow {
-	background: no-repeat url("../assets/right_arrow.png") 0px 0px;
-	float: right;
-}
-
 #viewport {
 	color: initial;
 	font-size: 44px;
@@ -206,8 +217,6 @@ div#viewer{
 	padding: 0 10px 4px 10px;
 	margin: 0;
 	white-space: nowrap;
-}
-.fu {
 }
 
 .mm_btns {
@@ -231,13 +240,10 @@ div#viewer{
 	vertical-align: super;
 	color: inherit;
 }
-
-
-
 .input_btns {
 	width: 76.1px;
 	height: 47.25px;
-	border: 1px solid rgba( 0, 0, 0, rgba(240,236,241, .4));
+	border: 1px solid rgba( 0, 0, 0, 0 );
 	float: left;
 	margin: 0 3px 3px 0;
 	background-color: rgba(240,236,241, .4);
@@ -267,41 +273,60 @@ div#viewer{
 }
 
 #btn_result {
-	background: url("../assets/result.png") no-repeat center rgba(139,195,4,0.40) ;
+/*	background: url("../assets/result.png") no-repeat center rgba(139,195,4,0.40) ;*/
+	background-position:  21px -472px;  
+	background-color: rgba(139, 195, 4, 0.4);
 }
 
 #btn_plus {
-	background: url("../assets/plus.png") no-repeat center rgba(240,236,241, .4) ;
+/*	background: url("../assets/plus.png") no-repeat center rgba(240,236,241, .4) ;*/
+	background-position:  21px -414px;  
+	background-color: rgba(240,236,241, .4);
 }
 
 #btn_minus {
-	background: url("../assets/minus.png") no-repeat center rgba(240,236,241, .4) ;
+/*	background: url("../assets/minus.png") no-repeat center rgba(240,236,241, .4) ;*/
+	background-position:  21px -292px;
+	background-color: rgba(240,236,241, .4);
 }
 
 #btn_multiply {
-	background: url("../assets/multiply.png") no-repeat center rgba(240,236,241, .4) ;
+/*	background: url("../assets/multiply.png") no-repeat center rgba(240,236,241, .4) ;*/
+	background-position:  21px -319px;
+	background-color: rgba(240,236,241, .4);
 }
 
 #btn_division {
-	background: url("../assets/division.png") no-repeat center rgba(240,236,241, .4) ;
+/*	background: url("../assets/division.png") no-repeat center rgba(240,236,241, .4) ;*/
+	background-position:  21px -260px;
+	background-color: rgba(240,236,241, .4);
 }
 
 #btn_remove {
-	background: url("../assets/del.png") no-repeat center rgba(240,236,241, .4) ;
+/*	background: url("../assets/del.png") no-repeat center rgba(240,236,241, .4) ;*/
+	background-position:  21px -230px;
+	background-color: rgba(240,236,241, .4);
 }
 
 #btn_plus_minus {
-	background: url("../assets/plus_minus.png") no-repeat center rgba(241,246,247,1.00);
+/*	background: url("../assets/plus_minus.png") no-repeat center rgba(241,246,247,1.00);*/
+	background-position:  21px -440px;
+	background-color: rgba(241,246,247,1.00);
 }
 
 #btn_2x {
-	background: url("../assets/22.png") no-repeat center rgba(240,236,241, .4);
+/*	background: url("../assets/22.png") no-repeat center rgba(240,236,241, .4);*/
+	background-position:  21px -230px;
+	background-color: rgba(240,236,241, .4);
 }
 
 #btn_x2 {
 	background: url("../assets/x2.png") no-repeat center rgba(240,236,241, .4);
+	
 }
 
 #btn_one_x {
 	background: url("../assets/onex.png") no-repeat center rgba(240,236,241, .4);
 }
+
+
