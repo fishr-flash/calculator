@@ -82,17 +82,7 @@ button {
 .full_width{
 	width: 100%;
 }
-div#pict{
-	position: absolute;
-	left: 50px;
-	top: 50px;
-	padding: 0;
-	margin: 0;
-	background: #F0F6F7;
-	visibility: hidden;
-	border: 1px solid black;
 
-}
 
 section#input{
 	width: 100%;
@@ -251,6 +241,7 @@ div#viewer{
 	float: left;
 	margin: 0 3px 3px 0;
 	background-color: rgba(240,236,241, .4);
+	
 }
 
 #fieldset_complexes_btns {
@@ -277,4 +268,8 @@ div#viewer{
 
 #btn_result {
 	background-color: rgba(139,195,4,0.40);
+}
+
+#btn_plus {
+	background: url("../assets/plus.png") no-repeat center rgba(240,236,241, .4) ;
 }
