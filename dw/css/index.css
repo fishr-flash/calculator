@@ -77,7 +77,9 @@ button {
 	padding: 0;
 	margin: 0;
 	background: none;
+	
 }
+
 
 .full_width{
 	width: 100%;
@@ -272,4 +274,28 @@ div#viewer{
 
 #btn_plus {
 	background: url("../assets/plus.png") no-repeat center rgba(240,236,241, .4) ;
+}
+
+
+/********************** BEHAVIOR **********************/
+
+button:active, button:focus {
+  outline: none;
+}
+button::-moz-focus-inner {
+  border: 0;
+}
+
+button:focus
+, button:hover
+, #btn_plus:hover
+, #btn_plus:focus {
+	background-color: rgba(0,0,0,0.1);
+	
+}
+
+#btn_result:hover
+, #btn_result:focus{
+	background-color: rgba(139,195,4,0.65);
+	border: 1px solid rgba(139,195,4, .15);
 }
