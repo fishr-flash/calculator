@@ -263,13 +263,45 @@ div#viewer{
 	font-size: 1.35em;
 	font-weight: bold;
 	color: rgba(0,0,0,0.8);
-	background-color: #f1f6f7;
+	background-color: rgba(241,246,247,1.00);
 }
 
 #btn_result {
-	background-color: rgba(139,195,4,0.40);
+	background: url("../assets/result.png") no-repeat center rgba(139,195,4,0.40) ;
 }
 
 #btn_plus {
 	background: url("../assets/plus.png") no-repeat center rgba(240,236,241, .4) ;
+}
+
+#btn_minus {
+	background: url("../assets/minus.png") no-repeat center rgba(240,236,241, .4) ;
+}
+
+#btn_multiply {
+	background: url("../assets/multiply.png") no-repeat center rgba(240,236,241, .4) ;
+}
+
+#btn_division {
+	background: url("../assets/division.png") no-repeat center rgba(240,236,241, .4) ;
+}
+
+#btn_remove {
+	background: url("../assets/del.png") no-repeat center rgba(240,236,241, .4) ;
+}
+
+#btn_plus_minus {
+	background: url("../assets/plus_minus.png") no-repeat center rgba(241,246,247,1.00);
+}
+
+#btn_2x {
+	background: url("../assets/22.png") no-repeat center rgba(240,236,241, .4);
+}
+
+#btn_x2 {
+	background: url("../assets/x2.png") no-repeat center rgba(240,236,241, .4);
+}
+
+#btn_one_x {
+	background: url("../assets/onex.png") no-repeat center rgba(240,236,241, .4);
 }
