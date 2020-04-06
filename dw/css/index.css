@@ -122,6 +122,7 @@ div#progress{
 div#viewer{
 	height: 60px;
 	overflow: hidden;
+	margin: 0 0 5px 0;
 }
 
 #label_ctrl_panel {
@@ -129,22 +130,24 @@ div#viewer{
 	padding: 7px 0 5px 6px;
 	font-size: 11px;
 	font-weight: lighter;
-	width: 170px;
+	width: 170.5px;
 	float: left;
 	
 }
 
 
 .main_controls {
-	width: 43px;
+	width: 44px;
 	height: 30px;
 }
 
+/*
 #field_controls {
 	margin: 0;
 	padding: 0;
 	border: 0;
 }
+*/
 
 #close_btn {
 	background-position: -2px -539px; width: 43px; height: 30px;
@@ -224,11 +227,11 @@ div#viewer{
 }
 
 .mm_btns {
-	width: 48px;
-	height: 35px;
+	width: 52px;
+	height: 30px;
 	/*background: rgba(63,0,1,.6);*/
 	border: 1px solid rgba( 0, 0, 0, 0);
-	margin: 2px;
+	margin: 0 0 3.5px 0;
 	float: left;
 	font-size: .9em;
 	color: rgba( 0, 0, 0, 0.25 );
@@ -246,11 +249,10 @@ div#viewer{
 }
 
 .input_btns {
-	width: 76.1px;
-	height: 47.25px;
+	width: 77px; height: 48.5px;
 	border: 1px solid rgba( 0, 0, 0, rgba(240,236,241, .4));
 	float: left;
-	margin: 0 3px 3px 0;
+	margin: 0 2px 2px 0;
 	background-color: rgba(240,236,241, .4);
 	
 }
@@ -277,80 +279,170 @@ div#viewer{
 	background-color: rgba(241,246,247,1.00);
 }
 
+#btn_result
+, #btn_plus 
+, #btn_division 
+, #btn_multiply 
+, #btn_minus 
+, #btn_plus_minus 
+, #btn_one_x 
+, #btn_x2 
+, #btn_2x 
+, #btn_remove {
+	width: 77px; height: 48.5px;
+}
+
+ #btn_plus 
+, #btn_division 
+, #btn_multiply 
+, #btn_minus 
+, #btn_plus_minus 
+, #btn_one_x 
+, #btn_x2 
+, #btn_2x 
+, #btn_remove {
+	background-color: rgba(240,236,241, .4);
+}
 #btn_result {
-	background-position: -2px -441px; width: 76px; height: 47.25px;
+	background-position: -2px -441px; 
 	background-color: rgba(139,195,4,0.40);
 }
 
 #btn_plus {
-	background-position: -2px -343px; width: 76px; height: 47.25px; 
-	background-color: rgba(240,236,241, .4);
+	background-position: -2px -343px; 
+	
 }
 
 #btn_remove {
 	background-position: -0px -46px; 
-	width: 76px; 
-	height: 47.25px;
-	background-color: rgba(240,236,241, .4);
+	
 }
 
 
 #btn_division {
-	background-position: -2px -98px; width: 76px; height: 47.25px;
-	background-color: rgba(240,236,241, .4);
+	background-position: -2px -98px; 
+	
 } 
 
 #btn_multiply {
-	background-position: -2px -196px; width: 76px; height: 47.25px;
-	background-color: rgba(240,236,241, .4);
+	background-position: -2px -196px; 
+	
 }
 
 #btn_minus {
-	background-position: -2px -147px; width: 76px; height: 47.25px; 
-	background-color: rgba(240,236,241, .4);
+	background-position: -2px -147px; 
+	
 }
 
 #btn_plus_minus {
-	background-position: -2px -392px; width: 76px; height: 47.25px; 
+	background-position: -2px -392px; 
 	background-color: rgba(241,246,247,1.00);
+	
 }
 
 #btn_one_x {
-	background-position: -2px -245px; width: 76px; height: 47.25px;
-	background-color: rgba(240,236,241, .4);
+	background-position: -2px -245px; 
+	
 }
 
 #btn_x2 {
-	background-position: -2px -490px; width: 76px; height: 47.25px; 
-	background-color: rgba(240,236,241, .4);
+	background-position: -2px -490px; 
+	
 }
 
 #btn_2x {
-	background-position: -2px -0px; width: 76px; height: 47.25px;
-	background-color: rgba(240,236,241, .4);
+	background-position: -2px -0px; 
+	
 }
 
 /********************** BEHAVIOR **********************/
 
-button:active, button:focus {
+button:active
+, button:focus
+, .subtitle_controls:active
+, .subtitle_controls:focus
+, #close_btn:active
+, #close_btn:focus
+, #min_btn:active
+, #min_btn:focus
+, #max_btn:active
+, #max_btn:focus
+, #menu_btn:active
+, #menu_btn:focus
+, #stick_btn:active
+, #stick_btn:focus
+, #journal_btn:active
+, #journal_btn:focus{
   outline: none;
 }
-button::-moz-focus-inner {
+button::-moz-focus-inner 
+, .subtitle_controls::-moz-focus-inner 
+, #close_btn::-moz-focus-inner 
+, #min_btn::-moz-focus-inner 
+, #max_btn::-moz-focus-inner 
+, #menu_btn::-moz-focus-inner 
+, #stick_btn::-moz-focus-inner 
+, #journal_btn::-moz-focus-inner {
+
   border: 0;
 }
 
-button:focus
-, button:hover
-, #btn_plus:hover
-, #btn_plus:focus {
+.mm_btns:hover
+, #close_btn:hover
+, #min_btn:hover
+, #max_btn:hover
+, #menu_btn:hover
+, #stick_btn:hover
+, #journal_btn:hover{
 	background-color: rgba(0,0,0,0.1);
+	border: 1px solid rgba(0,0,0, 0.3);
+}
+
+.mm_btns:active {
+	background-color: rgba(0,0,0,0.2);
+	border: 1px solid rgba(0,0,0, 0.3);
+}
+
+
+
+ button:hover
+, #btn_plus:hover
+, #btn_remove:hover
+, #btn_one_x:hover
+, #btn_2x:hover
+, #btn_x2:hover
+, #btn_division:hover
+, #btn_multiply:hover
+, #btn_minus:hover
+, #btn_plus_minus:hover{
+	background-color: rgba(0,0,0,0.1);
+	border: 1px solid rgba(0,0,0, 0.2);
 	
 }
 
-#btn_result:hover
-, #btn_result:focus{
+button:active
+, #btn_plus:active
+, #btn_remove:active
+, #btn_one_x:active
+, #btn_2x:active
+, #btn_x2:active
+, #btn_division:active
+, #btn_multiply:active
+, #btn_minus:active
+, #btn_plus_minus:active{
+	background-color: rgba(0,0,0,0.2);
+	border: 1px solid rgba(0,0,0, 0.2);
+	
+}
+
+#btn_result:hover{
 	background-color: rgba(139,195,4,0.65);
-	border: 1px solid rgba(139,195,4, .15);
+/*	border: 1px solid rgba(139,195,4, .6);*/
+	border: 1px solid rgba(0,0,0, 0.2);
 }
 
 /****************END OF BEHAVIOR **********************/
+
+
+
+
