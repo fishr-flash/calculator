@@ -49,10 +49,33 @@ border-spacing: 0;
 }
 
 /*////////////////END RESET STYLES////////////*/
+
+/********************SPRITE**********************/
+
+ #close_btn
+, #min_btn
+, #max_btn
+, #menu_btn
+, #stick_btn
+, #journal_btn
+, #left_progress_arrow
+, #right_progress_arrow
+, #btn_plus
+, #btn_remove
+, #btn_division
+, #btn_multiply
+, #btn_minus
+, #btn_result
+, #btn_plus_minus
+, #btn_one_x
+, #btn_2x
+, #btn_x2
+{ display: inline-block; background: url('../assets/calculator_sprite.png') no-repeat; overflow: hidden; text-indent: -9999px; text-align: left; }
+
+/****************END SPRITE**********************/
 body{
 	background-image: url("../assets/img2@1x.jpg");
 }
-
 
 main{
 	position: absolute;
@@ -80,21 +103,15 @@ button {
 	
 }
 
-
 .full_width{
 	width: 100%;
 }
-
 
 section#input{
 	width: 100%;
 	height: 335px;
 	
 }
-
-
-
-
 
 div#progress{
 	height: 30px;
@@ -130,16 +147,15 @@ div#viewer{
 }
 
 #close_btn {
-	background: no-repeat url( "../assets/close.png");
-	border: 0;
+	background-position: -2px -539px; width: 43px; height: 30px;
 }
 
 #min_btn {
-	background: url("../assets/minimize.png");
+	 background-position: -2px -603px; width: 43px; height: 30px;
 }
 
 #max_btn {
-	background: url("../assets/maximize.png")
+	background-position: -2px -571px; width: 43px; height: 30px;
 }
 
 .subtitle_controls {
@@ -149,7 +165,7 @@ div#viewer{
 }
 
 #menu_btn {
-	background: url("../assets/menu.png");
+	background-position: -2px -677px; width: 40px; height: 40px;
 	float: left;
 }
 
@@ -162,11 +178,11 @@ div#viewer{
 }
 
 #stick_btn {
-	background: url("../assets/stick.png");
+	background-position: -2px -719px; width: 40px; height: 40px;
 }
 
 #journal_btn {
-	background: url("../assets/journal.png");
+	background-position: -2px -635px; width: 40px; height: 40px;
 	float: right;
 }
 
@@ -180,11 +196,8 @@ div#viewer{
 
 
 #left_progress_arrow {
-	background: no-repeat url("../assets/left_arrow.png") 0px 0px;
+	background-position: -45px -506px; width: 18px; height: 17px;
 	float: left;
-	
-	
-	
 }
 
 .progress_arrows {
@@ -195,7 +208,7 @@ div#viewer{
 }
 
 #right_progress_arrow {
-	background: no-repeat url("../assets/right_arrow.png") 0px 0px;
+	background-position: -45px -523px; width: 18px; height: 17px;
 	float: right;
 }
 
@@ -208,8 +221,6 @@ div#viewer{
 	padding: 0 10px 4px 10px;
 	margin: 0;
 	white-space: nowrap;
-}
-.fu {
 }
 
 .mm_btns {
@@ -233,8 +244,6 @@ div#viewer{
 	vertical-align: super;
 	color: inherit;
 }
-
-
 
 .input_btns {
 	width: 76.1px;
@@ -265,17 +274,61 @@ div#viewer{
 	font-size: 1.35em;
 	font-weight: bold;
 	color: rgba(0,0,0,0.8);
-	background-color: #f1f6f7;
+	background-color: rgba(241,246,247,1.00);
 }
 
 #btn_result {
+	background-position: -2px -441px; width: 76px; height: 47.25px;
 	background-color: rgba(139,195,4,0.40);
 }
 
 #btn_plus {
-	background: url("../assets/plus.png") no-repeat center rgba(240,236,241, .4) ;
+	background-position: -2px -343px; width: 76px; height: 47.25px; 
+	background-color: rgba(240,236,241, .4);
 }
 
+#btn_remove {
+	background-position: -0px -46px; 
+	width: 76px; 
+	height: 47.25px;
+	background-color: rgba(240,236,241, .4);
+}
+
+
+#btn_division {
+	background-position: -2px -98px; width: 76px; height: 47.25px;
+	background-color: rgba(240,236,241, .4);
+} 
+
+#btn_multiply {
+	background-position: -2px -196px; width: 76px; height: 47.25px;
+	background-color: rgba(240,236,241, .4);
+}
+
+#btn_minus {
+	background-position: -2px -147px; width: 76px; height: 47.25px; 
+	background-color: rgba(240,236,241, .4);
+}
+
+#btn_plus_minus {
+	background-position: -2px -392px; width: 76px; height: 47.25px; 
+	background-color: rgba(241,246,247,1.00);
+}
+
+#btn_one_x {
+	background-position: -2px -245px; width: 76px; height: 47.25px;
+	background-color: rgba(240,236,241, .4);
+}
+
+#btn_x2 {
+	background-position: -2px -490px; width: 76px; height: 47.25px; 
+	background-color: rgba(240,236,241, .4);
+}
+
+#btn_2x {
+	background-position: -2px -0px; width: 76px; height: 47.25px;
+	background-color: rgba(240,236,241, .4);
+}
 
 /********************** BEHAVIOR **********************/
 
@@ -299,3 +352,5 @@ button:focus
 	background-color: rgba(139,195,4,0.65);
 	border: 1px solid rgba(139,195,4, .15);
 }
+
+/****************END OF BEHAVIOR **********************/
