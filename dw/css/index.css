@@ -4,7 +4,6 @@
 /*////////////////RESET STYLES////////////*/
 /* http://meyerweb.com/eric/tools/css/reset/
 v2.0 I 20110126 Лицензия: нет (общий домен)*/
-
 html, body, div, span, applet, object, iframe,
 hi, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -23,7 +22,6 @@ border: 0;
 font-size: 100%;
 font: inherit;
 vertical-align: baseline;
-
 }
 /* сброс типа отображения HTML5 для старых версий браузеров
 */
@@ -50,11 +48,10 @@ border-collapse: collapse;
 border-spacing: 0;
 }
 
-/*////////////////END RESET STYLES////////////*/
+/*////////////////END OF RESET STYLES////////////*/
 
-/********************SPRITE**********************/
-
- #close_btn
+/************************SPRITE************************/
+#close_btn
 , #min_btn
 , #max_btn
 , #menu_btn
@@ -62,32 +59,39 @@ border-spacing: 0;
 , #journal_btn
 , #left_progress_arrow
 , #right_progress_arrow
-, #btn_plus
-, #btn_remove
-, #btn_division
-, #btn_multiply
-, #btn_minus
 , #btn_result
+, #btn_plus
+, #btn_minus
+, #btn_multiply
+, #btn_division
+, #btn_remove
 , #btn_plus_minus
-, #btn_one_x
 , #btn_2x
 , #btn_x2
-{ display: inline-block; background: url('../assets/calculator_sprite.png') no-repeat; overflow: hidden; text-indent: -9999px; text-align: left; }
+, #btn_one_x
+{ display: inline-block; 
+	background: url("../assets/sprite_calculator.png") center no-repeat; 
+	overflow: hidden; 
+	text-indent: -9999px; 
+	text-align: center; }
 
-/****************END SPRITE**********************/
+
+/*****************END OF SPRITE************************/
 body{
 	background-image: url("../assets/img2@1x.jpg");
 }
+
 
 main{
 	position: absolute;
 	left: 50px;
 	top: 50px;
-	background: rgba(230,230,230,1.00);
+	background: rgba(253,253,253,0.72);
 	z-index: 1;
 	width: 320px;
 	height: 506px;
 	border: 1px solid rgba(25,25,25,1.00);
+	/*display: block;*/
 	border-collapse: collapse;
 	box-shadow: 1px 1px 32px 1px rgba(0,0,0,0.5) ;
 	font-family: "Microsoft Sans Serif", Arial, Calibri,  sans-serif;
@@ -96,27 +100,21 @@ main{
 
 }
 
-
-main.active{
-	background: rgba(253,253,253,0.72);
-}
 button {
+	border: 0;
 	padding: 0;
 	margin: 0;
 	background: none;
-	border: 1px solid rgba( 0, 0, 0, 0 );
-	
 }
 
 .full_width{
 	width: 100%;
 }
-
 section#input{
+	width: 100%;
 	height: 335px;
 	
 }
-
 div#progress{
 	height: 30px;
 	overflow: hidden;
@@ -126,7 +124,6 @@ div#progress{
 div#viewer{
 	height: 60px;
 	overflow: hidden;
-	margin: 0 0 5px 0;
 }
 
 #label_ctrl_panel {
@@ -134,28 +131,30 @@ div#viewer{
 	padding: 7px 0 5px 6px;
 	font-size: 11px;
 	font-weight: lighter;
-	width: 170.5px;
+	width: 170px;
 	float: left;
 	
 }
-
-
 .main_controls {
 	width: 43px;
 	height: 30px;
 }
+#field_controls {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
 
 #close_btn {
-	background-position: -2px -539px; 
-/*	width: 43.43px;*/
+	background-position: -0px -0px; width: 43px; height: 30px;
 }
 
 #min_btn {
-	 background-position: -2px -603px; 
+	background-position: -0px -60px; width: 43px; height: 30px;
 }
 
 #max_btn {
-	background-position: -2px -571px; 
+	background-position: -0px -30px; width: 43px; height: 30px;
 }
 
 .subtitle_controls {
@@ -165,7 +164,7 @@ div#viewer{
 }
 
 #menu_btn {
-	background-position: -2px -709px; 
+	background-position: -0px -130px; width: 43px; height: 30px;
 	float: left;
 }
 
@@ -178,11 +177,11 @@ div#viewer{
 }
 
 #stick_btn {
-	background-position: -2px -751px; 
+	background-position: -0px -170px; width: 43px; height: 30px;
 }
 
 #journal_btn {
-	background-position: -2px -667px; 
+	background-position: -0px -90px; width: 43px; height: 30px;
 	float: right;
 }
 
@@ -193,25 +192,22 @@ div#viewer{
 	display: inline-block;
 	white-space: nowrap;
 }
-
-
 #left_progress_arrow {
-	background-position: -45px -539px; width: 18px; height: 17px;
+	background-position: -0px -540px; width: 18px; height: 17px;
 	float: left;
+}
+
+#right_progress_arrow {
+	background-position: -18px -540px; width: 18px; height: 17px;
+	float: right;
 }
 
 .progress_arrows {
 	height: 30px;
 	width: 20px;
-	visibility: hidden;
+/*	visibility: hidden;*/
 	
 }
-
-#right_progress_arrow {
-	background-position: -45px -558px; width: 18px; height: 17px;
-	float: right;
-}
-
 #viewport {
 	color: initial;
 	font-size: 44px;
@@ -224,12 +220,14 @@ div#viewer{
 }
 
 .mm_btns {
-	width: 52px;
-	height: 30px;
-	margin: 0 0 3.5px 0;
+	width: 48px;
+	height: 35px;
+	/*background: rgba(63,0,1,.6);*/
+	border: 1px solid rgba( 0, 0, 0, 0);
+	margin: 2px;
 	float: left;
 	font-size: .9em;
-	color: rgba( 0, 0, 0, 1 );
+	color: rgba( 0, 0, 0, 0.25 );
 }
 
 .input_fieldsets{
@@ -242,11 +240,12 @@ div#viewer{
 	vertical-align: super;
 	color: inherit;
 }
-
 .input_btns {
-	width: 77px; height: 48.5px;
+	width: 76.1px;
+	height: 47.25px;
+	border: 1px solid rgba( 0, 0, 0, 0 );
 	float: left;
-	margin: 0 2px 2px 0;
+	margin: 0 3px 3px 0;
 	background-color: rgba(240,236,241, .4);
 	
 }
@@ -273,180 +272,61 @@ div#viewer{
 	background-color: rgba(241,246,247,1.00);
 }
 
-#btn_result
-, #btn_plus 
-, #btn_division 
-, #btn_multiply 
-, #btn_minus 
-, #btn_plus_minus 
-, #btn_one_x 
-, #btn_x2 
-, #btn_2x 
-, #btn_remove {
-	width: 77px; height: 48.5px;
-}
-
- #btn_plus 
-, #btn_division 
-, #btn_multiply 
-, #btn_minus 
-, #btn_plus_minus 
-, #btn_one_x 
-, #btn_x2 
-, #btn_2x 
-, #btn_remove {
-	background-color: rgba(240,236,241, .4 );
-}
 #btn_result {
-	background-position: -2px -441px; 
-	background-color: rgba(139,195,4, .4 );
+/*	background: url("../assets/result.png") no-repeat center rgba(139,195,4,0.40) ;*/
+	background-position:  21px -472px;  
+	background-color: rgba(139, 195, 4, 0.4);
 }
 
 #btn_plus {
-	background-position: -2px -343px; 
-	
-}
-
-#btn_remove {
-	background-position: -0px -49px; 
-	
-}
-
-
-#btn_division {
-	background-position: -2px -98px; 
-	
-} 
-
-#btn_multiply {
-	background-position: -2px -196px; 
-	
+/*	background: url("../assets/plus.png") no-repeat center rgba(240,236,241, .4) ;*/
+	background-position:  21px -414px;  
+	background-color: rgba(240,236,241, .4);
 }
 
 #btn_minus {
-	background-position: -2px -147px; 
-	
+/*	background: url("../assets/minus.png") no-repeat center rgba(240,236,241, .4) ;*/
+	background-position:  21px -292px;
+	background-color: rgba(240,236,241, .4);
+}
+
+#btn_multiply {
+/*	background: url("../assets/multiply.png") no-repeat center rgba(240,236,241, .4) ;*/
+	background-position:  21px -319px;
+	background-color: rgba(240,236,241, .4);
+}
+
+#btn_division {
+/*	background: url("../assets/division.png") no-repeat center rgba(240,236,241, .4) ;*/
+	background-position:  21px -260px;
+	background-color: rgba(240,236,241, .4);
+}
+
+#btn_remove {
+/*	background: url("../assets/del.png") no-repeat center rgba(240,236,241, .4) ;*/
+	background-position:  21px -230px;
+	background-color: rgba(240,236,241, .4);
 }
 
 #btn_plus_minus {
-	background-position: -2px -392px; 
+/*	background: url("../assets/plus_minus.png") no-repeat center rgba(241,246,247,1.00);*/
+	background-position:  21px -440px;
 	background-color: rgba(241,246,247,1.00);
+}
+
+#btn_2x {
+/*	background: url("../assets/22.png") no-repeat center rgba(240,236,241, .4);*/
+	background-position:  21px -230px;
+	background-color: rgba(240,236,241, .4);
+}
+
+#btn_x2 {
+	background: url("../assets/x2.png") no-repeat center rgba(240,236,241, .4);
 	
 }
 
 #btn_one_x {
-	background-position: -2px -245px; 
-	
+	background: url("../assets/onex.png") no-repeat center rgba(240,236,241, .4);
 }
-
-#btn_x2 {
-	background-position: -2px -490px; 
-	
-}
-
-#btn_2x {
-	background-position: -2px -0px; 
-	
-}
-
-/********************** BEHAVIOR **********************/
-
-
-button:active
-, button:focus {
-  outline: none;
-}
-
-button::-moz-focus-inner 
-, .subtitle_controls::-moz-focus-inner 
-, #close_btn::-moz-focus-inner 
-, #min_btn::-moz-focus-inner 
-, #max_btn::-moz-focus-inner 
-, #menu_btn::-moz-focus-inner 
-, #stick_btn::-moz-focus-inner 
-, #journal_btn::-moz-focus-inner {
-
-  border: 0;
-}
-
-.mm_btns:hover
-, #min_btn:hover
-, #max_btn:hover
-, #menu_btn:hover
-, #stick_btn:hover
-, #journal_btn:hover{
-	background-color: rgba(0,0,0,0.1);
-	border: 1px solid rgba(0,0,0, 0.3);
-}
-
-.mm_btns:active
-, #min_btn:active
-, #max_btn:active
-, #menu_btn:active
-, #stick_btn:active
-, #journal_btn:active{
-	background-color: rgba(0,0,0,0.2);
-	border: 1px solid rgba(0,0,0, 0.3);
-}
-
-
-button:active
-, #btn_plus:active
-, #btn_remove:active
-, #btn_one_x:active
-, #btn_2x:active
-, #btn_x2:active
-, #btn_division:active
-, #btn_multiply:active
-, #btn_minus:active
-, #btn_plus_minus:active
-, button:hover
-, #btn_plus:hover
-, #btn_remove:hover
-, #btn_one_x:hover
-, #btn_2x:hover
-, #btn_x2:hover
-, #btn_division:hover
-, #btn_multiply:hover
-, #btn_minus:hover
-, #btn_plus_minus:hover{
-	background-color: rgba(0,0,0,0.15);
-	border: 1px solid rgba(0,0,0, 0.2);
-	
-}
-
-#btn_result:active
-, #btn_result:hover{
-	background-color: rgba(108,154,0, .85);
-	border: 1px solid rgba(139,195,4, .6);
-	
-}
-
-
-#close_btn:active
-, #close_btn:hover{
-	background-color: rgba(232,17,35,1.00);
-	border: 1px solid rgba(0,0,0, 0.2);
-	background-position: -2px -635px; 
-	
-}
-
-button:disabled
-, .subtitle_controls:disabled
-, .mm_btns:disabled
-, #close_btn:disabled
-, #min_btn:disabled
-, #max_btn:disabled
-, #menu_btn:disabled
-, #stick_btn:disabled
-, #journal_btn:disabled{
-	background-color: rgb( 0, 0, 0, 0 );
-	border: 1px solid rgba(0,0,0, 0);
-	opacity: .5;
-}
-
-/****************END OF BEHAVIOR **********************/
-
-
 
 
