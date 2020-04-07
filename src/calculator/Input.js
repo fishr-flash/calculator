@@ -1,6 +1,12 @@
 import React from "react";
+import {connect} from "react-redux";
+import {ON_CLICK_NUMBER} from "../constants";
+import NumsBoard from "./NumsBoard";
 
-export default function Input() {
+const Input = () => {
+
+
+
     return(
         <section className="full_width" id="input">
             <fieldset className="input_fieldsets">
@@ -22,20 +28,22 @@ export default function Input() {
                     <button className="input_btns" id="btn_x2"/>
                     <button className="input_btns" id="btn_2x"/>
                 </fieldset>
-                <fieldset id="fieldset_num_btns">
-                    <button className="input_btns nmr_btns" id="btn_seven">7</button>
-                    <button className="input_btns nmr_btns" id="btn_eath">8</button>
-                    <button className="input_btns nmr_btns" id="btn_nine">9</button>
-                    <button className="input_btns nmr_btns" id="btn_four">4</button>
-                    <button className="input_btns nmr_btns" id="btn_five">5</button>
-                    <button className="input_btns nmr_btns" id="btn_six">6</button>
-                    <button className="input_btns nmr_btns" id="btn_one">1</button>
-                    <button className="input_btns nmr_btns" id="btn_two">2</button>
-                    <button className="input_btns nmr_btns" id="btn_three">3</button>
-                    <button className="input_btns nmr_btns" id="btn_plus_minus"/>
-                    <button className="input_btns nmr_btns" id="btn_zerro">0</button>
-                    <button className="input_btns nmr_btns" id="btn_dote">,</button>
-                </fieldset>
+
+                <NumsBoard />
+                {/*<fieldset id="fieldset_num_btns">*/}
+                {/*    <button className="input_btns nmr_btns" id="btn_seven">7</button>*/}
+                {/*    <button className="input_btns nmr_btns" id="btn_eath">8</button>*/}
+                {/*    <button className="input_btns nmr_btns" id="btn_nine">9</button>*/}
+                {/*    <button className="input_btns nmr_btns" id="btn_four">4</button>*/}
+                {/*    <button className="input_btns nmr_btns" id="btn_five">5</button>*/}
+                {/*    <button className="input_btns nmr_btns" id="btn_six">6</button>*/}
+                {/*    <button className="input_btns nmr_btns" id="btn_one">1</button>*/}
+                {/*    <button className="input_btns nmr_btns" id="btn_two">2</button>*/}
+                {/*    <button className="input_btns nmr_btns" id="btn_three">3</button>*/}
+                {/*    <button className="input_btns nmr_btns" id="btn_plus_minus"/>*/}
+                {/*    <button className="input_btns nmr_btns" id="btn_zerro">0</button>*/}
+                {/*    <button className="input_btns nmr_btns" id="btn_dote">,</button>*/}
+                {/*</fieldset>*/}
                 <fieldset id="fieldset_simple_btns">
                     <button className="input_btns" id="btn_remove"/>
                     <button className="input_btns" id="btn_division"/>
@@ -49,3 +57,5 @@ export default function Input() {
     );
 
 }
+
+export default Input

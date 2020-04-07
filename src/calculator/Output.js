@@ -1,6 +1,7 @@
 import React from "react";
+import {connect} from "react-redux";
 
-export default function Output() {
+function Output( props ) {
     return(
         <section className="full_width" id="output">
             <div className="full_width" id="progress">
@@ -10,9 +11,17 @@ export default function Output() {
             </div>
             <div className="full_width" id="viewer">
                 <blockquote>
-                    <p id="viewport">2 087 746 752</p>
+                    <p id="viewport">{props.setNumber}</p>
                 </blockquote>
             </div>
         </section>
     );
 }
+
+export default connect(
+    state => {
+               return ({
+            setNumber: state.setNumber
+        });
+    }, null
+)( Output );
