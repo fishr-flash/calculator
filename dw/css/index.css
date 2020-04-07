@@ -440,7 +440,7 @@ button:disabled
 , #menu_btn:disabled
 , #stick_btn:disabled
 , #journal_btn:disabled{
-	background-color: rgb( 0, 0, 0, 0 );
+	background-color: rgba( 0, 0, 0, 0 );
 	border: 1px solid rgba(0,0,0, 0);
 	opacity: .5;
 }
