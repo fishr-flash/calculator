@@ -2,6 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 
 function Output( props ) {
+
     return(
         <section className="full_width" id="output">
             <div className="full_width" id="progress">
@@ -11,7 +12,7 @@ function Output( props ) {
             </div>
             <div className="full_width" id="viewer">
                 <blockquote>
-                    <p id="viewport">{props.setNumber}</p>
+                    <p id="viewport">{props.output}</p>
                 </blockquote>
             </div>
         </section>
@@ -19,9 +20,10 @@ function Output( props ) {
 }
 
 export default connect(
+    
     state => {
-               return ({
-            setNumber: state.setNumber
+        return ({
+                output: state.output
         });
     }, null
 )( Output );

@@ -1,6 +1,4 @@
 import React from "react";
-import {connect} from "react-redux";
-import {ON_CLICK_NUMBER} from "../constants";
 import NumsBoard from "./NumsBoard";
 
 const Input = () => {

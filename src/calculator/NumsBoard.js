@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import {ON_CLICK_NUMBER} from "../constants";
+import {ON_CLICK_DOT, ON_CLICK_NUMBER, ON_CLICK_SIGN} from "../constants";
 
 const NumsBoard = ( props ) => {
 
@@ -31,8 +31,9 @@ export default connect(
         clickNumber: ( v ) => {
             dispatch( {type: ON_CLICK_NUMBER, value: v })
         }
-        , clickSymbol: (  ) => {
-            dispatch( {type: ON_CLICK_NUMBER, value: 9 })
+        , clickSymbol: ( arg ) => {
+            arg ? dispatch( {type: ON_CLICK_DOT })
+                : dispatch( {type: ON_CLICK_SIGN })
         }
         , onAddTrack: (trackName) => {
             dispatch({ type: 'ADD_TRACK', payload: trackName });
