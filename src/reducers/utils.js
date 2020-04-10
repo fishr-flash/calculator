@@ -1,27 +1,54 @@
-export const getBuffer = (state, action) => {
+import {SIMPLE_PLUS} from "../constants";
 
-    return parseFloat(`${state.buffer}${ state.onDot ? ",":"" }${action.value}`);
+export const getBuffer = ( {
+    firstNumber
+    , buffer
+    , onDot
+    , firstOperator
+    , secondNumber
+                           }, { value }) => {
+    let newBuffer = buffer;
+    if( firstNumber && firstOperator && !( secondNumber ) )
+        newBuffer = 0;
+
+        return parseFloat(`${ newBuffer}${ onDot ? ",":"" }${value}`);
 };
 
-export const getFirstNumber = (state, action, buffer) => {
-    let firstNumber = state.firstNumber;
 
-    if (state.resultNumber) {
-        firstNumber = state.resultNumber;
-    } else if (!state.secondNumber) {
-        firstNumber = buffer;
+export const getFirstNumber = ({ firstNumber, resultNumber, secondNumber, firstOperator }, buffer) => {
+    let first = firstNumber;
+
+    if (resultNumber) {
+        first = resultNumber;
+    } else if( !secondNumber && !firstOperator ){
+        first = buffer;
     }
-    return firstNumber;
+    return first;
 };
 
-export const getSecondNumber = (state, action, buffer) => {
-    let secondNumber = state.secondNumber;
-    if (state.resultNumber)
-        secondNumber = 0;
+export const getSecondNumber = ({ firstNumber, resultNumber, secondNumber, firstOperator }, buffer  ) => {
+    let second = secondNumber;
+    if( firstNumber && firstOperator ){
+        second = buffer;
+    } else if ( resultNumber){
+        second = 0;
+    }
 
-    return secondNumber;
+
+    return second;
 };
 
-export const getOutput = (state, action, buffer) => {
-    return `${state.output === '0' || undefined ? "" : state.output}${action.value}`
+
+export const getResult = ( { firstNumber, secondNumber, firstOperator}) =>{
+
+    let result = 0;
+    switch ( firstOperator ) {
+
+        case SIMPLE_PLUS:
+            result = firstNumber + secondNumber;
+            break;
+        default:
+    }
+
+    return result;
 };

@@ -15,7 +15,7 @@ const NumsBoard = ( props ) => {
             <button className="input_btns nmr_btns" onClick={ () => props.clickNumber( 1 )}>1</button>
             <button className="input_btns nmr_btns" onClick={ () => props.clickNumber( 2 )}>2</button>
             <button className="input_btns nmr_btns" onClick={ () => props.clickNumber( 3 )}>3</button>
-            <button className="input_btns nmr_btns" id="btn_plus_minus" onClick={ () => props.clickSymbol( "" )}/>
+            <button className="input_btns nmr_btns" id="btn_plus_minus" onClick={ () => props.clickSymbol( )}/>
             <button className="input_btns nmr_btns" id="btn_zerro" onClick={ () => props.clickNumber( 0 )}>0</button>
             <button className="input_btns nmr_btns" id="btn_dote" onClick={ () => props.clickSymbol( "." )}>,</button>
         </fieldset>
@@ -24,9 +24,7 @@ const NumsBoard = ( props ) => {
 }
 
 export default connect(
-    state => ({
-        tracks: state.tracks
-    }),
+   null,
     dispatch => ({
         clickNumber: ( v ) => {
             dispatch( {type: ON_CLICK_NUMBER, value: v })
@@ -34,9 +32,6 @@ export default connect(
         , clickSymbol: ( arg ) => {
             arg ? dispatch( {type: ON_CLICK_DOT })
                 : dispatch( {type: ON_CLICK_SIGN })
-        }
-        , onAddTrack: (trackName) => {
-            dispatch({ type: 'ADD_TRACK', payload: trackName });
         }
     })
 )( NumsBoard );

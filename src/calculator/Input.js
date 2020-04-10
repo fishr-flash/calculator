@@ -1,5 +1,6 @@
 import React from "react";
 import NumsBoard from "./NumsBoard";
+import SimpleOperators from "./SimpleOperators";
 
 const Input = () => {
 
@@ -42,14 +43,15 @@ const Input = () => {
                 {/*    <button className="input_btns nmr_btns" id="btn_zerro">0</button>*/}
                 {/*    <button className="input_btns nmr_btns" id="btn_dote">,</button>*/}
                 {/*</fieldset>*/}
-                <fieldset id="fieldset_simple_btns">
-                    <button className="input_btns" id="btn_remove"/>
-                    <button className="input_btns" id="btn_division"/>
-                    <button className="input_btns" id="btn_multiply"/>
-                    <button className="input_btns" id="btn_minus"/>
-                    <button className="input_btns" id="btn_plus"/>
-                    <button className="input_btns" id="btn_result"/>
-                </fieldset>
+                <SimpleOperators />
+                {/*<fieldset id="fieldset_simple_btns">*/}
+                {/*    <button className="input_btns" id="btn_remove"/>*/}
+                {/*    <button className="input_btns" id="btn_division"/>*/}
+                {/*    <button className="input_btns" id="btn_multiply"/>*/}
+                {/*    <button className="input_btns" id="btn_minus"/>*/}
+                {/*    <button className="input_btns" id="btn_plus"/>*/}
+                {/*    <button className="input_btns" id="btn_result"/>*/}
+                {/*</fieldset>*/}
             </section>
         </section>
     );

@@ -1,7 +1,14 @@
 // import { combineReducers } from 'redux';
 // import setNumber from "./setNumber";
-import {ON_CLICK_DOT, ON_CLICK_NUMBER} from "../constants";
-import {getBuffer, getFirstNumber, getOutput, getSecondNumber} from "./utils";
+import {
+    ON_CLICK_DOT,
+    ON_CLICK_NUMBER,
+    ON_CLICK_SIGN,
+    ON_CLICK_SIMPLE_OPERATOR,
+    SIMPLE_REMOVE,
+    SIMPLE_RESULT
+} from "../constants";
+import {getBuffer, getFirstNumber, getResult, getSecondNumber} from "./utils";
 
 // export default combineReducers({ setNumber });
 
@@ -14,18 +21,20 @@ const store = {
   , firstOperator: null
   , secondOperator: null
   , onDot: false
-  , onSign: false
+
 
 
 };
 export default function reducer ( state = store, action ) {
 
-    const buffer = getBuffer( state, action );
+    let buffer = getBuffer( state, action );
 
     switch ( action.type ) {
 
+
         case ON_CLICK_DOT:
 
+            if( !( buffer%1 ) )
             state = {
                 ...state
                 , onDot: true
@@ -33,9 +42,19 @@ export default function reducer ( state = store, action ) {
             };
 
             break;
+
+        case ON_CLICK_SIGN:
+            buffer*=-1;
+            state = {
+                ...state
+                , buffer: buffer
+                , output : `${buffer}`.replace(".", ",")
+            };
+           break;
+
         case ON_CLICK_NUMBER:
-            const firstNumber = getFirstNumber( state, action, buffer );
-            const secondNumber = getSecondNumber( state, action, buffer );
+            const firstNumber = getFirstNumber( state, buffer );
+            const secondNumber = getSecondNumber( state, buffer );
 
             state = {
                 ...state
@@ -44,8 +63,48 @@ export default function reducer ( state = store, action ) {
                 , secondNumber: secondNumber
                 , resultNumber: 0
                 , onDot: false
-                , output : `${buffer}`
+                , output : `${buffer}`.replace(".", ",")
             };
+            break;
+
+        case ON_CLICK_SIMPLE_OPERATOR:
+
+            if( action.value === SIMPLE_REMOVE ){
+                buffer = parseFloat( state.output.slice(0, -1 ).replace(",", ".") );
+                if( isNaN( buffer ) )
+                            buffer = 0;
+                state = {
+                    ...state
+                    , buffer: buffer
+                    , output: `${buffer}`.replace(".", ",")
+                    , firstNumber: state.secondNumber ? state.firstNumber: buffer
+                    , secondNumber: state.secondNumber ? buffer: 0
+
+                }
+            } else if( action.value === SIMPLE_RESULT ){
+
+                if( state.firstOperator ){
+                    buffer = getResult( state );
+                    state = {
+                        ...state
+                        , buffer: buffer
+                        , firstNumber: buffer
+                        , secondNumber: 0
+                        , firstOperator: null
+                        , secondOperator: null
+                        , output: `${buffer}`.replace(".", ",")
+                    }
+                }
+
+            } else if( !state.firstOperator ){
+                state ={
+                    ...state
+                    , firstOperator: action.value
+                }
+            } else {
+
+            }
+
             break;
         default:
 
@@ -60,6 +119,7 @@ export default function reducer ( state = store, action ) {
         if( true ){
             console.group( 'Console log in the code "INDEX_JS" line 32' );
             //console.debug( 'state: ', state );
+            //console.debug( '( !buffer%1 ): ', ( !( buffer%1 ) ) );
             console.table( state );
             //console.debug( 'this: ', this );
             console.groupEnd();
