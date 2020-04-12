@@ -1,4 +1,4 @@
-import {SIMPLE_PLUS} from "../constants";
+import {SIMPLE_PLUS, SIMPLE_RESULT} from "../constants";
 
 export const getBuffer = ( {
     firstNumber
@@ -39,6 +39,30 @@ export const getSecondNumber = ({ firstNumber, resultNumber, secondNumber, first
 };
 
 
+export const getHistory = ( { history,  firstNumber, firstOperator,  secondNumber }, lastSymbol ) =>{
+
+    const first = history ? '' :`${firstNumber}`.replace(".", ",");
+    const second =  secondNumber ?`${secondNumber}`.replace(".", ",") : '';
+    return `${ history }${first} ${ history ? '' : getOperator( firstOperator ) } 
+            ${second} ${ getOperator( lastSymbol )}`;
+};
+
+const getOperator = ( firstOperator )=>{
+
+    let operator = ''
+    switch ( firstOperator ) {
+        case SIMPLE_RESULT:
+            operator = "="
+            break;
+        case SIMPLE_PLUS:
+            operator = "+";
+            break;
+        default:
+            operator = "";
+    }
+
+    return operator;
+};
 export const getResult = ( { firstNumber, secondNumber, firstOperator}) =>{
 
     let result = 0;

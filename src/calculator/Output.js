@@ -7,7 +7,7 @@ function Output( props ) {
         <section className="full_width" id="output">
             <div className="full_width" id="progress">
                 <button className="progress_arrows" id="left_progress_arrow"/>
-                <p id="progress_content">512342457+4568+512+123</p>
+                <p id="progress_content">{ props.history }</p>
                 <button className="progress_arrows" id="right_progress_arrow"/>
             </div>
             <div className="full_width" id="viewer">
@@ -24,6 +24,7 @@ export default connect(
     state => {
         return ({
                 output: state.output
+                , history: state.history
         });
     }, null
 )( Output );

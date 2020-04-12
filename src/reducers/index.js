@@ -8,7 +8,7 @@ import {
     SIMPLE_REMOVE,
     SIMPLE_RESULT
 } from "../constants";
-import {getBuffer, getFirstNumber, getResult, getSecondNumber} from "./utils";
+import {getBuffer, getFirstNumber, getHistory, getResult, getSecondNumber} from "./utils";
 
 // export default combineReducers({ setNumber });
 
@@ -21,6 +21,7 @@ const store = {
   , firstOperator: null
   , secondOperator: null
   , onDot: false
+  , history: ''
 
 
 
@@ -64,6 +65,7 @@ export default function reducer ( state = store, action ) {
                 , resultNumber: 0
                 , onDot: false
                 , output : `${buffer}`.replace(".", ",")
+
             };
             break;
 
@@ -79,7 +81,7 @@ export default function reducer ( state = store, action ) {
                     , output: `${buffer}`.replace(".", ",")
                     , firstNumber: state.secondNumber ? state.firstNumber: buffer
                     , secondNumber: state.secondNumber ? buffer: 0
-
+                    , history: getHistory( )
                 }
             } else if( action.value === SIMPLE_RESULT ){
 
@@ -89,10 +91,11 @@ export default function reducer ( state = store, action ) {
                         ...state
                         , buffer: buffer
                         , firstNumber: buffer
-                        , secondNumber: 0
-                        , firstOperator: null
+                        ///TODO remove, secondNumber: buffer
+                        ///TODO remove, firstOperator: null
                         , secondOperator: null
                         , output: `${buffer}`.replace(".", ",")
+                        , history: getHistory( { ...state, history: ''}, SIMPLE_RESULT  )
                     }
                 }
 
@@ -100,11 +103,24 @@ export default function reducer ( state = store, action ) {
                 state ={
                     ...state
                     , firstOperator: action.value
+                    , history: getHistory( {...state, firstOperator: action.value }, ''  )
                 }
-            } else {
+            } else if( state.secondNumber ){
+                buffer = getResult( state );
 
+                state = {
+                    ...state
+                    , buffer: buffer
+                    , firstNumber: buffer
+                    , secondNumber: 0
+                    , firstOperator: null
+                    , secondOperator: null
+                    , output: `${buffer}`.replace(".", ",")
+                    , history: getHistory( {...state, firstOperator: action.value }, action.value  )
+                }
             }
-
+            ////FIXME: СЛОМАЛАСЬ ТОЧКА!
+            ////FIXME: СЛОМАЛСЯ РЕМУВ!
             break;
         default:
 
