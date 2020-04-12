@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import App from '../App';
-import reducers from '../reducers';
+import reducers from '../reducers/index1';
 
 test('renders learn react link', () => {
   const { getByText } = render(<App />);
