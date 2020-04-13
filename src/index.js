@@ -4,7 +4,7 @@ import './css/index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {Provider} from 'react-redux';
-import reducer from "./reducers";
+import reducer from "./reducers/index";
 //import { composeWithDevTools } from 'redux-devtools-extension';
 import {createStore} from 'redux';
 

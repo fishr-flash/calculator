@@ -15,64 +15,61 @@ export const getBuffer = ( {
 };
 
 
-export const getFirstNumber = ({ firstNumber, resultNumber, secondNumber, firstOperator }, buffer) => {
-    let first = firstNumber;
 
-    if (resultNumber) {
-        first = resultNumber;
-    } else if( !secondNumber && !firstOperator ){
-        first = buffer;
-    }
-    return first;
-};
-
-export const getSecondNumber = ({ firstNumber, resultNumber, secondNumber, firstOperator }, buffer  ) => {
-    let second = secondNumber;
-    if( firstNumber && firstOperator ){
-        second = buffer;
-    } else if ( resultNumber){
-        second = 0;
-    }
-
-
-    return second;
-};
-
-
-export const getHistory = ( { history,  firstNumber, firstOperator,  secondNumber }, lastSymbol ) =>{
+/**
+ *
+ * @param history
+ * @param firstNumber
+ * @param firstOperator
+ * @param lastNumber
+ * @param lastSymbol
+ * @returns {string}
+ */
+export const getHistory = ( { history,  firstNumber, firstOperator,  lastNumber }, lastSymbol ) =>{
 
     const first = history ? '' :`${firstNumber}`.replace(".", ",");
-    const second =  secondNumber ?`${secondNumber}`.replace(".", ",") : '';
-    return `${ history }${first} ${ history ? '' : getOperator( firstOperator ) } 
-            ${second} ${ getOperator( lastSymbol )}`;
+    const second =  lastNumber ?`${lastNumber}`.replace(".", ",") : '';
+    return `${ history }${first} ${ history ? '' : getSimpleOperator( firstOperator ) } 
+            ${second} ${ getSimpleOperator( lastSymbol )}`;
 };
 
-const getOperator = ( firstOperator )=>{
+export const getSimpleOperator = (operator )=>{
 
-    let operator = ''
-    switch ( firstOperator ) {
+    let o = '';
+    switch ( operator ) {
         case SIMPLE_RESULT:
-            operator = "="
+            o = "=";
             break;
         case SIMPLE_PLUS:
-            operator = "+";
+            o = "+";
             break;
         default:
-            operator = "";
+            o = "";
     }
 
-    return operator;
+    return o;
 };
-export const getResult = ( { firstNumber, secondNumber, firstOperator}) =>{
+export const getResult = ( { firstNumber, lastNumber, firstOperator}) =>{
 
     let result = 0;
     switch ( firstOperator ) {
 
         case SIMPLE_PLUS:
-            result = firstNumber + secondNumber;
+            result = firstNumber + lastNumber;
             break;
         default:
     }
 
     return result;
+};
+
+export const getOutput = ( base, arg, dot ) =>{
+    if( base.search( "," ) > -1 ) {
+        base = base.replace( ",", ".");
+        dot = false;
+    }
+    if( dot )
+        return  `${ base.toString() }.${ arg }`;
+    else
+        return  base === '0' ? `${ arg}` : `${base}${arg}`;
 };

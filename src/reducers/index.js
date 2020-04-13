@@ -8,20 +8,19 @@ import {
     SIMPLE_REMOVE,
     SIMPLE_RESULT
 } from "../constants";
-import {getBuffer, getFirstNumber, getHistory, getResult, getSecondNumber} from "./utils";
+import {getBuffer, getHistory, getOutput, getResult} from "./utils";
 
 // export default combineReducers({ setNumber });
 
 const store = {
     buffer: 0
-  , output: "0"
-  , firstNumber: 0
-  , secondNumber: 0
-  , resultNumber: 0
-  , firstOperator: null
-  , secondOperator: null
-  , onDot: false
-  , history: ''
+    , output: "0"
+    , firstNumber: 0
+    , lastNumber: 0
+    , mode: 0
+    , firstOperator: null
+    , onDot: false
+    , history: ''
 
 
 
@@ -29,44 +28,73 @@ const store = {
 export default function reducer ( state = store, action ) {
 
     let buffer = getBuffer( state, action );
+    let output = state.output;
+    let firstNumber = state.firstNumber;
+    let lastNumber = state.lastNumber;
+    let mode = state.mode;
 
     switch ( action.type ) {
 
 
         case ON_CLICK_DOT:
 
-            if( !( buffer%1 ) )
-            state = {
-                ...state
-                , onDot: true
-                , output : `${buffer},`
-            };
+            if( state.output.search( "," ) === -1 ){
+                state = {
+                    ...state
+                    , onDot: true
+                    , output : `${ state.output },`
+                };
+            }
+
 
             break;
 
         case ON_CLICK_SIGN:
-            buffer*=-1;
+            if( state.firstOperator ){
+                if( lastNumber ){
+                    lastNumber *= -1;
+                    output = lastNumber < 0 ? `-${output}` : output.slice( 1 );
+                }
+            } else if( firstNumber ){
+                firstNumber *= -1;
+                output = firstNumber < 0 ? `-${output}` : output.slice( 1 );
+            }
+
             state = {
                 ...state
-                , buffer: buffer
-                , output : `${buffer}`.replace(".", ",")
+                , firstNumber:  firstNumber
+                , lastNumber:  lastNumber
+                , output : output
             };
            break;
 
         case ON_CLICK_NUMBER:
-            const firstNumber = getFirstNumber( state, buffer );
-            const secondNumber = getSecondNumber( state, buffer );
+
+            if( mode === 1 ){
+                output = getOutput( lastNumber.toString(), action.value, state.onDot );
+                lastNumber = parseFloat( output );
+                mode = 2;
+
+            } else if ( mode === 2 ){
+                output = getOutput( state.output, action.value, state.onDot );
+                lastNumber = parseFloat( output );
+            } else {
+                output = getOutput( state.output, action.value, state.onDot );
+                firstNumber = parseFloat( output );
+            }
+
 
             state = {
                 ...state
-                , buffer : buffer
                 , firstNumber: firstNumber
-                , secondNumber: secondNumber
-                , resultNumber: 0
+                , lastNumber: lastNumber
+                , mode: mode
                 , onDot: false
-                , output : `${buffer}`.replace(".", ",")
+                , output : `${output}`.replace(".", ",")
 
             };
+
+
             break;
 
         case ON_CLICK_SIMPLE_OPERATOR:
@@ -79,48 +107,51 @@ export default function reducer ( state = store, action ) {
                     ...state
                     , buffer: buffer
                     , output: `${buffer}`.replace(".", ",")
-                    , firstNumber: state.secondNumber ? state.firstNumber: buffer
-                    , secondNumber: state.secondNumber ? buffer: 0
+                    , firstNumber: state.lastNumber ? state.firstNumber: buffer
+                    , lastNumber: state.lastNumber ? buffer: 0
                     , history: getHistory( )
                 }
             } else if( action.value === SIMPLE_RESULT ){
 
                 if( state.firstOperator ){
-                    buffer = getResult( state );
+
+                    if( !lastNumber && mode !== 2 )
+                                    lastNumber = firstNumber;
+
+                    const output = getResult( state );
+
                     state = {
                         ...state
-                        , buffer: buffer
-                        , firstNumber: buffer
-                        ///TODO remove, secondNumber: buffer
-                        ///TODO remove, firstOperator: null
-                        , secondOperator: null
-                        , output: `${buffer}`.replace(".", ",")
+                        , firstNumber: output
+                        , output: `${output}`.replace(".", ",")
                         , history: getHistory( { ...state, history: ''}, SIMPLE_RESULT  )
                     }
                 }
 
             } else if( !state.firstOperator ){
+
                 state ={
                     ...state
                     , firstOperator: action.value
-                    , history: getHistory( {...state, firstOperator: action.value }, ''  )
+                    , mode: 1
+                    , onDot: false
+                    , history: getHistory( { ...state,  history:'',  firstOperator: action.value }, '')
                 }
-            } else if( state.secondNumber ){
+            } else if( state.mode === 2 && lastNumber ){
                 buffer = getResult( state );
 
                 state = {
                     ...state
                     , buffer: buffer
+                    , mode: 1
                     , firstNumber: buffer
-                    , secondNumber: 0
-                    , firstOperator: null
-                    , secondOperator: null
+                    , lastNumber: 0
+                    , firstOperator: action.value
                     , output: `${buffer}`.replace(".", ",")
                     , history: getHistory( {...state, firstOperator: action.value }, action.value  )
                 }
             }
-            ////FIXME: СЛОМАЛАСЬ ТОЧКА!
-            ////FIXME: СЛОМАЛСЯ РЕМУВ!
+
             break;
         default:
 
@@ -128,8 +159,6 @@ export default function reducer ( state = store, action ) {
 
     }
 
-
-    
     /////////////////////////////CONSOLE/////////////////////////////////////
         ///TODO: Console log in the code "INDEX_JS" line 32
         if( true ){
