@@ -13,8 +13,7 @@ import {getBuffer, getHistory, getOutput, getResult} from "./utils";
 // export default combineReducers({ setNumber });
 
 const store = {
-    buffer: 0
-    , output: "0"
+     output: "0"
     , firstNumber: 0
     , lastNumber: 0
     , mode: 0
@@ -27,18 +26,24 @@ const store = {
 };
 export default function reducer ( state = store, action ) {
 
-    let buffer = getBuffer( state, action );
-    let output = state.output;
-    let firstNumber = state.firstNumber;
-    let lastNumber = state.lastNumber;
-    let mode = state.mode;
+    let {  output
+        , firstNumber
+        , lastNumber
+        , mode
+        , firstOperator
+        , onDot
+        , history } = state;
+
+
+
 
     switch ( action.type ) {
+        ///TODO: Разбить цифры на группы по 3 в окнах вывода
 
+        ///TODO: Доделать!!!
+        /*case ON_CLICK_DOT:
 
-        case ON_CLICK_DOT:
-
-            if( state.output.search( "," ) === -1 ){
+            if( !state.output.includes( "," )  ){
                 state = {
                     ...state
                     , onDot: true
@@ -67,39 +72,39 @@ export default function reducer ( state = store, action ) {
                 , output : output
             };
            break;
-
+*/
         case ON_CLICK_NUMBER:
 
+            if( history.includes( "=" )){
+                output = store.output;
+                 firstNumber = store.firstNumber;
+                 lastNumber = store.lastNumber;
+                 mode = store.mode;
+                 firstOperator = store.firstOperator;
+                 onDot = store.onDot;
+                 history = store.history;
+            }
+
             if( mode === 1 ){
-                output = getOutput( lastNumber.toString(), action.value, state.onDot );
+                output = getOutput( lastNumber.toString(), action.value, onDot );
                 lastNumber = parseFloat( output );
                 mode = 2;
 
             } else if ( mode === 2 ){
-                output = getOutput( state.output, action.value, state.onDot );
+                output = getOutput( output, action.value, onDot );
                 lastNumber = parseFloat( output );
             } else {
-                output = getOutput( state.output, action.value, state.onDot );
+                output = getOutput( output, action.value, onDot );
                 firstNumber = parseFloat( output );
             }
-
-
-            state = {
-                ...state
-                , firstNumber: firstNumber
-                , lastNumber: lastNumber
-                , mode: mode
-                , onDot: false
-                , output : `${output}`.replace(".", ",")
-
-            };
-
 
             break;
 
         case ON_CLICK_SIMPLE_OPERATOR:
 
-            if( action.value === SIMPLE_REMOVE ){
+            onDot = false;
+            ///TODO: Доделать!!!
+            /*if( action.value === SIMPLE_REMOVE ){
                 buffer = parseFloat( state.output.slice(0, -1 ).replace(",", ".") );
                 if( isNaN( buffer ) )
                             buffer = 0;
@@ -110,55 +115,101 @@ export default function reducer ( state = store, action ) {
                     , firstNumber: state.lastNumber ? state.firstNumber: buffer
                     , lastNumber: state.lastNumber ? buffer: 0
                     , history: getHistory( )
-                }
-            } else if( action.value === SIMPLE_RESULT ){
-
-                if( state.firstOperator ){
-
-                    if( !lastNumber && mode !== 2 )
-                                    lastNumber = firstNumber;
-
-                    const output = getResult( state );
-
-                    state = {
-                        ...state
-                        , firstNumber: output
-                        , output: `${output}`.replace(".", ",")
-                        , history: getHistory( { ...state, history: ''}, SIMPLE_RESULT  )
-                    }
-                }
-
-            } else if( !state.firstOperator ){
-
-                state ={
-                    ...state
-                    , firstOperator: action.value
-                    , mode: 1
                     , onDot: false
-                    , history: getHistory( { ...state,  history:'',  firstOperator: action.value }, '')
                 }
-            } else if( state.mode === 2 && lastNumber ){
-                buffer = getResult( state );
+            } else */if( action.value === SIMPLE_RESULT ){
+            ///FIXME: 1+2=( 3 )+ 2 + ( 5 ) = ( 10 )??
+                if( firstOperator ){
 
-                state = {
-                    ...state
-                    , buffer: buffer
-                    , mode: 1
-                    , firstNumber: buffer
-                    , lastNumber: 0
-                    , firstOperator: action.value
-                    , output: `${buffer}`.replace(".", ",")
-                    , history: getHistory( {...state, firstOperator: action.value }, action.value  )
+                    ///TODO: on comment
+                    if( !lastNumber && mode !== 2 ){
+                        lastNumber = parseFloat( output );
+                        mode = 2;
+                    }
+
+
+
+                    output = getResult( firstNumber, lastNumber, firstOperator );
+                    history = getHistory( history.includes( '=') ? '': history
+                                                , firstNumber
+                                                , firstOperator
+                                                , lastNumber
+                                                , SIMPLE_RESULT
+                                                , mode );
+                    firstNumber = parseFloat( output );
+
                 }
+
+
+            } else if( mode !==2 &&  firstOperator ){
+                history = getHistory( ''
+                    , firstNumber
+                    , firstOperator
+                    , lastNumber
+                    , ''
+                    , mode);
+
+                ///  over simple a butt
+            } else if( !firstOperator ){
+                firstOperator = action.value;
+                mode = 1;
+
+                history = getHistory( ''
+                                        , firstNumber
+                                        , firstOperator
+                                        , lastNumber
+                                        , ''
+                                        , mode);
+            } else if( mode === 2 ){
+                /// now, is exits from SIMPLE_RESULT
+                if( history.includes( "=") ){
+
+                    firstNumber = parseFloat( output );
+                    firstOperator = action.value;
+                    lastNumber = 0;
+                    mode = 1;
+                    history = getHistory( ''
+                                            , firstNumber
+                                            , firstOperator
+                                            , lastNumber
+                                            , ''
+                                            , mode);
+
+
+
+                } else {
+                    output = getResult( firstNumber, lastNumber, firstOperator );
+                    firstNumber = parseFloat( output );
+                    firstOperator = action.value;
+                    history = getHistory( history
+                                            , firstNumber
+                                            , firstOperator
+                                            , lastNumber
+                                            , firstOperator
+                                            , mode  );
+                    lastNumber = 0;
+                    mode = 1;
+                }
+
+
+
             }
 
             break;
         default:
 
-
-
     }
 
+    state = {
+        ...state
+        , mode: mode
+        , firstNumber: firstNumber
+        , lastNumber: lastNumber
+        , firstOperator: firstOperator
+        , onDot: onDot
+        , output: `${output}`.replace(".", ",")
+        , history: history
+    };
     /////////////////////////////CONSOLE/////////////////////////////////////
         ///TODO: Console log in the code "INDEX_JS" line 32
         if( true ){
@@ -166,6 +217,7 @@ export default function reducer ( state = store, action ) {
             //console.debug( 'state: ', state );
             //console.debug( '( !buffer%1 ): ', ( !( buffer%1 ) ) );
             console.table( state );
+            console.table( action );
             //console.debug( 'this: ', this );
             console.groupEnd();
         }

@@ -23,14 +23,21 @@ export const getBuffer = ( {
  * @param firstOperator
  * @param lastNumber
  * @param lastSymbol
+ * @param mode
  * @returns {string}
  */
-export const getHistory = ( { history,  firstNumber, firstOperator,  lastNumber }, lastSymbol ) =>{
+export const getHistory = (  history
+                             ,  firstNumber
+                             , firstOperator
+                             ,  lastNumber
+                             , lastSymbol
+                             , mode ) =>{
 
     const first = history ? '' :`${firstNumber}`.replace(".", ",");
-    const second =  lastNumber ?`${lastNumber}`.replace(".", ",") : '';
-    return `${ history }${first} ${ history ? '' : getSimpleOperator( firstOperator ) } 
-            ${second} ${ getSimpleOperator( lastSymbol )}`;
+    const second = mode === 2 ?`${lastNumber}`.replace(".", ",") : '';
+    //const second = `${lastNumber}`.replace(".", ",");
+    //const second = "2";
+    return `${ history } ${first} ${ history ?'':getSimpleOperator( firstOperator )} ${second} ${ getSimpleOperator( lastSymbol )}`;
 };
 
 export const getSimpleOperator = (operator )=>{
@@ -49,7 +56,7 @@ export const getSimpleOperator = (operator )=>{
 
     return o;
 };
-export const getResult = ( { firstNumber, lastNumber, firstOperator}) =>{
+export const getResult = (  firstNumber, lastNumber, firstOperator ) =>{
 
     let result = 0;
     switch ( firstOperator ) {
@@ -64,7 +71,7 @@ export const getResult = ( { firstNumber, lastNumber, firstOperator}) =>{
 };
 
 export const getOutput = ( base, arg, dot ) =>{
-    if( base.search( "," ) > -1 ) {
+    if( base.includes( "," )  ) {
         base = base.replace( ",", ".");
         dot = false;
     }
