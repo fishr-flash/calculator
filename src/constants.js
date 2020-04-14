@@ -11,3 +11,12 @@ export const SIMPLE_MULTIPLY = "simpleMultiply";
 export const SIMPLE_DIVISION = "simpleDivision";
 export const SIMPLE_RESULT = "simpleResult";
 export const SIMPLE_REMOVE = "simpleRemove";
+
+/// modes set
+
+export const MODES = {
+    BEGIN_MODE: 0
+    , FIRST_OPERATOR: 1
+    , LAST_NUMBER: 2
+}
+

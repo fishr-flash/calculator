@@ -1,6 +1,7 @@
 // import { combineReducers } from 'redux';
 // import setNumber from "./setNumber";
 import {
+    MODES,
     ON_CLICK_DOT,
     ON_CLICK_NUMBER,
     ON_CLICK_SIGN,
@@ -16,7 +17,7 @@ const store = {
      output: "0"
     , firstNumber: 0
     , lastNumber: 0
-    , mode: 0
+    , mode: MODES.BEGIN_MODE
     , firstOperator: null
     , onDot: false
     , history: ''
@@ -41,38 +42,34 @@ export default function reducer ( state = store, action ) {
         ///TODO: Разбить цифры на группы по 3 в окнах вывода
 
         ///TODO: Доделать!!!
-        /*case ON_CLICK_DOT:
+        case ON_CLICK_DOT:
 
-            if( !state.output.includes( "," )  ){
-                state = {
-                    ...state
-                    , onDot: true
-                    , output : `${ state.output },`
-                };
+            if( !state.output.includes( "," ) ){
+                onDot = true;
+                output = `${ state.output },`;
             }
 
 
             break;
 
         case ON_CLICK_SIGN:
-            if( state.firstOperator ){
-                if( lastNumber ){
-                    lastNumber *= -1;
-                    output = lastNumber < 0 ? `-${output}` : output.slice( 1 );
-                }
-            } else if( firstNumber ){
+
+            if( mode < MODES.FIRST_OPERATOR ){
                 firstNumber *= -1;
-                output = firstNumber < 0 ? `-${output}` : output.slice( 1 );
+                output = firstNumber;
+            } else if( mode === MODES.FIRST_OPERATOR ) {
+                mode = 2;
+                lastNumber = firstNumber * -1;
+                output = lastNumber;
+                history = getHistory( '', firstNumber, firstOperator, `negate( ${ firstNumber } )`, '', mode );
+
+            } else {
+                lastNumber *= -1;
+                output = lastNumber;
             }
 
-            state = {
-                ...state
-                , firstNumber:  firstNumber
-                , lastNumber:  lastNumber
-                , output : output
-            };
+
            break;
-*/
         case ON_CLICK_NUMBER:
 
             if( history.includes( "=" )){
@@ -85,12 +82,12 @@ export default function reducer ( state = store, action ) {
                  history = store.history;
             }
 
-            if( mode === 1 ){
+            if( mode === MODES.FIRST_OPERATOR ){
                 output = getOutput( lastNumber.toString(), action.value, onDot );
                 lastNumber = parseFloat( output );
-                mode = 2;
+                mode = MODES.LAST_NUMBER;
 
-            } else if ( mode === 2 ){
+            } else if ( mode === MODES.LAST_NUMBER ){
                 output = getOutput( output, action.value, onDot );
                 lastNumber = parseFloat( output );
             } else {
@@ -102,6 +99,7 @@ export default function reducer ( state = store, action ) {
 
         case ON_CLICK_SIMPLE_OPERATOR:
 
+            ////FIXME: 1 + ( -/+ ) ( negate( 1 ) ) = ( 0 ) = -1 = -2 = - 3
             onDot = false;
             ///TODO: Доделать!!!
             /*if( action.value === SIMPLE_REMOVE ){
@@ -118,13 +116,12 @@ export default function reducer ( state = store, action ) {
                     , onDot: false
                 }
             } else */if( action.value === SIMPLE_RESULT ){
-            ///FIXME: 1+2=( 3 )+ 2 + ( 5 ) = ( 10 )??
                 if( firstOperator ){
 
                     ///TODO: on comment
-                    if( !lastNumber && mode !== 2 ){
+                    if( !lastNumber && mode !== MODES.LAST_NUMBER ){
                         lastNumber = parseFloat( output );
-                        mode = 2;
+                        mode = MODES.LAST_NUMBER;
                     }
 
 
@@ -141,7 +138,7 @@ export default function reducer ( state = store, action ) {
                 }
 
 
-            } else if( mode !==2 &&  firstOperator ){
+            } else if( mode !== MODES.LAST_NUMBER &&  firstOperator ){
                 history = getHistory( ''
                     , firstNumber
                     , firstOperator
@@ -152,7 +149,7 @@ export default function reducer ( state = store, action ) {
                 ///  over simple a butt
             } else if( !firstOperator ){
                 firstOperator = action.value;
-                mode = 1;
+                mode = MODES.FIRST_OPERATOR;
 
                 history = getHistory( ''
                                         , firstNumber
@@ -160,14 +157,14 @@ export default function reducer ( state = store, action ) {
                                         , lastNumber
                                         , ''
                                         , mode);
-            } else if( mode === 2 ){
+            } else if( mode === MODES.LAST_NUMBER ){
                 /// now, is exits from SIMPLE_RESULT
                 if( history.includes( "=") ){
 
                     firstNumber = parseFloat( output );
                     firstOperator = action.value;
                     lastNumber = 0;
-                    mode = 1;
+                    mode = MODES.FIRST_OPERATOR;
                     history = getHistory( ''
                                             , firstNumber
                                             , firstOperator
@@ -188,7 +185,7 @@ export default function reducer ( state = store, action ) {
                                             , firstOperator
                                             , mode  );
                     lastNumber = 0;
-                    mode = 1;
+                    mode = MODES.FIRST_OPERATOR;
                 }
 
 
