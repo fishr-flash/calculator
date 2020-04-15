@@ -18,5 +18,6 @@ export const MODES = {
     BEGIN_MODE: 0
     , FIRST_OPERATOR: 1
     , LAST_NUMBER: 2
+    , AFTER_RESULT: 3
 }
 

@@ -5,11 +5,11 @@ import {
     ON_CLICK_DOT,
     ON_CLICK_NUMBER,
     ON_CLICK_SIGN,
-    ON_CLICK_SIMPLE_OPERATOR,
+    ON_CLICK_SIMPLE_OPERATOR, SIMPLE_PLUS,
     SIMPLE_REMOVE,
     SIMPLE_RESULT
 } from "../constants";
-import {getBuffer, getHistory, getOutput, getResult} from "./utils";
+import { getHistory, getOutput, getResult} from "./utils";
 
 // export default combineReducers({ setNumber });
 
@@ -41,7 +41,6 @@ export default function reducer ( state = store, action ) {
     switch ( action.type ) {
         ///TODO: Разбить цифры на группы по 3 в окнах вывода
 
-        ///TODO: Доделать!!!
         case ON_CLICK_DOT:
 
             if( !state.output.includes( "," ) ){
@@ -58,21 +57,69 @@ export default function reducer ( state = store, action ) {
                 firstNumber *= -1;
                 output = firstNumber;
             } else if( mode === MODES.FIRST_OPERATOR ) {
-                mode = 2;
+                mode = MODES.LAST_NUMBER;
                 lastNumber = firstNumber * -1;
                 output = lastNumber;
-                history = getHistory( '', firstNumber, firstOperator, `negate( ${ firstNumber } )`, '', mode );
+                history = getHistory( '', firstNumber, firstOperator, `negate( ${ Math.abs( lastNumber ) } )`, '', mode );
 
             } else {
-                lastNumber *= -1;
-                output = lastNumber;
+
+                ///FIXME: 1+2=( 3 ) (+/-)( -3 )(+/-)
+                if( history.includes( "=" )){
+
+                    firstNumber = 0;
+                    lastNumber =  parseFloat( output );
+                    firstOperator = SIMPLE_PLUS;
+                    output = getResult( firstNumber, lastNumber, firstOperator ) * -1;
+                    history = getHistory( `negate( ${ lastNumber } )`, '', '', '', '' )
+                    onDot = store.onDot;
+                    mode = MODES.AFTER_RESULT;
+                    lastNumber *= -1;
+                } else if( mode === MODES.LAST_NUMBER ) {
+
+                    lastNumber *= -1;
+                    output = lastNumber;
+
+                    if( history.includes( 'negate')){
+
+                        ///TODO: history text-align = right
+                        const countNegates = history.split( 'negate').length;
+
+                        let lastNegate = Math.abs( lastNumber );
+                        for (let i = 0; i < countNegates ; i++) {
+                            lastNegate = `negate( ${ lastNegate } )`;
+                        }
+
+                        history = getHistory( '', firstNumber, firstOperator, lastNegate, '', mode );
+                    }
+
+                    mode = MODES.AFTER_RESULT;
+                } else {
+                    lastNumber *= -1;
+                    output = lastNumber;
+
+                    if( history.includes( 'negate')){
+
+
+                        const countNegates = history.split( 'negate').length;
+
+                        let lastNegate = Math.abs( lastNumber );
+                        for (let i = 0; i < countNegates ; i++) {
+                            lastNegate = `negate( ${ lastNegate } )`;
+                        }
+
+                        history = getHistory( lastNegate, '', '', '', '', mode );
+                    }
+
+                }
+
             }
 
 
            break;
         case ON_CLICK_NUMBER:
 
-            if( history.includes( "=" )){
+            if( mode === MODES.AFTER_RESULT ){
                 output = store.output;
                  firstNumber = store.firstNumber;
                  lastNumber = store.lastNumber;
@@ -100,6 +147,7 @@ export default function reducer ( state = store, action ) {
         case ON_CLICK_SIMPLE_OPERATOR:
 
             ////FIXME: 1 + ( -/+ ) ( negate( 1 ) ) = ( 0 ) = -1 = -2 = - 3
+            ////FIXME: 1 + ( -/+ ) ( negate( 1 ) ) ( -/+ ) ( negate( negate( 1 )  ) )
             onDot = false;
             ///TODO: Доделать!!!
             /*if( action.value === SIMPLE_REMOVE ){
@@ -134,6 +182,7 @@ export default function reducer ( state = store, action ) {
                                                 , SIMPLE_RESULT
                                                 , mode );
                     firstNumber = parseFloat( output );
+                    mode = MODES.AFTER_RESULT;
 
                 }
 

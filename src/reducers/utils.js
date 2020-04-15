@@ -1,20 +1,4 @@
-import {SIMPLE_PLUS, SIMPLE_RESULT} from "../constants";
-
-export const getBuffer = ( {
-    firstNumber
-    , buffer
-    , onDot
-    , firstOperator
-    , secondNumber
-                           }, { value }) => {
-    let newBuffer = buffer;
-    if( firstNumber && firstOperator && !( secondNumber ) )
-        newBuffer = 0;
-
-        return parseFloat(`${ newBuffer}${ onDot ? ",":"" }${value}`);
-};
-
-
+import {MODES, SIMPLE_PLUS, SIMPLE_RESULT} from "../constants";
 
 /**
  *
@@ -25,7 +9,7 @@ export const getBuffer = ( {
  * @param lastSymbol
  * @param mode
  * @returns {string}
- */
+*/
 export const getHistory = (  history
                              ,  firstNumber
                              , firstOperator
@@ -34,7 +18,7 @@ export const getHistory = (  history
                              , mode ) =>{
 
     const first = history ? '' :`${firstNumber}`.replace(".", ",");
-    const second = mode === 2 && !history.includes( 'negate' ) ?`${lastNumber}`.replace(".", ",") : '';
+    const second = mode === MODES.LAST_NUMBER && !history.includes( 'negate' ) ?`${lastNumber}`.replace(".", ",") : '';
     //const second = `${lastNumber}`.replace(".", ",");
     //const second = "2";
     return `${ history } ${first} ${ history ?'':getSimpleOperator( firstOperator )} ${second} ${ getSimpleOperator( lastSymbol )}`;
