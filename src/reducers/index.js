@@ -63,8 +63,6 @@ export default function reducer ( state = store, action ) {
                 history = getHistory( '', firstNumber, firstOperator, `negate( ${ Math.abs( lastNumber ) } )`, '', mode );
 
             } else {
-
-                ///FIXME: 1+2=( 3 ) (+/-)( -3 )(+/-)
                 if( history.includes( "=" )){
 
                     firstNumber = 0;
@@ -146,8 +144,6 @@ export default function reducer ( state = store, action ) {
 
         case ON_CLICK_SIMPLE_OPERATOR:
 
-            ////FIXME: 1 + ( -/+ ) ( negate( 1 ) ) = ( 0 ) = -1 = -2 = - 3
-            ////FIXME: 1 + ( -/+ ) ( negate( 1 ) ) ( -/+ ) ( negate( negate( 1 )  ) )
             onDot = false;
             ///TODO: Доделать!!!
             /*if( action.value === SIMPLE_REMOVE ){
@@ -163,19 +159,14 @@ export default function reducer ( state = store, action ) {
                     , history: getHistory( )
                     , onDot: false
                 }
-            } else */if( action.value === SIMPLE_RESULT ){
+            } else */if( action.value === SIMPLE_RESULT && firstOperator ){
                 if( firstOperator ){
-
-                    ///TODO: on comment
-                    if( !lastNumber && mode !== MODES.LAST_NUMBER ){
+                    if( !lastNumber && mode < MODES.LAST_NUMBER ){
                         lastNumber = parseFloat( output );
                         mode = MODES.LAST_NUMBER;
                     }
-
-
-
                     output = getResult( firstNumber, lastNumber, firstOperator );
-                    history = getHistory( history.includes( '=') ? '': history
+                    history = getHistory( mode === MODES.AFTER_RESULT ? '': history
                                                 , firstNumber
                                                 , firstOperator
                                                 , lastNumber
@@ -187,7 +178,7 @@ export default function reducer ( state = store, action ) {
                 }
 
 
-            } else if( mode !== MODES.LAST_NUMBER &&  firstOperator ){
+            } else if( mode < MODES.LAST_NUMBER &&  firstOperator ){
                 history = getHistory( ''
                     , firstNumber
                     , firstOperator

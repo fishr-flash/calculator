@@ -18,7 +18,7 @@ export const getHistory = (  history
                              , mode ) =>{
 
     const first = history ? '' :`${firstNumber}`.replace(".", ",");
-    const second = mode === MODES.LAST_NUMBER && !history.includes( 'negate' ) ?`${lastNumber}`.replace(".", ",") : '';
+    const second = mode >= MODES.LAST_NUMBER && !history.includes( 'negate' ) ?`${lastNumber}`.replace(".", ",") : '';
     //const second = `${lastNumber}`.replace(".", ",");
     //const second = "2";
     return `${ history } ${first} ${ history ?'':getSimpleOperator( firstOperator )} ${second} ${ getSimpleOperator( lastSymbol )}`;
