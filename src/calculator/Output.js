@@ -7,12 +7,12 @@ function Output( props ) {
         <section className="full_width" id="output">
             <div className="full_width" id="progress">
                 <button className="progress_arrows" id="left_progress_arrow"/>
-                <p id="progress_content">{ props.history }</p>
+                <p id="progress_content">{ props.logText }</p>
                 <button className="progress_arrows" id="right_progress_arrow"/>
             </div>
             <div className="full_width" id="viewer">
                 <blockquote>
-                    <p id="viewport">{props.output}</p>
+                    <p id="viewport">{props.displayText}</p>
                 </blockquote>
             </div>
         </section>
@@ -23,8 +23,8 @@ export default connect(
     
     state => {
         return ({
-                output: state.output
-                , history: state.history
+                displayText: state.displayText
+                , logText: state.logText
         });
     }, null
 )( Output );

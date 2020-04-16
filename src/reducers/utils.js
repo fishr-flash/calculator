@@ -2,7 +2,7 @@ import {MODES, SIMPLE_PLUS, SIMPLE_RESULT} from "../constants";
 
 /**
  *
- * @param history
+ * @param logText
  * @param firstNumber
  * @param firstOperator
  * @param lastNumber
@@ -10,18 +10,16 @@ import {MODES, SIMPLE_PLUS, SIMPLE_RESULT} from "../constants";
  * @param mode
  * @returns {string}
 */
-export const getHistory = (  history
+export const getHistory = (  logText
                              ,  firstNumber
                              , firstOperator
                              ,  lastNumber
                              , lastSymbol
                              , mode ) =>{
 
-    const first = history ? '' :`${firstNumber}`.replace(".", ",");
-    const second = mode >= MODES.LAST_NUMBER && !history.includes( 'negate' ) ?`${lastNumber}`.replace(".", ",") : '';
-    //const second = `${lastNumber}`.replace(".", ",");
-    //const second = "2";
-    return `${ history } ${first} ${ history ?'':getSimpleOperator( firstOperator )} ${second} ${ getSimpleOperator( lastSymbol )}`;
+    const first = logText ? '' :`${firstNumber}`.replace(".", ",");
+    const second = mode >= MODES.LAST_NUMBER && !logText.includes( 'negate' ) ?`${lastNumber}`.replace(".", ",") : '';
+    return `${ logText } ${first} ${ logText ?'':getSimpleOperator( firstOperator )} ${second} ${ getSimpleOperator( lastSymbol )}`;
 };
 
 export const getSimpleOperator = (operator )=>{
@@ -51,7 +49,7 @@ export const getResult = (  firstNumber, lastNumber, firstOperator ) =>{
         default:
     }
 
-    return result;
+    return result.toString().replace( ".", ",");
 };
 
 export const getOutput = ( base, arg, dot ) =>{

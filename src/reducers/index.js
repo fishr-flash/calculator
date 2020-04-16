@@ -14,27 +14,26 @@ import { getHistory, getOutput, getResult} from "./utils";
 // export default combineReducers({ setNumber });
 
 const store = {
-     output: "0"
+     displayText: "0"
     , firstNumber: 0
     , lastNumber: 0
     , mode: MODES.BEGIN_MODE
     , firstOperator: null
     , onDot: false
-    , history: ''
+    , logText: ''
 
 
 
 };
 export default function reducer ( state = store, action ) {
 
-    let {  output
+    let {  displayText
         , firstNumber
         , lastNumber
         , mode
         , firstOperator
         , onDot
-        , history } = state;
-
+        , logText } = state;
 
 
 
@@ -43,9 +42,9 @@ export default function reducer ( state = store, action ) {
 
         case ON_CLICK_DOT:
 
-            if( !state.output.includes( "," ) ){
+            if( !state.displayText.includes( "," ) ){
                 onDot = true;
-                output = `${ state.output },`;
+                displayText = `${ state.displayText },`;
             }
 
 
@@ -55,58 +54,58 @@ export default function reducer ( state = store, action ) {
 
             if( mode < MODES.FIRST_OPERATOR ){
                 firstNumber *= -1;
-                output = firstNumber;
+                displayText = firstNumber;
             } else if( mode === MODES.FIRST_OPERATOR ) {
                 mode = MODES.LAST_NUMBER;
                 lastNumber = firstNumber * -1;
-                output = lastNumber;
-                history = getHistory( '', firstNumber, firstOperator, `negate( ${ Math.abs( lastNumber ) } )`, '', mode );
+                displayText = lastNumber;
+                logText = getHistory( '', firstNumber, firstOperator, `negate( ${ Math.abs( lastNumber ) } )`, '', mode );
 
             } else {
-                if( history.includes( "=" )){
+                if( logText.includes( "=" )){
 
                     firstNumber = 0;
-                    lastNumber =  parseFloat( output );
+                    lastNumber =  parseFloat( displayText.replace( ",", "." ) );
                     firstOperator = SIMPLE_PLUS;
-                    output = getResult( firstNumber, lastNumber, firstOperator ) * -1;
-                    history = getHistory( `negate( ${ lastNumber } )`, '', '', '', '' )
+                    displayText = getResult( firstNumber, lastNumber, firstOperator ) * -1;
+                    logText = getHistory( `negate( ${ lastNumber } )`, '', '', '', '' );
                     onDot = store.onDot;
                     mode = MODES.AFTER_RESULT;
                     lastNumber *= -1;
                 } else if( mode === MODES.LAST_NUMBER ) {
 
                     lastNumber *= -1;
-                    output = lastNumber;
+                    displayText = lastNumber;
 
-                    if( history.includes( 'negate')){
+                    if( logText.includes( 'negate')){
 
-                        ///TODO: history text-align = right
-                        const countNegates = history.split( 'negate').length;
+                        ///TODO: logText text-align = right
+                        const countNegates = logText.split( 'negate').length;
 
                         let lastNegate = Math.abs( lastNumber );
                         for (let i = 0; i < countNegates ; i++) {
                             lastNegate = `negate( ${ lastNegate } )`;
                         }
 
-                        history = getHistory( '', firstNumber, firstOperator, lastNegate, '', mode );
+                        logText = getHistory( '', firstNumber, firstOperator, lastNegate, '', mode );
                     }
 
                     mode = MODES.AFTER_RESULT;
                 } else {
                     lastNumber *= -1;
-                    output = lastNumber;
+                    displayText = lastNumber;
 
-                    if( history.includes( 'negate')){
+                    if( logText.includes( 'negate')){
 
 
-                        const countNegates = history.split( 'negate').length;
+                        const countNegates = logText.split( 'negate').length;
 
                         let lastNegate = Math.abs( lastNumber );
                         for (let i = 0; i < countNegates ; i++) {
                             lastNegate = `negate( ${ lastNegate } )`;
                         }
 
-                        history = getHistory( lastNegate, '', '', '', '', mode );
+                        logText = getHistory( lastNegate, '', '', '', '', mode );
                     }
 
                 }
@@ -118,68 +117,111 @@ export default function reducer ( state = store, action ) {
         case ON_CLICK_NUMBER:
 
             if( mode === MODES.AFTER_RESULT ){
-                output = store.output;
+                displayText = store.displayText;
                  firstNumber = store.firstNumber;
                  lastNumber = store.lastNumber;
                  mode = store.mode;
                  firstOperator = store.firstOperator;
                  onDot = store.onDot;
-                 history = store.history;
+                 logText = store.logText;
             }
 
             if( mode === MODES.FIRST_OPERATOR ){
-                output = getOutput( lastNumber.toString(), action.value, onDot );
-                lastNumber = parseFloat( output );
+                displayText = getOutput( lastNumber.toString(), action.value, onDot );
+                lastNumber = parseFloat( displayText.replace( ",", "." ) );
                 mode = MODES.LAST_NUMBER;
 
             } else if ( mode === MODES.LAST_NUMBER ){
-                output = getOutput( output, action.value, onDot );
-                lastNumber = parseFloat( output );
+                displayText = getOutput( displayText, action.value, onDot );
+                lastNumber = parseFloat( displayText.replace( ",", "." ) );
             } else {
-                output = getOutput( output, action.value, onDot );
-                firstNumber = parseFloat( output );
+                displayText = getOutput( displayText, action.value, onDot );
+                firstNumber = parseFloat( displayText.replace( ",", "." ) );
             }
 
             break;
 
         case ON_CLICK_SIMPLE_OPERATOR:
 
+            ///FIXME: , = 3 = ( 0=3= )...
+            ///TODO: check all parseFloat( displayText ) for replace( ",", "." )
             onDot = false;
             ///TODO: Доделать!!!
-            /*if( action.value === SIMPLE_REMOVE ){
-                buffer = parseFloat( state.output.slice(0, -1 ).replace(",", ".") );
-                if( isNaN( buffer ) )
-                            buffer = 0;
-                state = {
-                    ...state
-                    , buffer: buffer
-                    , output: `${buffer}`.replace(".", ",")
-                    , firstNumber: state.lastNumber ? state.firstNumber: buffer
-                    , lastNumber: state.lastNumber ? buffer: 0
-                    , history: getHistory( )
-                    , onDot: false
-                }
-            } else */if( action.value === SIMPLE_RESULT && firstOperator ){
-                if( firstOperator ){
-                    if( !lastNumber && mode < MODES.LAST_NUMBER ){
-                        lastNumber = parseFloat( output );
+            if( action.value === SIMPLE_REMOVE ){
+
+                if( displayText !== "0" ){
+                    if( mode < MODES.AFTER_RESULT ){
+                        displayText = displayText.slice( 0, -1 ) || "0";
+
+                        if( mode < MODES.LAST_NUMBER )
+                            firstNumber = parseFloat( displayText.replace( ",", "." ) );
+                        else
+                            lastNumber =  parseFloat( displayText.replace( ",", "." ) );
+                    }else {
+                        firstNumber = parseFloat( displayText.replace( ",", "." ) );
                         mode = MODES.LAST_NUMBER;
+                        logText ="";
                     }
-                    output = getResult( firstNumber, lastNumber, firstOperator );
-                    history = getHistory( mode === MODES.AFTER_RESULT ? '': history
+                }
+            }
+            else if( action.value === SIMPLE_RESULT ){
+                   if( mode > MODES.FIRST_OPERATOR ){
+                       if( !lastNumber && mode < MODES.LAST_NUMBER ){
+                           lastNumber = parseFloat( displayText.replace( ",", "." ) );
+                           mode = MODES.LAST_NUMBER;
+                       }
+                       displayText = getResult( firstNumber, lastNumber, firstOperator );
+                       logText = getHistory( mode === MODES.AFTER_RESULT ? '': logText
+                           , firstNumber
+                           , firstOperator
+                           , lastNumber
+                           , SIMPLE_RESULT
+                           , mode );
+                       firstNumber = parseFloat( displayText.replace( ",", "." ) );
+                       mode = MODES.AFTER_RESULT;
+                   }
+            } else {
+
+
+                ////////////////// ANOTHER SIMPLE OPERATORS //////////////////////////
+
+                onDot = false;
+                if( mode === MODES.BEGIN_MODE || mode === MODES.FIRST_OPERATOR ){
+                    logText = getHistory( ''
+                                        , firstNumber
+                                        , action.value
+                                        , ''
+                                        , '', mode );
+
+                } else {
+                    displayText = getResult( firstNumber, lastNumber, firstOperator );
+                    firstNumber = parseFloat( displayText.replace( ",", "." ) );
+
+                    if( mode === MODES.LAST_NUMBER ){
+                        logText = getHistory( ''
                                                 , firstNumber
-                                                , firstOperator
-                                                , lastNumber
-                                                , SIMPLE_RESULT
+                                                , action.value
+                                                , ''
+                                                , ''
                                                 , mode );
-                    firstNumber = parseFloat( output );
-                    mode = MODES.AFTER_RESULT;
+
+                    } else{
+                        logText = getHistory( logText
+                            , firstNumber
+                            , action.value
+                            , lastNumber
+                            , action.value
+                            , mode );
+                    }
 
                 }
 
+                firstOperator = action.value;
+                lastNumber = 0;
+                mode = MODES.FIRST_OPERATOR;
 
-            } else if( mode < MODES.LAST_NUMBER &&  firstOperator ){
-                history = getHistory( ''
+                /*if( mode < MODES.LAST_NUMBER &&  firstOperator ){
+                logText = getHistory( ''
                     , firstNumber
                     , firstOperator
                     , lastNumber
@@ -191,7 +233,7 @@ export default function reducer ( state = store, action ) {
                 firstOperator = action.value;
                 mode = MODES.FIRST_OPERATOR;
 
-                history = getHistory( ''
+                logText = getHistory( ''
                                         , firstNumber
                                         , firstOperator
                                         , lastNumber
@@ -199,13 +241,13 @@ export default function reducer ( state = store, action ) {
                                         , mode);
             } else if( mode === MODES.LAST_NUMBER ){
                 /// now, is exits from SIMPLE_RESULT
-                if( history.includes( "=") ){
+                if( logText.includes( "=") ){
 
-                    firstNumber = parseFloat( output );
+                    firstNumber = parseFloat( displayText.replace( ",", "." ) );
                     firstOperator = action.value;
                     lastNumber = 0;
                     mode = MODES.FIRST_OPERATOR;
-                    history = getHistory( ''
+                    logText = getHistory( ''
                                             , firstNumber
                                             , firstOperator
                                             , lastNumber
@@ -215,10 +257,10 @@ export default function reducer ( state = store, action ) {
 
 
                 } else {
-                    output = getResult( firstNumber, lastNumber, firstOperator );
-                    firstNumber = parseFloat( output );
+                    displayText = getResult( firstNumber, lastNumber, firstOperator );
+                    firstNumber = parseFloat( displayText.replace( ",", "." ) );
                     firstOperator = action.value;
-                    history = getHistory( history
+                    logText = getHistory( logText
                                             , firstNumber
                                             , firstOperator
                                             , lastNumber
@@ -226,7 +268,7 @@ export default function reducer ( state = store, action ) {
                                             , mode  );
                     lastNumber = 0;
                     mode = MODES.FIRST_OPERATOR;
-                }
+                }*/
 
 
 
@@ -244,8 +286,8 @@ export default function reducer ( state = store, action ) {
         , lastNumber: lastNumber
         , firstOperator: firstOperator
         , onDot: onDot
-        , output: `${output}`.replace(".", ",")
-        , history: history
+        , displayText: `${displayText}`.replace(".", ",")
+        , logText: logText
     };
     /////////////////////////////CONSOLE/////////////////////////////////////
         ///TODO: Console log in the code "INDEX_JS" line 32
