@@ -10,15 +10,15 @@ import {MODES, SIMPLE_PLUS, SIMPLE_RESULT} from "../constants";
  * @param mode
  * @returns {string}
 */
-export const getHistory = (  logText
-                             ,  firstNumber
+export const getLogText = (logText
+                             , firstNumber
                              , firstOperator
-                             ,  lastNumber
+                             , lastNumber
                              , lastSymbol
                              , mode ) =>{
 
     const first = logText ? '' :`${firstNumber}`.replace(".", ",");
-    const second = mode >= MODES.LAST_NUMBER && !logText.includes( 'negate' ) ?`${lastNumber}`.replace(".", ",") : '';
+    const second = mode >= MODES.MULTIPLE_ACTION && !logText.includes( 'negate' ) ?`${lastNumber}`.replace(".", ",") : '';
     return `${ logText } ${first} ${ logText ?'':getSimpleOperator( firstOperator )} ${second} ${ getSimpleOperator( lastSymbol )}`;
 };
 
