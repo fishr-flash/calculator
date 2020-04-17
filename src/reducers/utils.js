@@ -20,6 +20,30 @@ export const getLogText = (logText
     return `${ logText } ${first} ${ getSimpleOperator( firstOperator )} ${second} ${ getSimpleOperator( lastSymbol )}`;
 };
 
+export const getArrLogText = ( ...args ) =>{
+
+    /////////////////////////////CONSOLE/////////////////////////////////////
+        ///TODO: Console log in the code "UTILS_JS" line 26
+        if( true ){
+            console.group( 'Console log in the code "UTILS_JS" line 26' );
+            console.info( 'args: ', args );
+            console.info( 'this: ', this );
+            //console.table( this );
+            console.groupEnd();
+        }
+    /////////////////////////////END CONSOLE/////////////////////////////////
+    return args.map( v => {
+        let res ="";
+        if( typeof v === "number" )
+            res = v.toString().replace( ".", ",");
+        else
+            res = getSimpleOperator( v );
+
+        if( res ) return res;
+        return v;
+    })
+};
+
 export const getSimpleOperator = (operator )=>{
 
     let o = '';

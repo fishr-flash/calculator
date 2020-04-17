@@ -24,7 +24,9 @@ export default connect(
     state => {
         return ({
                 displayText: state.displayText
-                , logText: state.logText
+                //, logText: state.logText
+                , logText: state.arrLogText.join( ' ' )
+
         });
     }, null
 )( Output );

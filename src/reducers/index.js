@@ -9,7 +9,7 @@ import {
     SIMPLE_REMOVE,
     SIMPLE_RESULT
 } from "../constants";
-import {applyNegates, getLogText, getOutput, getResult} from "./utils";
+import {applyNegates, getArrLogText, getLogText, getOutput, getResult} from "./utils";
 
 // export default combineReducers({ setNumber });
 
@@ -20,7 +20,9 @@ const store = {
     , mode: MODES.BEGIN_MODE
     , firstOperator: null
     , onDot: false
+    , arrLogText: []
     , logText: ''
+
 
 
 
@@ -33,6 +35,7 @@ export default function reducer ( state = store, action ) {
         , mode
         , firstOperator
         , onDot
+        , arrLogText
         , logText } = state;
 
 
@@ -60,36 +63,36 @@ export default function reducer ( state = store, action ) {
                 mode = MODES.LAST_NUMBER;
                 lastNumber = firstNumber * -1;
                 displayText = lastNumber;
-                logText = getLogText( '', firstNumber, firstOperator, `negate( ${ Math.abs( lastNumber ) } )`, '' );
-
+                arrLogText = getArrLogText( '', firstNumber, firstOperator, `negate( ${ Math.abs( lastNumber ) } )`, '' );
             } else {
                 if( mode === MODES.AFTER_RESULT ){
                     firstNumber = parseFloat( displayText.replace( ",", "." ) ) * -1;
                     displayText = firstNumber;
-                    logText = getLogText( ` ${ applyNegates( firstNumber, logText ) } `, '', '', '', '' );
+                    arrLogText = getArrLogText( ` ${ applyNegates( firstNumber, arrLogText.join( " " ) ) } `, '', '', '', '' );
 
                 } else if( mode === MODES.LAST_NUMBER ) {
 
                     lastNumber *= -1;
                     displayText = lastNumber;
 
-                    ///TODO: logText text-align = right
-                    logText = getLogText( '', firstNumber, firstOperator,  `${ applyNegates( lastNumber, logText ) } `, '' );
+                    ///TODO: arrLogText.join( " " ) text-align = right
+                    arrLogText = getArrLogText( '', firstNumber, firstOperator,  `${ applyNegates( lastNumber, arrLogText.join( " " ) ) } `, '' );
+
                 } else {
                     lastNumber *= -1;
                     displayText = lastNumber;
 
-                    if( logText.includes( 'negate')){
+                    if( arrLogText.join( " " ).includes( 'negate')){
 
 
-                        const countNegates = logText.split( 'negate').length;
+                        const countNegates = arrLogText.join( " " ).split( 'negate').length;
 
                         let lastNegate = Math.abs( lastNumber );
                         for (let i = 0; i < countNegates ; i++) {
                             lastNegate = `negate( ${ lastNegate } )`;
                         }
 
-                        logText = getLogText( lastNegate, '', '', '', '' );
+                        arrLogText = getArrLogText( lastNegate, '', '', '', '' );
                     }
 
                 }
@@ -157,17 +160,17 @@ export default function reducer ( state = store, action ) {
                        displayText = getResult( firstNumber, lastNumber, firstOperator );
                        if( mode === MODES.AFTER_RESULT ){
 
-                           logText = getLogText( ''
+                           arrLogText = getArrLogText( ''
                                , firstNumber
                                , firstOperator
                                , lastNumber
                                , SIMPLE_RESULT );
                        }
                        else{
-                           logText = getLogText( logText
+                           arrLogText = getArrLogText( arrLogText.join( " " )
                                , ''
                                , ''
-                               , logText.includes( 'negate') ? '' : lastNumber
+                               , arrLogText.join( " " ).includes( 'negate') ? '' : lastNumber
                                , SIMPLE_RESULT);
                        }
 
@@ -183,12 +186,11 @@ export default function reducer ( state = store, action ) {
                 if( mode === MODES.BEGIN_MODE
                     || mode === MODES.AFTER_RESULT
                     || mode === MODES.FIRST_OPERATOR ){
-                    logText = getLogText( ''
-                                        , firstNumber
-                                        , action.value
-                                        , ''
-                                        , '' );
-
+                    arrLogText = getArrLogText( ''
+                        , firstNumber
+                        , action.value
+                        , ''
+                        , '' );
                     mode = MODES.FIRST_OPERATOR;
                 } else if(  mode === MODES.MULTIPLE_ACTION ){
                     ///nothing
@@ -199,19 +201,20 @@ export default function reducer ( state = store, action ) {
 
                     if( mode === MODES.LAST_NUMBER ){
 
-                        logText = getLogText( logText
-                                                , ''
-                                                , ''
-                                                , lastNumber
-                                                , action.value);
+                        arrLogText = getArrLogText( arrLogText.join( " " )
+                            , ''
+                            , ''
+                            , lastNumber
+                            , action.value);
 
                         mode = MODES.MULTIPLE_ACTION;
                     } else{
-                        logText = getLogText( logText
+                        arrLogText = getArrLogText( arrLogText.join( " " )
                             , firstNumber
                             , action.value
                             , lastNumber
                             , action.value );
+
                         mode = MODES.FIRST_OPERATOR;
                     }
 
@@ -237,6 +240,7 @@ export default function reducer ( state = store, action ) {
         , onDot: onDot
         , displayText: `${displayText}`.replace(".", ",")
         , logText: logText
+        , arrLogText: arrLogText
     };
     /////////////////////////////CONSOLE/////////////////////////////////////
         ///TODO: Console log in the code "INDEX_JS" line 32
