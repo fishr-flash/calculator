@@ -64,7 +64,7 @@ export default function reducer ( state = store, action ) {
 
             } else {
                 if( mode === MODES.AFTER_RESULT ){
-                    firstNumber = parseFloat( displayText.replace( ",", "." ) ) * -1;;
+                    firstNumber = parseFloat( displayText.replace( ",", "." ) ) * -1;
                     displayText = firstNumber;
                     logText = getLogText( ` ${ applyNegates( firstNumber, logText ) } `, '', '', '', '' );
 
@@ -75,9 +75,6 @@ export default function reducer ( state = store, action ) {
 
                     ///TODO: logText text-align = right
                     logText = getLogText( '', firstNumber, firstOperator,  `${ applyNegates( lastNumber, logText ) } `, '' );
-
-                    ///TODO: Remove
-                    //mode = MODES.AFTER_RESULT;
                 } else {
                     lastNumber *= -1;
                     displayText = lastNumber;
@@ -131,10 +128,9 @@ export default function reducer ( state = store, action ) {
         case ON_CLICK_SIMPLE_OPERATOR:
 
             ///FIXME: , = 3 = ( 0=3= )...
-            ///FIXME: 14 + 6 + + + + + + + + + + + + + + + + + + + +
+
 
             onDot = false;
-            ///TODO: Доделать!!!
             if( action.value === SIMPLE_REMOVE ){
 
                 if( displayText !== "0" ){
