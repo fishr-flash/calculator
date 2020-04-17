@@ -17,7 +17,7 @@ export const SIMPLE_REMOVE = "simpleRemove";
 export const MODES = {
     BEGIN_MODE: 0
     , FIRST_OPERATOR: 1
-    , MULTIPLE_ACTION:2
+    , MULTIPLE_ACTION: 2
     , LAST_NUMBER: 3
     , AFTER_RESULT: 4
 }

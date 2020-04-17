@@ -1,4 +1,4 @@
-import {MODES, SIMPLE_PLUS, SIMPLE_RESULT} from "../constants";
+import {SIMPLE_PLUS, SIMPLE_RESULT} from "../constants";
 
 /**
  *
@@ -7,19 +7,17 @@ import {MODES, SIMPLE_PLUS, SIMPLE_RESULT} from "../constants";
  * @param firstOperator
  * @param lastNumber
  * @param lastSymbol
- * @param mode
  * @returns {string}
-*/
+ */
 export const getLogText = (logText
                              , firstNumber
                              , firstOperator
                              , lastNumber
-                             , lastSymbol
-                             , mode ) =>{
+                             , lastSymbol ) =>{
 
-    const first = logText ? '' :`${firstNumber}`.replace(".", ",");
-    const second = mode >= MODES.MULTIPLE_ACTION && !logText.includes( 'negate' ) ?`${lastNumber}`.replace(".", ",") : '';
-    return `${ logText } ${first} ${ logText ?'':getSimpleOperator( firstOperator )} ${second} ${ getSimpleOperator( lastSymbol )}`;
+    const first = `${firstNumber}`.replace(".", ",");
+    const second = `${lastNumber}`.replace(".", ",") ;
+    return `${ logText } ${first} ${ getSimpleOperator( firstOperator )} ${second} ${ getSimpleOperator( lastSymbol )}`;
 };
 
 export const getSimpleOperator = (operator )=>{
@@ -62,3 +60,17 @@ export const getOutput = ( base, arg, dot ) =>{
     else
         return  base === '0' ? `${ arg}` : `${base}${arg}`;
 };
+
+export const applyNegates = ( nm, log )=>{
+    let negates = Math.abs( nm );
+
+    if( log.includes( 'negate')){
+        const countNegates = log.split( 'negate').length;
+        for (let i = 1; i < countNegates ; i++) {
+            negates = `negate( ${ negates } )`;
+        }
+
+
+    }
+    return `negate( ${ negates } )`;
+}

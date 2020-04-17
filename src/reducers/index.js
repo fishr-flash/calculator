@@ -9,7 +9,7 @@ import {
     SIMPLE_REMOVE,
     SIMPLE_RESULT
 } from "../constants";
-import { getLogText, getOutput, getResult} from "./utils";
+import {applyNegates, getLogText, getOutput, getResult} from "./utils";
 
 // export default combineReducers({ setNumber });
 
@@ -39,6 +39,7 @@ export default function reducer ( state = store, action ) {
 
     switch ( action.type ) {
         ///TODO: Разбить цифры на группы по 3 в окнах вывода
+            ///FIXME: 123+321=(444)-|+, -|+, +....
 
         case ON_CLICK_DOT:
 
@@ -59,38 +60,24 @@ export default function reducer ( state = store, action ) {
                 mode = MODES.LAST_NUMBER;
                 lastNumber = firstNumber * -1;
                 displayText = lastNumber;
-                logText = getLogText( '', firstNumber, firstOperator, `negate( ${ Math.abs( lastNumber ) } )`, '', mode );
+                logText = getLogText( '', firstNumber, firstOperator, `negate( ${ Math.abs( lastNumber ) } )`, '' );
 
             } else {
-                if( logText.includes( "=" )){
+                if( mode === MODES.AFTER_RESULT ){
+                    firstNumber = parseFloat( displayText.replace( ",", "." ) ) * -1;;
+                    displayText = firstNumber;
+                    logText = getLogText( ` ${ applyNegates( firstNumber, logText ) } `, '', '', '', '' );
 
-                    firstNumber = 0;
-                    lastNumber =  parseFloat( displayText.replace( ",", "." ) );
-                    firstOperator = SIMPLE_PLUS;
-                    displayText = getResult( firstNumber, lastNumber, firstOperator ) * -1;
-                    logText = getLogText( `negate( ${ lastNumber } )`, '', '', '', '' );
-                    onDot = store.onDot;
-                    mode = MODES.AFTER_RESULT;
-                    lastNumber *= -1;
                 } else if( mode === MODES.LAST_NUMBER ) {
 
                     lastNumber *= -1;
                     displayText = lastNumber;
 
-                    if( logText.includes( 'negate')){
+                    ///TODO: logText text-align = right
+                    logText = getLogText( '', firstNumber, firstOperator,  `${ applyNegates( lastNumber, logText ) } `, '' );
 
-                        ///TODO: logText text-align = right
-                        const countNegates = logText.split( 'negate').length;
-
-                        let lastNegate = Math.abs( lastNumber );
-                        for (let i = 0; i < countNegates ; i++) {
-                            lastNegate = `negate( ${ lastNegate } )`;
-                        }
-
-                        logText = getLogText( '', firstNumber, firstOperator, lastNegate, '', mode );
-                    }
-
-                    mode = MODES.AFTER_RESULT;
+                    ///TODO: Remove
+                    //mode = MODES.AFTER_RESULT;
                 } else {
                     lastNumber *= -1;
                     displayText = lastNumber;
@@ -105,7 +92,7 @@ export default function reducer ( state = store, action ) {
                             lastNegate = `negate( ${ lastNegate } )`;
                         }
 
-                        logText = getLogText( lastNegate, '', '', '', '', mode );
+                        logText = getLogText( lastNegate, '', '', '', '' );
                     }
 
                 }
@@ -172,12 +159,22 @@ export default function reducer ( state = store, action ) {
                            mode = MODES.LAST_NUMBER;
                        }
                        displayText = getResult( firstNumber, lastNumber, firstOperator );
-                       logText = getLogText( mode === MODES.AFTER_RESULT ? '': logText
-                           , firstNumber
-                           , firstOperator
-                           , lastNumber
-                           , SIMPLE_RESULT
-                           , mode );
+                       if( mode === MODES.AFTER_RESULT ){
+
+                           logText = getLogText( ''
+                               , firstNumber
+                               , firstOperator
+                               , lastNumber
+                               , SIMPLE_RESULT );
+                       }
+                       else{
+                           logText = getLogText( logText
+                               , ''
+                               , ''
+                               , logText.includes( 'negate') ? '' : lastNumber
+                               , SIMPLE_RESULT);
+                       }
+
                        firstNumber = parseFloat( displayText.replace( ",", "." ) );
                        mode = MODES.AFTER_RESULT;
                    }
@@ -194,16 +191,12 @@ export default function reducer ( state = store, action ) {
                                         , firstNumber
                                         , action.value
                                         , ''
-                                        , '', mode );
+                                        , '' );
 
                     mode = MODES.FIRST_OPERATOR;
                 } else if(  mode === MODES.MULTIPLE_ACTION ){
-                    logText = getLogText( logText
-                        , firstNumber
-                        , action.value
-                        , ''
-                        , ''
-                        , mode );
+                    ///nothing
+
                 } else {
                     displayText = getResult( firstNumber, lastNumber, firstOperator );
                     firstNumber = parseFloat( displayText.replace( ",", "." ) );
@@ -211,11 +204,10 @@ export default function reducer ( state = store, action ) {
                     if( mode === MODES.LAST_NUMBER ){
 
                         logText = getLogText( logText
-                                                , firstNumber
-                                                , firstOperator
+                                                , ''
+                                                , ''
                                                 , lastNumber
-                                                , action.value
-                                                , mode );
+                                                , action.value);
 
                         mode = MODES.MULTIPLE_ACTION;
                     } else{
@@ -223,8 +215,7 @@ export default function reducer ( state = store, action ) {
                             , firstNumber
                             , action.value
                             , lastNumber
-                            , action.value
-                            , mode );
+                            , action.value );
                         mode = MODES.FIRST_OPERATOR;
                     }
 
@@ -233,59 +224,6 @@ export default function reducer ( state = store, action ) {
 
                 firstOperator = action.value;
                 lastNumber = 0;
-
-
-                /*if( mode < MODES.LAST_NUMBER &&  firstOperator ){
-                logText = getLogText( ''
-                    , firstNumber
-                    , firstOperator
-                    , lastNumber
-                    , ''
-                    , mode);
-
-                ///  over simple a butt
-            } else if( !firstOperator ){
-                firstOperator = action.value;
-                mode = MODES.FIRST_OPERATOR;
-
-                logText = getLogText( ''
-                                        , firstNumber
-                                        , firstOperator
-                                        , lastNumber
-                                        , ''
-                                        , mode);
-            } else if( mode === MODES.LAST_NUMBER ){
-                /// now, is exits from SIMPLE_RESULT
-                if( logText.includes( "=") ){
-
-                    firstNumber = parseFloat( displayText.replace( ",", "." ) );
-                    firstOperator = action.value;
-                    lastNumber = 0;
-                    mode = MODES.FIRST_OPERATOR;
-                    logText = getLogText( ''
-                                            , firstNumber
-                                            , firstOperator
-                                            , lastNumber
-                                            , ''
-                                            , mode);
-
-
-
-                } else {
-                    displayText = getResult( firstNumber, lastNumber, firstOperator );
-                    firstNumber = parseFloat( displayText.replace( ",", "." ) );
-                    firstOperator = action.value;
-                    logText = getLogText( logText
-                                            , firstNumber
-                                            , firstOperator
-                                            , lastNumber
-                                            , firstOperator
-                                            , mode  );
-                    lastNumber = 0;
-                    mode = MODES.FIRST_OPERATOR;
-                }*/
-
-
 
             }
 
