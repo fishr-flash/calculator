@@ -16,7 +16,7 @@ export const getArrLogText = ( ...args ) =>{
     return arr.filter( v => v !== "" );
 };
 
-export const changeToFloat = (displayText )=> parseFloat( displayText.replace( ",", "." ) );
+export const toFloat = (displayText )=> parseFloat( displayText.replace( ",", "." ) );
 
 export const getSimpleOperator = (operator )=>{
 
