@@ -5,11 +5,11 @@ import {
     ON_CLICK_DOT,
     ON_CLICK_NUMBER,
     ON_CLICK_SIGN,
-    ON_CLICK_SIMPLE_OPERATOR, SIMPLE_PLUS,
+    ON_CLICK_SIMPLE_OPERATOR,
     SIMPLE_REMOVE,
     SIMPLE_RESULT
 } from "../constants";
-import {applyNegates, getArrLogText, getLogText, getOutput, getResult} from "./utils";
+import {applyNegates, getArrLogText, getOutput, getResult, changeToFloat } from "./utils";
 
 // export default combineReducers({ setNumber });
 
@@ -21,10 +21,6 @@ const store = {
     , firstOperator: null
     , onDot: false
     , arrLogText: []
-    , logText: ''
-
-
-
 
 };
 export default function reducer ( state = store, action ) {
@@ -35,13 +31,13 @@ export default function reducer ( state = store, action ) {
         , mode
         , firstOperator
         , onDot
-        , arrLogText
-        , logText } = state;
+        , arrLogText} = state;
 
 
 
     switch ( action.type ) {
         ///TODO: Разбить цифры на группы по 3 в окнах вывода
+        ///TODO: Огругление в JS ( 3,23 + 2,365 =5,59500000000 )
             ///FIXME: 123+321=(444)-|+, -|+, +....
 
         case ON_CLICK_DOT:
@@ -66,7 +62,7 @@ export default function reducer ( state = store, action ) {
                 arrLogText = getArrLogText( '', firstNumber, firstOperator, `negate( ${ Math.abs( lastNumber ) } )`, '' );
             } else {
                 if( mode === MODES.AFTER_RESULT ){
-                    firstNumber = parseFloat( displayText.replace( ",", "." ) ) * -1;
+                    firstNumber = changeToFloat( displayText ) * -1;
                     displayText = firstNumber;
                     arrLogText = getArrLogText( ` ${ applyNegates( firstNumber, arrLogText.join( " " ) ) } `, '', '', '', '' );
 
@@ -110,20 +106,20 @@ export default function reducer ( state = store, action ) {
                  mode = store.mode;
                  firstOperator = store.firstOperator;
                  onDot = store.onDot;
-                 logText = store.logText;
+
             }
 
             if( mode === MODES.FIRST_OPERATOR || mode === MODES.MULTIPLE_ACTION ){
                 displayText = getOutput( lastNumber.toString(), action.value, onDot );
-                lastNumber = parseFloat( displayText.replace( ",", "." ) );
+                lastNumber = changeToFloat( displayText );
                 mode = MODES.LAST_NUMBER;
 
             } else if ( mode === MODES.LAST_NUMBER ){
                 displayText = getOutput( displayText, action.value, onDot );
-                lastNumber = parseFloat( displayText.replace( ",", "." ) );
+                lastNumber = changeToFloat( displayText );
             } else {
                 displayText = getOutput( displayText, action.value, onDot );
-                firstNumber = parseFloat( displayText.replace( ",", "." ) );
+                firstNumber = changeToFloat( displayText );
             }
 
             break;
@@ -141,12 +137,12 @@ export default function reducer ( state = store, action ) {
                         displayText = displayText.slice( 0, -1 ) || "0";
 
                         if( mode < MODES.LAST_NUMBER )
-                            firstNumber = parseFloat( displayText.replace( ",", "." ) );
+                            firstNumber = changeToFloat( displayText );
                         else
-                            lastNumber =  parseFloat( displayText.replace( ",", "." ) );
+                            lastNumber =  changeToFloat( displayText );
                     }else {
-                        firstNumber = parseFloat( displayText.replace( ",", "." ) );
-                         logText ="";
+                        firstNumber = changeToFloat( displayText );
+                        arrLogText = [];
                     }
                 }
             }
@@ -154,7 +150,7 @@ export default function reducer ( state = store, action ) {
                    if( mode >= MODES.FIRST_OPERATOR ){
 
                        if( ( !lastNumber && mode < MODES.LAST_NUMBER ) || mode === MODES.MULTIPLE_ACTION ){
-                           lastNumber = parseFloat( displayText.replace( ",", "." ) );
+                           lastNumber = changeToFloat( displayText );
                            mode = MODES.LAST_NUMBER;
                        }
                        displayText = getResult( firstNumber, lastNumber, firstOperator );
@@ -167,16 +163,22 @@ export default function reducer ( state = store, action ) {
                                , SIMPLE_RESULT );
                        }
                        else{
-                           arrLogText = getArrLogText( arrLogText.join( " " )
+                           arrLogText = getArrLogText( arrLogText
                                , ''
                                , ''
                                , arrLogText.join( " " ).includes( 'negate') ? '' : lastNumber
                                , SIMPLE_RESULT);
                        }
 
-                       firstNumber = parseFloat( displayText.replace( ",", "." ) );
-                       mode = MODES.AFTER_RESULT;
+                       firstNumber = changeToFloat( displayText );
+
+                   } else {
+                         arrLogText = getArrLogText( firstNumber, SIMPLE_RESULT );
+                         ///FIXME: multi negate
                    }
+
+                    mode = MODES.AFTER_RESULT;
+
             } else {
 
 
@@ -197,11 +199,11 @@ export default function reducer ( state = store, action ) {
 
                 } else {
                     displayText = getResult( firstNumber, lastNumber, firstOperator );
-                    firstNumber = parseFloat( displayText.replace( ",", "." ) );
+                    firstNumber = changeToFloat( displayText );
 
                     if( mode === MODES.LAST_NUMBER ){
 
-                        arrLogText = getArrLogText( arrLogText.join( " " )
+                        arrLogText = getArrLogText( arrLogText
                             , ''
                             , ''
                             , lastNumber
@@ -209,7 +211,7 @@ export default function reducer ( state = store, action ) {
 
                         mode = MODES.MULTIPLE_ACTION;
                     } else{
-                        arrLogText = getArrLogText( arrLogText.join( " " )
+                        arrLogText = getArrLogText( arrLogText
                             , firstNumber
                             , action.value
                             , lastNumber
@@ -239,7 +241,6 @@ export default function reducer ( state = store, action ) {
         , firstOperator: firstOperator
         , onDot: onDot
         , displayText: `${displayText}`.replace(".", ",")
-        , logText: logText
         , arrLogText: arrLogText
     };
     /////////////////////////////CONSOLE/////////////////////////////////////

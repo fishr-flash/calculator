@@ -1,38 +1,8 @@
 import {SIMPLE_PLUS, SIMPLE_RESULT} from "../constants";
 
-/**
- *
- * @param logText
- * @param firstNumber
- * @param firstOperator
- * @param lastNumber
- * @param lastSymbol
- * @returns {string}
- */
-export const getLogText = (logText
-                             , firstNumber
-                             , firstOperator
-                             , lastNumber
-                             , lastSymbol ) =>{
-
-    const first = `${firstNumber}`.replace(".", ",");
-    const second = `${lastNumber}`.replace(".", ",") ;
-    return `${ logText } ${first} ${ getSimpleOperator( firstOperator )} ${second} ${ getSimpleOperator( lastSymbol )}`;
-};
-
 export const getArrLogText = ( ...args ) =>{
 
-    /////////////////////////////CONSOLE/////////////////////////////////////
-        ///TODO: Console log in the code "UTILS_JS" line 26
-        if( true ){
-            console.group( 'Console log in the code "UTILS_JS" line 26' );
-            console.info( 'args: ', args );
-            console.info( 'this: ', this );
-            //console.table( this );
-            console.groupEnd();
-        }
-    /////////////////////////////END CONSOLE/////////////////////////////////
-    return args.map( v => {
+    let arr = args.flat( 10 ).map( v => {
         let res ="";
         if( typeof v === "number" )
             res = v.toString().replace( ".", ",");
@@ -41,8 +11,12 @@ export const getArrLogText = ( ...args ) =>{
 
         if( res ) return res;
         return v;
-    })
+    });
+
+    return arr.filter( v => v !== "" );
 };
+
+export const changeToFloat = (displayText )=> parseFloat( displayText.replace( ",", "." ) );
 
 export const getSimpleOperator = (operator )=>{
 
@@ -97,4 +71,4 @@ export const applyNegates = ( nm, log )=>{
 
     }
     return `negate( ${ negates } )`;
-}
+};
