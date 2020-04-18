@@ -243,6 +243,7 @@ export default function reducer ( state = store, action ) {
         , displayText: `${displayText}`.replace(".", ",")
         , arrLogText: arrLogText
     };
+
     /////////////////////////////CONSOLE/////////////////////////////////////
         ///TODO: Console log in the code "INDEX_JS" line 32
         if( true ){
