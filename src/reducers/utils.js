@@ -80,8 +80,6 @@ export const getOutput = ( base, arg, dot ) =>{
 };
 
 export const applyNegates = ( nm, log )=>{
-    ///TODO: remove
-    //let negates = Math.abs( nm );
     let negates = nm;
 
     if( log && log.includes( 'negate')){
@@ -89,8 +87,6 @@ export const applyNegates = ( nm, log )=>{
         for (let i = 1; i < countNegates ; i++) {
             negates = `negate( ${ negates } )`;
         }
-
-
     }
     return `negate( ${ negates } )`;
 };

@@ -47,31 +47,7 @@ export default ({displayText
         displayText = lastNumber;
 
         ///TODO: arrLogText.join( " " ) text-align = right
-        ///TODO: remove it
-        //arrLogText = getArrLogText( firstNumber, firstOperator,  `${ applyNegates( lastNumber, arrLogText.join( " " ) ) } ` );
-
     }
-    ///TODO: remove it
-    /*else {
-        lastNumber *= -1;
-        displayText = lastNumber;
-
-        if( arrLogText.join( " " ).includes( 'negate')){
-
-
-            const countNegates = arrLogText.join( " " ).split( 'negate').length;
-
-            let lastNegate = Math.abs( lastNumber );
-            for (let i = 0; i < countNegates ; i++) {
-                lastNegate = `negate( ${ lastNegate } )`;
-            }
-
-            arrLogText = getArrLogText( lastNegate );
-        }
-
-    }*/
-
-
 
     return{ displayText: `${displayText}`.replace(".", ",")
         , firstNumber
