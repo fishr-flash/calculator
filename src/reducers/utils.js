@@ -16,7 +16,7 @@ export const getArrLogText = ( ...args ) =>{
     return arr.filter( v => v !== "" );
 };
 
-export const toFloat = (displayText )=> parseFloat( displayText.replace( ",", "." ) );
+export const toFloat = (displayText )=> parseFloat( displayText.replace( ",", "." ).replace( ' ', '') );
 
 export const getSimpleOperator = (operator )=>{
 
@@ -70,11 +70,10 @@ export const getResult = (  firstNumber, lastNumber, firstOperator ) =>{
 
 export const getOutput = ( base, arg, dot ) =>{
     if( base.includes( "," )  ) {
-        base = base.replace( ",", ".");
         dot = false;
     }
     if( dot )
-        return  `${ base.toString() }.${ arg }`;
+        return  `${ base.toString() },${ arg }`;
     else
         return  base === '0' ? `${ arg}` : `${base}${arg}`;
 };
@@ -89,4 +88,14 @@ export const applyNegates = ( nm, log )=>{
         }
     }
     return `negate( ${ negates } )`;
+};
+
+export const formatDisplayText = ( dText )=>{
+    /// it is impossible to get rid of a space in the input line :(
+    let stringNm = dText.split( '' ).map( v =>{
+         return v === "," ? "." :  isNaN( parseInt( v ) ) ? '' : v;
+    }).join('');
+    const parts = stringNm.split( "." );
+    return `${ new Intl.NumberFormat('ru-RU').format(  parts[ 0 ] )}${parts.length > 1?","+parts[ 1 ]:''}`;
+
 };

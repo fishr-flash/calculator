@@ -21,8 +21,6 @@ export const store = {
 export default function reducer ( state = store, action ) {
 
     switch ( action.type ) {
-        ///TODO: Разбить цифры на группы по 3 в окнах вывода
-
         case ON_CLICK_DOT:
             state = servantOnDot( state, action );
             break;

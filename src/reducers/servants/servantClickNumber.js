@@ -1,5 +1,5 @@
 import {MODES} from "../../constants";
-import {toFloat, getOutput, getArrLogText} from "../utils";
+import {toFloat, getOutput, getArrLogText, formatDisplayText} from "../utils";
 import { store } from "../index";
 
 export default ({displayText
@@ -10,6 +10,7 @@ export default ({displayText
                     , onDot
                     , arrLogText
                 }, { type, value /*action*/})=>{
+
 
     if( mode === MODES.AFTER_RESULT ){
         displayText = store.displayText;
@@ -47,7 +48,7 @@ export default ({displayText
         firstNumber = toFloat( displayText );
     }
 
-    return{ displayText: `${displayText}`.replace(".", ",")
+    return{ displayText: formatDisplayText( displayText )
         , firstNumber
         , lastNumber
         , mode

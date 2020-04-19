@@ -1,5 +1,5 @@
 import {MODES, SIMPLE_REMOVE, SIMPLE_RESULT} from "../../constants";
-import {toFloat, getArrLogText, getResult} from "../utils";
+import {toFloat, getArrLogText, getResult, formatDisplayText} from "../utils";
 
 export default ({displayText
                     , firstNumber
@@ -102,7 +102,7 @@ export default ({displayText
     }
 
 
-    return{ displayText: `${displayText}`.replace(".", ",")
+    return{ displayText: formatDisplayText( displayText )
         , firstNumber
         , lastNumber
         , mode

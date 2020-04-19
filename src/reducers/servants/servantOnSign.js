@@ -1,5 +1,5 @@
 import {MODES} from "../../constants";
-import {applyNegates, toFloat, getArrLogText} from "../utils";
+import {applyNegates, toFloat, getArrLogText, formatDisplayText} from "../utils";
 
 export default ({displayText
                     , firstNumber
@@ -49,7 +49,7 @@ export default ({displayText
         ///TODO: arrLogText.join( " " ) text-align = right
     }
 
-    return{ displayText: `${displayText}`.replace(".", ",")
+    return{ displayText: formatDisplayText( displayText )
         , firstNumber
         , lastNumber
         , mode
