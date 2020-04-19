@@ -60,9 +60,10 @@ export const getOutput = ( base, arg, dot ) =>{
 };
 
 export const applyNegates = ( nm, log )=>{
-    let negates = Math.abs( nm );
+    //let negates = Math.abs( nm );
+    let negates = nm;
 
-    if( log.includes( 'negate')){
+    if( log && log.includes( 'negate')){
         const countNegates = log.split( 'negate').length;
         for (let i = 1; i < countNegates ; i++) {
             negates = `negate( ${ negates } )`;
