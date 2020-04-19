@@ -40,7 +40,7 @@ export const getResult = (  firstNumber, lastNumber, firstOperator ) =>{
     switch ( firstOperator ) {
 
         case SIMPLE_PLUS:
-            result = firstNumber + lastNumber;
+            result = ( firstNumber + lastNumber ).toFixed( 10 ) * 1 /* exclude excess zeros*/;
             break;
         default:
     }
