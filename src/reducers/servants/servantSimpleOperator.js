@@ -44,18 +44,18 @@ export default ({displayText
             }
             else{
                 arrLogText = getArrLogText( arrLogText
-                    , arrLogText.join( " " ).includes( 'negate') ? '' : lastNumber
+                    , arrLogText[ arrLogText.length - 1 ].includes( 'negate') ? '' : lastNumber
                     , SIMPLE_RESULT);
             }
 
             firstNumber = toFloat( displayText );
+            mode = MODES.AFTER_RESULT;
 
         } else {
             arrLogText = getArrLogText( firstNumber, SIMPLE_RESULT );
-            ///FIXME: multi negate
         }
 
-        mode = MODES.AFTER_RESULT;
+
 
     } else {
 

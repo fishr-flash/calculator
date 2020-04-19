@@ -60,6 +60,7 @@ export const getOutput = ( base, arg, dot ) =>{
 };
 
 export const applyNegates = ( nm, log )=>{
+    ///TODO: remove
     //let negates = Math.abs( nm );
     let negates = nm;
 

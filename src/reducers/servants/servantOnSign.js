@@ -20,9 +20,6 @@ export default ({displayText
         } else{
             arrLogText = [];
         }
-        ///FIXME: -/+ /negate( 0 )/ | 1 /negate( 0 )/
-        ///FIXME: 1+2+( -/+ )4 /1+2+4/ ( !1+2+negate( 3 )+4 )
-
     } else if( mode === MODES.FIRST_OPERATOR ) {
 
         mode = MODES.LAST_NUMBER;
@@ -40,7 +37,7 @@ export default ({displayText
                                                                             ? arrLogText.pop() : '') );
     } else if( mode === MODES.AFTER_RESULT ){
             firstNumber = toFloat( displayText ) * -1;
-            arrLogText = getArrLogText( ` ${ applyNegates( firstNumber * -1 ) } ` );
+            arrLogText = getArrLogText( ` ${ applyNegates( firstNumber * -1, arrLogText.pop() ) } ` );
             displayText = firstNumber;
 
 

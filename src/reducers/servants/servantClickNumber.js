@@ -1,5 +1,5 @@
 import {MODES} from "../../constants";
-import {toFloat, getOutput} from "../utils";
+import {toFloat, getOutput, getArrLogText} from "../utils";
 import { store } from "../index";
 
 export default ({displayText
@@ -21,9 +21,22 @@ export default ({displayText
 
     }
 
-    if( mode === MODES.FIRST_OPERATOR || mode === MODES.MULTIPLE_ACTION ){
+    if( mode === MODES.FIRST_OPERATOR  ){
         displayText = getOutput( lastNumber.toString(), value, onDot );
         lastNumber = toFloat( displayText );
+        mode = MODES.LAST_NUMBER;
+
+    } else if ( mode === MODES.MULTIPLE_ACTION ){
+
+        if( arrLogText[ arrLogText.length - 1].includes( 'negate' )){
+            lastNumber = value;
+            displayText =lastNumber;
+            arrLogText = getArrLogText( arrLogText.slice( 0, -1 ) );
+        } else {
+            displayText = getOutput( lastNumber.toString(), value, onDot );
+            lastNumber = toFloat( displayText );
+        }
+
         mode = MODES.LAST_NUMBER;
 
     } else if ( mode === MODES.LAST_NUMBER ){

@@ -23,7 +23,6 @@ export default function reducer ( state = store, action ) {
     switch ( action.type ) {
         ///TODO: Разбить цифры на группы по 3 в окнах вывода
         ///TODO: Огругление в JS ( 3,23 + 2,365 =5,59500000000 )
-            ///FIXME: 123+321=(444)-|+, -|+, +....
 
         case ON_CLICK_DOT:
             state = servantOnDot( state, action );
@@ -35,8 +34,6 @@ export default function reducer ( state = store, action ) {
             state = servantClickNumber( state, action );
             break;
         case ON_CLICK_SIMPLE_OPERATOR:
-
-            ///FIXME: , = 3 = ( 0=3= )...
             state = servantSimpleOperator( state, action );
             break;
         default:
