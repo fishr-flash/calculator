@@ -52,6 +52,8 @@ export default ({displayText
             mode = MODES.AFTER_RESULT;
 
         } else {
+            
+            firstNumber = toFloat( displayText );
             arrLogText = getArrLogText( firstNumber, SIMPLE_RESULT );
         }
 

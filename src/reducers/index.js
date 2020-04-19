@@ -37,6 +37,7 @@ export default function reducer ( state = store, action ) {
 
     }
 
+    ///TODO: Проверить взаимодействие с кнопкой backspace
     /////////////////////////////CONSOLE/////////////////////////////////////
         ///TODO: Console log in the code "INDEX_JS" line 32
         if( true ){

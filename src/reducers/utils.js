@@ -16,7 +16,12 @@ export const getArrLogText = ( ...args ) =>{
     return arr.filter( v => v !== "" );
 };
 
-export const toFloat = (displayText )=> parseFloat( displayText.replace( ",", "." ).replace( ' ', '') );
+export const toFloat = (displayText )=> {
+    const strNm = displayText.split( '' ).map( v =>{
+        return v === "," ? "." :  isNaN( parseInt( v ) ) ? '' : v;
+    }).join('');
+    return parseFloat( strNm );
+};
 
 export const getSimpleOperator = (operator )=>{
 
