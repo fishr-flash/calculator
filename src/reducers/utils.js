@@ -1,4 +1,4 @@
-import {SIMPLE_PLUS, SIMPLE_RESULT} from "../constants";
+import {SIMPLE_DIVISION, SIMPLE_MINUS, SIMPLE_MULTIPLY, SIMPLE_PLUS, SIMPLE_RESULT} from "../constants";
 
 export const getArrLogText = ( ...args ) =>{
 
@@ -28,6 +28,16 @@ export const getSimpleOperator = (operator )=>{
         case SIMPLE_PLUS:
             o = "+";
             break;
+
+        case SIMPLE_MINUS:
+            o = "-";
+            break;
+        case SIMPLE_MULTIPLY:
+            o = "×";
+            break;
+        case SIMPLE_DIVISION:
+            o = "÷";
+            break;
         default:
             o = "";
     }
@@ -41,6 +51,16 @@ export const getResult = (  firstNumber, lastNumber, firstOperator ) =>{
 
         case SIMPLE_PLUS:
             result = ( firstNumber + lastNumber ).toFixed( 10 ) * 1 /* exclude excess zeros*/;
+            break;
+
+        case SIMPLE_MINUS:
+            result = ( firstNumber - lastNumber ).toFixed( 10 ) * 1 /* exclude excess zeros*/;
+            break;
+        case SIMPLE_MULTIPLY:
+            result = ( firstNumber * lastNumber ).toFixed( 10 ) * 1 /* exclude excess zeros*/;
+            break;
+        case SIMPLE_DIVISION:
+            result = ( firstNumber / lastNumber ).toFixed( 10 ) * 1 /* exclude excess zeros*/;
             break;
         default:
     }
