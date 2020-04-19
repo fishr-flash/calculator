@@ -15,7 +15,7 @@ export const getArrLogText = ( ...args ) =>{
 
     return arr.filter( v => v !== "" );
 };
-
+///TODO: Перестроить работу с перем. displayText, будет числом и только на выводе будет преобразовываться в текст
 export const toFloat = (displayText )=> {
     const strNm = displayText.split( '' ).map( v =>{
         return v === "," ? "." :  isNaN( parseInt( v ) ) ? '' : v;
