@@ -23,7 +23,7 @@ export default connect(
     
     state => {
         return ({
-                displayText: state.displayText
+                displayText: new Intl.NumberFormat('ru-RU').format( state.displayText )
                 , logText: state.arrLogText.join( ' ' )
 
         });
