@@ -1,5 +1,5 @@
 import {MODES, SIMPLE_REMOVE, SIMPLE_RESULT} from "../../constants";
-import {toFloat, getArrLogText, getResult, formatDisplayText} from "../utils";
+import {getArrLogText, getResult, toFloat} from "../utils";
 
 export default ({displayText
                     , firstNumber
@@ -104,7 +104,7 @@ export default ({displayText
     }
 
 
-    return{ displayText: formatDisplayText( displayText )
+    return{ displayText
         , firstNumber
         , lastNumber
         , mode

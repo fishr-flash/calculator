@@ -1,5 +1,5 @@
 import {MODES} from "../../constants";
-import {applyNegates, toFloat, getArrLogText, formatDisplayText} from "../utils";
+import {applyNegates, getArrLogText, toFloat} from "../utils";
 
 export default ({displayText
                     , firstNumber
@@ -24,12 +24,12 @@ export default ({displayText
 
         mode = MODES.LAST_NUMBER;
         lastNumber = firstNumber * -1;
-        displayText = lastNumber;
+        displayText = lastNumber.toString();
         arrLogText = getArrLogText(  firstNumber, firstOperator, applyNegates( firstNumber, arrLogText.pop() ) );
 
     } else if( mode === MODES.MULTIPLE_ACTION ) {
         lastNumber = toFloat( displayText ) * -1;
-        displayText = lastNumber;
+        displayText = lastNumber.toString();
         arrLogText = getArrLogText(  arrLogText
                                     , applyNegates(
                                             lastNumber * -1
@@ -38,18 +38,18 @@ export default ({displayText
     } else if( mode === MODES.AFTER_RESULT ){
             firstNumber = toFloat( displayText ) * -1;
             arrLogText = getArrLogText( ` ${ applyNegates( firstNumber * -1, arrLogText.pop() ) } ` );
-            displayText = firstNumber;
+            displayText = firstNumber.toString();
 
 
     } else if( mode === MODES.LAST_NUMBER ) {
 
         lastNumber *= -1;
-        displayText = lastNumber;
+        displayText = lastNumber.toString();
 
         ///TODO: arrLogText.join( " " ) text-align = right
     }
 
-    return{ displayText: formatDisplayText( displayText )
+    return{ displayText
         , firstNumber
         , lastNumber
         , mode

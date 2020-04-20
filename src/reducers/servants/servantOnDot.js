@@ -1,5 +1,3 @@
-import {formatDisplayText} from "../utils";
-
 export default ({displayText
                     , firstNumber
                     , lastNumber
@@ -15,7 +13,7 @@ export default ({displayText
     }
 
 
-    return{ displayText: formatDisplayText( displayText )
+    return{ displayText
         , firstNumber
         , lastNumber
         , mode

@@ -95,12 +95,3 @@ export const applyNegates = ( nm, log )=>{
     return `negate( ${ negates } )`;
 };
 
-export const formatDisplayText = ( dText )=>{
-    /// it is impossible to get rid of a space in the input line :(
-    let stringNm = dText.split( '' ).map( v =>{
-         return v === "," ? "." :  isNaN( parseInt( v ) ) ? '' : v;
-    }).join('');
-    const parts = stringNm.split( "." );
-    return `${ new Intl.NumberFormat('ru-RU').format(  parts[ 0 ] )}${parts.length > 1?","+parts[ 1 ]:''}`;
-
-};

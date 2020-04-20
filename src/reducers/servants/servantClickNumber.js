@@ -1,6 +1,6 @@
 import {MODES} from "../../constants";
-import {toFloat, getOutput, getArrLogText, formatDisplayText} from "../utils";
-import { store } from "../index";
+import {getArrLogText, getOutput, toFloat} from "../utils";
+import {store} from "../index";
 
 export default ({displayText
                     , firstNumber
@@ -48,7 +48,7 @@ export default ({displayText
         firstNumber = toFloat( displayText );
     }
 
-    return{ displayText: formatDisplayText( displayText )
+    return{ displayText
         , firstNumber
         , lastNumber
         , mode
