@@ -15,14 +15,15 @@ export const getArrLogText = ( ...args ) =>{
 
     return arr.filter( v => v !== "" );
 };
-///TODO: Перестроить работу с перем. displayText, будет числом и только на выводе будет преобразовываться в текст
+
 export const toFloat = (displayText )=> {
-    const strNm = displayText.split( '' ).map( v =>{
-        return v === "," ? "." :  isNaN( parseInt( v ) ) ? '' : v;
-    }).join('');
-    return parseFloat( strNm );
+    return parseFloat(  displayText.replace( ",", '.'));
 };
 
+export const toDisplayText = ( nm )=>{
+
+    return nm.toString().replace( ".", ",");
+};
 export const getSimpleOperator = (operator )=>{
 
     let o = '';
@@ -87,11 +88,10 @@ export const applyNegates = ( nm, log )=>{
     let negates = nm;
 
     if( log && log.includes( 'negate')){
-        const countNegates = log.split( 'negate').length;
-        for (let i = 1; i < countNegates ; i++) {
-            negates = `negate( ${ negates } )`;
-        }
+        negates = `negate( ${ log } )`;
+    } else {
+        negates = `negate( ${ negates } )`;
     }
-    return `negate( ${ negates } )`;
+    return negates;
 };
 

@@ -1,5 +1,5 @@
 import {MODES} from "../../constants";
-import {applyNegates, getArrLogText, toFloat} from "../utils";
+import {applyNegates, getArrLogText, toDisplayText, toFloat} from "../utils";
 
 export default ({displayText
                     , firstNumber
@@ -13,7 +13,7 @@ export default ({displayText
     if( mode < MODES.FIRST_OPERATOR ){
         
         firstNumber *= -1;
-        displayText = firstNumber.toString();
+        displayText = toDisplayText( firstNumber );
 
         if( firstNumber === 0 ){
             arrLogText = getArrLogText(  arrLogText, applyNegates( firstNumber, arrLogText.pop() ));
@@ -24,27 +24,36 @@ export default ({displayText
 
         mode = MODES.LAST_NUMBER;
         lastNumber = firstNumber * -1;
-        displayText = lastNumber.toString();
-        arrLogText = getArrLogText(  firstNumber, firstOperator, applyNegates( firstNumber, arrLogText.pop() ) );
+        arrLogText = getArrLogText(  firstNumber, firstOperator, applyNegates( displayText, arrLogText.pop() ) );
+        displayText = toDisplayText( lastNumber );
+
 
     } else if( mode === MODES.MULTIPLE_ACTION ) {
         lastNumber = toFloat( displayText ) * -1;
-        displayText = lastNumber.toString();
-        arrLogText = getArrLogText(  arrLogText
-                                    , applyNegates(
-                                            lastNumber * -1
-                                            , arrLogText[ arrLogText.length - 1].includes( 'negate')
-                                                                            ? arrLogText.pop() : '') );
+       /* arrLogText = getArrLogText(  arrLogText
+            , applyNegates(
+                displayText
+                , arrLogText[ arrLogText.length - 1].includes( 'negate')
+                    ? arrLogText.pop() : '') );*/
+         arrLogText = getArrLogText(  arrLogText
+             , firstOperator
+             , applyNegates(
+                 displayText
+                 ,  arrLogText.pop() ) );
+
+        displayText = toDisplayText( lastNumber );
+
     } else if( mode === MODES.AFTER_RESULT ){
             firstNumber = toFloat( displayText ) * -1;
-            arrLogText = getArrLogText( ` ${ applyNegates( firstNumber * -1, arrLogText.pop() ) } ` );
-            displayText = firstNumber.toString();
+            arrLogText = getArrLogText( ` ${ applyNegates( displayText , arrLogText.pop() ) } ` );
+            displayText = toDisplayText( firstNumber );
 
 
     } else if( mode === MODES.LAST_NUMBER ) {
 
         lastNumber *= -1;
-        displayText = lastNumber.toString();
+        arrLogText = getArrLogText( arrLogText,  applyNegates( displayText , arrLogText.pop() )  );
+        displayText = toDisplayText( lastNumber );
 
         ///TODO: arrLogText.join( " " ) text-align = right
     }

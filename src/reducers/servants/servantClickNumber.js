@@ -31,7 +31,7 @@ export default ({displayText
 
         if( arrLogText[ arrLogText.length - 1].includes( 'negate' )){
             lastNumber = value;
-            displayText =lastNumber;
+            displayText =lastNumber.toString();
             arrLogText = getArrLogText( arrLogText.slice( 0, -1 ) );
         } else {
             displayText = getOutput( lastNumber.toString(), value, onDot );
