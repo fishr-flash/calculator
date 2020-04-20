@@ -14,12 +14,12 @@ const SimpleOperators = ( props )=>{
 
     return(
         <fieldset id="fieldset_simple_btns">
-            <button className="input_btns" id="btn_remove" onClick={ () => props.onClick( SIMPLE_REMOVE )} />
+            {/*<button className="input_btns" id="btn_remove" onClick={ () => props.onClick( SIMPLE_REMOVE )} />*/}
             <button className="input_btns" id="btn_division" onClick={ () => props.onClick( SIMPLE_DIVISION )} />
             <button className="input_btns" id="btn_multiply" onClick={ () => props.onClick( SIMPLE_MULTIPLY )} />
             <button className="input_btns" id="btn_minus" onClick={ () => props.onClick( SIMPLE_MINUS )} />
             <button className="input_btns" id="btn_plus" onClick={ () => props.onClick( SIMPLE_PLUS )} />
-            <button className="input_btns" id="btn_result" onClick={ () => props.onClick( SIMPLE_RESULT )} />
+            {/*<button className="input_btns" id="btn_result" onClick={ () => props.onClick( SIMPLE_RESULT )} />*/}
         </fieldset>
     );
 }

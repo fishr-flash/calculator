@@ -134,14 +134,14 @@ div#viewer{
     padding: 7px 0 5px 6px;
     font-size: 11px;
     font-weight: lighter;
-    width: 175px;
+    width: 170.5px;
     float: left;
 
 }
 
 
 .main_controls {
-    width: 44px;
+    width: 43px;
     height: 30px;
 }
 
@@ -169,7 +169,7 @@ div#viewer{
     float: left;
 }
 
-#subtitle_ordinary {
+#subitile_ordinary {
     font-size: 19px;
     padding: 12px 15px 0 15px;
     display: inline-block;
@@ -379,11 +379,28 @@ button::-moz-focus-inner
     border: 1px solid rgba(0,0,0, 0.3);
 }
 
+.mm_btns:active
+, #min_btn:active
+, #max_btn:active
+, #menu_btn:active
+, #stick_btn:active
+, #journal_btn:active{
+    background-color: rgba(0,0,0,0.2);
+    border: 1px solid rgba(0,0,0, 0.3);
+}
 
 
-
-
- button:hover
+button:active
+, #btn_plus:active
+, #btn_remove:active
+, #btn_one_x:active
+, #btn_2x:active
+, #btn_x2:active
+, #btn_division:active
+, #btn_multiply:active
+, #btn_minus:active
+, #btn_plus_minus:active
+, button:hover
 , #btn_plus:hover
 , #btn_remove:hover
 , #btn_one_x:hover
@@ -398,36 +415,11 @@ button::-moz-focus-inner
 
 }
 
-button:active
-, #btn_plus:active
-, #btn_remove:active
-, #btn_one_x:active
-, #btn_2x:active
-, #btn_x2:active
-, #btn_division:active
-, #btn_multiply:active
-, #btn_minus:active
-, #btn_plus_minus:active
-, .mm_btns:active
-, .nmr_btns:active
-, #min_btn:active
-, #max_btn:active
-, #menu_btn:active
-, #stick_btn:active
-, #journal_btn:active{
-    background-color: rgba(0,0,0,0.2);
-    border: 1px solid rgba(0,0,0, 0.3);
-}
-
-
-#btn_result:hover{
+#btn_result:active
+, #btn_result:hover{
     background-color: rgba(108,154,0, .85);
     border: 1px solid rgba(139,195,4, .6);
 
-}
-
-#btn_result:active{
-    background-color: rgba(108,154,0, 1);
 }
 
 
@@ -436,14 +428,6 @@ button:active
     background-color: rgba(232,17,35,1.00);
     border: 1px solid rgba(0,0,0, 0.2);
     background-position: -2px -635px;
-
-}
-
-#close_btn:disabled{
-    background-color: rgba( 0, 0, 0, 0 );
-    border: 1px solid rgba(0,0,0, 0);
-    background-position: -2px -539px;
-    opacity: .5;
 
 }
 
@@ -466,3 +450,11 @@ button:disabled
 
 
 
+
+#btn_percent {
+    float: left;
+}
+
+#main_btns {
+    float: left;
+}

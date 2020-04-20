@@ -13,7 +13,7 @@ export default function Header(){
             </div>
             <div className="full_width" id="dashboard">
                 <button className="subtitle_controls" id="menu_btn" disabled={true}/>
-                <h2 id="subtitle_ordinary">Обычный</h2>
+                <h2 id="subitile_ordinary">Обычный</h2>
                 <button className="subtitle_controls" id="stick_btn" disabled={true}/>
                 <button className="subtitle_controls" id="journal_btn" disabled={true}/>
             </div>
