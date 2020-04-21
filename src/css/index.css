@@ -349,6 +349,19 @@ div#viewer{
 
 }
 
+#btn_percent {
+    float: left;
+}
+
+#main_btns {
+    float: left;
+}
+
+#fieldset_percent {
+    float: left;
+}
+
+
 /********************** BEHAVIOR **********************/
 
 
@@ -447,14 +460,3 @@ button:disabled
 
 /****************END OF BEHAVIOR **********************/
 
-
-
-
-
-#btn_percent {
-    float: left;
-}
-
-#main_btns {
-    float: left;
-}

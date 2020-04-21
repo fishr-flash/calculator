@@ -19,10 +19,9 @@ export default ({displayText
         mode = store.mode;
         firstOperator = store.firstOperator;
         onDot = store.onDot;
+        arrLogText = store.arrLogText;
 
-    }
-
-    if( mode === MODES.FIRST_OPERATOR  ){
+    } else if( mode === MODES.FIRST_OPERATOR  ){
         displayText = getOutput( lastNumber.toString(), value, onDot );
         lastNumber = toFloat( displayText );
         mode = MODES.LAST_NUMBER;

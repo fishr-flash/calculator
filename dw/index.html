@@ -1,39 +1,60 @@
-<!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<title>Calculator</title>
-	<!--<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.18.1/build/cssreset/cssreset-min.css">-->
+	<meta charset="utf-8">
+	<link rel="icon" href="/favicon.ico">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#000000">
+	<meta name="description" content="Web site created using create-react-app">
+	<link rel="apple-touch-icon" href="/logo17.png">
+	<!--
+          manifest.json provides metadata used when your web app is installed on a
+          user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+        -->
+	<link rel="manifest" href="/manifest.json">
+	<!--
+          Notice the use of  in the tags above.
+          It will be replaced with the URL of the `public` folder during the build.
+          Only files inside the `public` folder can be referenced from the HTML.
 
-<link href="css/index.css" rel="stylesheet" type="text/css">
+          Unlike "/favicon.ico" or "favicon.ico", "/favicon.ico" will
+          work correctly both with client-side routing and a non-root public URL.
+          Learn how to configure a non-root public URL by running `npm run build`.
+        -->
+	<title>Calculator</title>
+	<link href="css/index.css" rel="stylesheet" type="text/css">
 </head>
-
 <body>
-	<main role="main" class="active">
+<noscript>
+	You need to enable JavaScript to run this app.
+</noscript>
+<div id="root">
+	<main role="main" class="App active">
 		<header>
 			<div class="full_width" id="control_panel">
-				<h1 id="label_ctrl_panel">Калькулятор</h1><fieldset id="field_controls">
-					<button class="main_controls" id="min_btn"></button>
-					<button class="main_controls" id="max_btn"></button>
-					<button class="main_controls" id="close_btn"></button>
+				<h1 id="label_ctrl_panel">Калькулятор</h1>
+				<fieldset id="field_controls">
+					<button class="main_controls" id="min_btn" disabled=""/>
+					<button class="main_controls" id="max_btn" disabled=""></button>
+					<button class="main_controls" id="close_btn" disabled=""></button>
 				</fieldset>
 			</div>
 			<div class="full_width" id="dashboard">
-				<button class="subtitle_controls" id="menu_btn"></button>
+				<button class="subtitle_controls" id="menu_btn" disabled=""></button>
 				<h2 id="subitile_ordinary">Обычный</h2>
-				<button class="subtitle_controls" id="stick_btn"></button>
-				<button class="subtitle_controls" id="journal_btn"></button>
+				<button class="subtitle_controls" id="stick_btn" disabled=""></button>
+				<button class="subtitle_controls" id="journal_btn" disabled=""></button>
 			</div>
 		</header>
 		<section class="full_width" id="output">
-			<div class="full_width" id="progress"><button class="progress_arrows" id="left_progress_arrow"></button>
-				<p id="progress_content">512342457+4568+512+123</p>
+			<div class="full_width" id="progress">
+				<button class="progress_arrows" id="left_progress_arrow"></button>
+				<p id="progress_content"></p>
 				<button class="progress_arrows" id="right_progress_arrow"></button>
 			</div>
 			<div class="full_width" id="viewer">
-			  <blockquote>
-			    <p id="viewport">2 087 746 752</p>
-		      </blockquote>
+				<blockquote>
+					<p id="viewport">0</p>
+				</blockquote>
 			</div>
 		</section>
 		<section class="full_width" id="input">
@@ -46,7 +67,9 @@
 				<button class="mm_btns">M<sup id="down_arrow">▼</sup></button>
 			</fieldset>
 			<section class="input_fieldsets">
-				<button class="input_btns" id="btn_percent">%</button>
+				<fieldset id="fielset_percent">
+					<button class="input_btns" id="btn_percent">%</button>
+				</fieldset>
 				<fieldset id="main_btns">
 					<button class="input_btns" id="btn_ce">CE</button>
 					<button class="input_btns" id="btn_c">C</button>
@@ -58,17 +81,16 @@
 					<button class="input_btns" id="btn_2x"></button>
 				</fieldset>
 				<fieldset id="fieldset_num_btns">
-					<button class="input_btns nmr_btns" id="btn_seven">7</button>
-					<button class="input_btns nmr_btns" id="btn_eath">8</button>
-					<button class="input_btns nmr_btns" id="btn_nine">9</button>
-					<button class="input_btns nmr_btns" id="btn_four">4</button>
-					<button class="input_btns nmr_btns" id="btn_five">5</button>
-					<button class="input_btns nmr_btns" id="btn_six">6</button>
-					<button class="input_btns nmr_btns" id="btn_one">1</button>
-					<button class="input_btns nmr_btns" id="btn_two">2</button>
-					<button class="input_btns nmr_btns" id="btn_three">3</button>
-					<button class="input_btns nmr_btns" id="btn_plus_minus">
-					</button>
+					<button class="input_btns nmr_btns">7</button>
+					<button class="input_btns nmr_btns">8</button>
+					<button class="input_btns nmr_btns">9</button>
+					<button class="input_btns nmr_btns">4</button>
+					<button class="input_btns nmr_btns">5</button>
+					<button class="input_btns nmr_btns">6</button>
+					<button class="input_btns nmr_btns">1</button>
+					<button class="input_btns nmr_btns">2</button>
+					<button class="input_btns nmr_btns">3</button>
+					<button class="input_btns nmr_btns" id="btn_plus_minus"></button>
 					<button class="input_btns nmr_btns" id="btn_zerro">0</button>
 					<button class="input_btns nmr_btns" id="btn_dote">,</button>
 				</fieldset>
@@ -78,10 +100,23 @@
 					<button class="input_btns" id="btn_minus"></button>
 					<button class="input_btns" id="btn_plus"></button>
 				</fieldset>
-				<button class="input_btns" id="btn_result"></button>
-				
+				<fieldset>
+					<button class="input_btns" id="btn_result"></button>
+				</fieldset>
 			</section>
 		</section>
 	</main>
+</div>
+<!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+<script src="/static/js/bundle.js"></script><script src="/static/js/1.chunk.js"></script><script src="/static/js/main.chunk.js"></script><script src="/main.01df055f410c6afb07bd.hot-update.js"></script>
 </body>
 </html>

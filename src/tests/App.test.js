@@ -24,3 +24,9 @@ test('test getArrLogText', () => {
 
   expect( getArrLogText( 1.03, 2.32, SIMPLE_PLUS, 3, 4, 5,  SIMPLE_RESULT, "hello" ) ).toEqual(  undefined );
 });
+
+test('reducers', () => {
+  let state;
+  state = reducers({displayText:'2',firstNumber:2,lastNumber:0,mode:0,firstOperator:null,onDot:false,arrLogText:[' negate( 7423 ) ']}, {type:'onClickNumber',value:3});
+  expect(state).toEqual({displayText:'23',firstNumber:23,lastNumber:0,mode:0,firstOperator:null,onDot:false,arrLogText:[' negate( 7423 ) ']});
+});

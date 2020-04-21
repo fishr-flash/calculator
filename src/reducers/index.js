@@ -18,6 +18,7 @@ export const store = {
     , arrLogText: []
 
 };
+
 export default function reducer ( state = store, action ) {
 
     switch ( action.type ) {
@@ -36,6 +37,7 @@ export default function reducer ( state = store, action ) {
         default:
 
     }
+    ///TODO: Перегнать графику в свг
 
     ///TODO: Проверить взаимодействие с кнопкой backspace
     /////////////////////////////CONSOLE/////////////////////////////////////
