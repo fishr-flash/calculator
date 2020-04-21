@@ -1,4 +1,4 @@
-import {ON_CLICK_SIMPLE_OPERATOR, SIMPLE_RESULT} from "../../constants";
+import {ON_CLICK_SIMPLE_OPERATOR} from "../../constants";
 import {connect} from "react-redux";
 import React from "react";
 

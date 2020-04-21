@@ -1,4 +1,4 @@
-import {MODES, SIMPLE_REMOVE, SIMPLE_RESULT} from "../../constants";
+import {MODES} from "../../constants";
 import {getArrLogText, getResult, toFloat} from "../utils";
 
 export default ({displayText
@@ -10,60 +10,6 @@ export default ({displayText
                     , arrLogText
                 }, { type, value /*action*/})=>{
 
-    onDot = false;
-    if( value === SIMPLE_REMOVE ){
-
-        if( displayText !== "0" ){
-            if( mode < MODES.AFTER_RESULT ){
-                displayText = displayText.slice( 0, -1 ) || "0";
-
-                if( mode < MODES.LAST_NUMBER )
-                    firstNumber = toFloat( displayText );
-                else
-                    lastNumber =  toFloat( displayText );
-            }else {
-                firstNumber = toFloat( displayText );
-                arrLogText = [];
-            }
-        }
-    }
-    else if( value === SIMPLE_RESULT ){
-        if( mode >= MODES.FIRST_OPERATOR ){
-
-            if( ( !lastNumber && mode < MODES.LAST_NUMBER ) || mode === MODES.MULTIPLE_ACTION ){
-                lastNumber = toFloat( displayText );
-                mode = MODES.LAST_NUMBER;
-            }
-            displayText = getResult( firstNumber, lastNumber, firstOperator );
-            if( mode === MODES.AFTER_RESULT ){
-
-                arrLogText = getArrLogText( firstNumber
-                    , firstOperator
-                    , lastNumber
-                    , SIMPLE_RESULT );
-            }
-            else{
-                arrLogText = getArrLogText( arrLogText
-                    , arrLogText[ arrLogText.length - 1 ].includes( 'negate') ? '' : lastNumber
-                    , SIMPLE_RESULT);
-            }
-
-            firstNumber = toFloat( displayText );
-            mode = MODES.AFTER_RESULT;
-
-        } else {
-            
-            firstNumber = toFloat( displayText );
-            arrLogText = getArrLogText( firstNumber, SIMPLE_RESULT );
-        }
-
-
-
-    } else {
-
-
-        ////////////////// ANOTHER SIMPLE OPERATORS //////////////////////////
-
         onDot = false;
         if( mode === MODES.BEGIN_MODE
             || mode === MODES.AFTER_RESULT
@@ -71,10 +17,8 @@ export default ({displayText
             arrLogText = getArrLogText( firstNumber
                 , value );
             mode = MODES.FIRST_OPERATOR;
-        } else if(  mode === MODES.MULTIPLE_ACTION ){
-            ///nothing
 
-        } else {
+        } else if(  mode !== MODES.MULTIPLE_ACTION ){
             displayText = getResult( firstNumber, lastNumber, firstOperator );
             firstNumber = toFloat( displayText );
 
@@ -100,9 +44,6 @@ export default ({displayText
 
         firstOperator = value;
         lastNumber = 0;
-
-    }
-
 
     return{ displayText
         , firstNumber

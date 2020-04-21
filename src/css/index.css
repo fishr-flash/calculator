@@ -63,7 +63,7 @@ table {
 , #left_progress_arrow
 , #right_progress_arrow
 , #btn_plus
-, #btn_remove
+, #btn_backspace
 , #btn_division
 , #btn_multiply
 , #btn_minus
@@ -282,7 +282,7 @@ div#viewer{
 , #btn_one_x
 , #btn_x2
 , #btn_2x
-, #btn_remove {
+, #btn_backspace {
     width: 77px; height: 48.5px;
 }
 
@@ -294,7 +294,7 @@ div#viewer{
 , #btn_one_x
 , #btn_x2
 , #btn_2x
-, #btn_remove {
+, #btn_backspace {
     background-color: rgba(240,236,241, .4 );
 }
 #btn_result {
@@ -307,7 +307,7 @@ div#viewer{
 
 }
 
-#btn_remove {
+#btn_backspace {
     background-position: -0px -49px;
 
 }
@@ -405,7 +405,7 @@ button::-moz-focus-inner
 
 button:active
 , #btn_plus:active
-, #btn_remove:active
+, #btn_backspace:active
 , #btn_one_x:active
 , #btn_2x:active
 , #btn_x2:active
@@ -415,7 +415,7 @@ button:active
 , #btn_plus_minus:active
 , button:hover
 , #btn_plus:hover
-, #btn_remove:hover
+, #btn_backspace:hover
 , #btn_one_x:hover
 , #btn_2x:hover
 , #btn_x2:hover

@@ -3,6 +3,9 @@ export const ON_CLICK_NUMBER = "onClickNumber";
 export const ON_CLICK_DOT = "onClickDot";
 export const ON_CLICK_SIGN = "onClickSign";
 export const ON_CLICK_SIMPLE_OPERATOR = "onClickSimpleOperator";
+export const ON_CLICK_RESULT = "onClickResult";
+export const ON_CLICK_MAIN = "onClickMain";
+
 
 /// simple operators
 export const SIMPLE_MINUS = "simpleMinus";
@@ -11,6 +14,9 @@ export const SIMPLE_MULTIPLY = "simpleMultiply";
 export const SIMPLE_DIVISION = "simpleDivision";
 export const SIMPLE_RESULT = "simpleResult";
 export const SIMPLE_REMOVE = "simpleRemove";
+
+/// main operators
+export const MAIN_BACKSPACE = "mainBackspace";
 
 /// modes set
 

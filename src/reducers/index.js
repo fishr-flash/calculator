@@ -1,10 +1,19 @@
 // import { combineReducers } from 'redux';
 // import setNumber from "./setNumber";
-import {MODES, ON_CLICK_DOT, ON_CLICK_NUMBER, ON_CLICK_SIGN, ON_CLICK_SIMPLE_OPERATOR} from "../constants";
+import {
+    MODES,
+    ON_CLICK_DOT, ON_CLICK_MAIN,
+    ON_CLICK_NUMBER,
+    ON_CLICK_RESULT,
+    ON_CLICK_SIGN,
+    ON_CLICK_SIMPLE_OPERATOR
+} from "../constants";
 import servantOnSign from "./servants/servantOnSign";
 import servantClickNumber from "./servants/servantClickNumber";
 import servantOnDot from "./servants/servantOnDot";
 import servantSimpleOperator from "./servants/servantSimpleOperator";
+import servantResult from "./servants/servantResult";
+import servantMain from "./servants/servantMain";
 
 // export default combineReducers({ setNumber });
 
@@ -22,6 +31,12 @@ export const store = {
 export default function reducer ( state = store, action ) {
 
     switch ( action.type ) {
+        case ON_CLICK_RESULT:
+            state = servantResult( state, action );
+            break;
+        case ON_CLICK_MAIN:
+            state = servantMain( state, action );
+            break;
         case ON_CLICK_DOT:
             state = servantOnDot( state, action );
             break;
@@ -38,7 +53,8 @@ export default function reducer ( state = store, action ) {
 
     }
     ///TODO: Перегнать графику в свг
-
+    ///TODO: добавить полифил  для флэт https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flat
+    ///TODO: Заменить инклюдес
     ///TODO: Проверить взаимодействие с кнопкой backspace
     /////////////////////////////CONSOLE/////////////////////////////////////
         ///TODO: Console log in the code "INDEX_JS" line 32
