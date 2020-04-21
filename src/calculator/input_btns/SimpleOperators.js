@@ -12,7 +12,7 @@ const SimpleOperators = ( props )=>{
             <button className="input_btns" id="btn_plus" onClick={ () => props.onClick( SIMPLE_PLUS )} />
         </fieldset>
     );
-}
+};
 
 
 export default connect(
