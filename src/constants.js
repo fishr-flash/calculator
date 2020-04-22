@@ -17,6 +17,8 @@ export const SIMPLE_REMOVE = "simpleRemove";
 
 /// main operators
 export const MAIN_BACKSPACE = "mainBackspace";
+export const MAIN_CLEAR = "mainClear";
+export const MAIN_CLEAR_END = "mainClearEnd";
 
 /// modes set
 

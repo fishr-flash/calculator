@@ -13,13 +13,13 @@ export default ({displayText
 
 
     if( mode === MODES.AFTER_RESULT ){
-        displayText = store.displayText;
-        firstNumber = store.firstNumber;
+        firstNumber = value;
         lastNumber = store.lastNumber;
-        mode = store.mode;
+        mode = MODES.BEGIN_MODE;
         firstOperator = store.firstOperator;
         onDot = store.onDot;
         arrLogText = store.arrLogText;
+        displayText = getOutput( '', value, onDot );
 
     } else if( mode === MODES.FIRST_OPERATOR  ){
         displayText = getOutput( lastNumber.toString(), value, onDot );
