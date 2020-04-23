@@ -86,7 +86,7 @@ export const getOutput = ( base, arg, dot ) =>{
 
 export const applyNegates = ( nm, log )=>{
     let negates = nm;
-
+    ///FIXME: Replace includes to indexOf, and flat to toFlat
     if( log && log.includes( 'negate')){
         negates = `negate( ${ log } )`;
     } else {

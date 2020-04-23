@@ -1,3 +1,5 @@
+const DIVISION_WARNING = 'Деление на ноль невозможно';
+
 export default ({displayText
                     , firstNumber
                     , lastNumber
