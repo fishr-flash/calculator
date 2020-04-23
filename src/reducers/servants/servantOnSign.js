@@ -30,16 +30,9 @@ export default ({displayText
 
     } else if( mode === MODES.MULTIPLE_ACTION ) {
         lastNumber = toFloat( displayText ) * -1;
-       /* arrLogText = getArrLogText(  arrLogText
-            , applyNegates(
-                displayText
-                , arrLogText[ arrLogText.length - 1].includes( 'negate')
-                    ? arrLogText.pop() : '') );*/
          arrLogText = getArrLogText(  arrLogText
-             , firstOperator
-             , applyNegates(
-                 displayText
-                 ,  arrLogText.pop() ) );
+             ,  applyNegates( displayText
+                 , arrLogText.length%2 ? arrLogText.pop() : '' )  );
 
         displayText = toDisplayText( lastNumber );
 
@@ -52,7 +45,10 @@ export default ({displayText
     } else if( mode === MODES.LAST_NUMBER ) {
 
         lastNumber *= -1;
-        arrLogText = getArrLogText( arrLogText,  applyNegates( displayText , arrLogText.pop() )  );
+        ///TODO: Remove it
+       /* arrLogText = getArrLogText( arrLogText
+                                        ,  applyNegates( displayText
+                                                        , arrLogText.length%2 ? arrLogText.pop() : '' )  );*/
         displayText = toDisplayText( lastNumber );
 
         ///TODO: arrLogText.join( " " ) text-align = right

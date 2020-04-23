@@ -1,7 +1,7 @@
 // import { combineReducers } from 'redux';
 // import setNumber from "./setNumber";
 import {
-    MODES,
+    MODES, ON_CLICK_COMPLEXES,
     ON_CLICK_DOT, ON_CLICK_MAIN,
     ON_CLICK_NUMBER,
     ON_CLICK_RESULT,
@@ -14,6 +14,7 @@ import servantOnDot from "./servants/servantOnDot";
 import servantSimpleOperator from "./servants/servantSimpleOperator";
 import servantResult from "./servants/servantResult";
 import servantMain from "./servants/servantMain";
+import servantComplexes from "./servants/servantComplexes";
 
 // export default combineReducers({ setNumber });
 
@@ -48,6 +49,9 @@ export default function reducer ( state = store, action ) {
             break;
         case ON_CLICK_SIMPLE_OPERATOR:
             state = servantSimpleOperator( state, action );
+            break;
+        case ON_CLICK_COMPLEXES:
+            state = servantComplexes( state, action );
             break;
         default:
 
