@@ -95,5 +95,29 @@ export const applyNegates = ( nm, log )=>{
     return negates;
 };
 
+export const wrapperArg = ( nm, log, wrapText ) =>{
+
+    let result = `${ nm }`;
+    if( log && log.includes( wrapText )){
+        result = `${wrapText}(${ log })`;
+    } else {
+        result = `${wrapText}(${ nm })`;
+    }
+
+    return result;
+};
+
+export const applyOneDivison = ( nm, log ) =>{
+
+    let negates = nm;
+    ///FIXME: Replace includes to indexOf, and flat to toFlat
+    if( log && log.includes( 'negate')){
+        negates = `negate( ${ log } )`;
+    } else {
+        negates = `negate( ${ negates } )`;
+    }
+    return negates;
+};
+
 
 

@@ -1,5 +1,5 @@
 import {MODES} from "../../constants";
-import {applyNegates, getArrLogText, toDisplayText, toFloat} from "../utils";
+import {wrapperArg, getArrLogText, toDisplayText, toFloat } from "../utils";
 
 export default ({displayText
                     , firstNumber
@@ -16,7 +16,7 @@ export default ({displayText
         displayText = toDisplayText( firstNumber );
 
         if( firstNumber === 0 ){
-            arrLogText = getArrLogText(  arrLogText, applyNegates( firstNumber, arrLogText.pop() ));
+            arrLogText = getArrLogText(  arrLogText, wrapperArg( firstNumber, arrLogText.pop(), 'negate' ));
         } else{
             arrLogText = [];
         }
@@ -24,21 +24,21 @@ export default ({displayText
 
         mode = MODES.LAST_NUMBER;
         lastNumber = firstNumber * -1;
-        arrLogText = getArrLogText(  firstNumber, firstOperator, applyNegates( displayText, arrLogText.pop() ) );
+        arrLogText = getArrLogText(  firstNumber, firstOperator, wrapperArg( displayText, arrLogText.pop(), 'negate' ) );
         displayText = toDisplayText( lastNumber );
 
 
     } else if( mode === MODES.MULTIPLE_ACTION ) {
         lastNumber = toFloat( displayText ) * -1;
          arrLogText = getArrLogText(  arrLogText
-             ,  applyNegates( displayText
-                 , arrLogText.length%2 ? arrLogText.pop() : '' )  );
+             ,  wrapperArg( displayText
+                 , arrLogText.length%2 ? arrLogText.pop() : '', 'negate' )  );
 
         displayText = toDisplayText( lastNumber );
 
     } else if( mode === MODES.AFTER_RESULT ){
             firstNumber = toFloat( displayText ) * -1;
-            arrLogText = getArrLogText( ` ${ applyNegates( displayText , arrLogText.pop() ) } ` );
+            arrLogText = getArrLogText( ` ${ wrapperArg( displayText , arrLogText.pop(), 'negate' ) } ` );
             displayText = toDisplayText( firstNumber );
 
 
@@ -47,7 +47,7 @@ export default ({displayText
         lastNumber *= -1;
         ///TODO: Remove it
        /* arrLogText = getArrLogText( arrLogText
-                                        ,  applyNegates( displayText
+                                        ,  wrapperArg( displayText
                                                         , arrLogText.length%2 ? arrLogText.pop() : '' )  );*/
         displayText = toDisplayText( lastNumber );
 
