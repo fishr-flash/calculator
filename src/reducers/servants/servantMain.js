@@ -16,14 +16,11 @@ export default ({displayText
     switch ( value ) {
 
         case MAIN_CLEAR:
-
-            displayText = store.displayText;
             displayText = store.displayText;
             firstNumber = store.firstNumber;
             lastNumber = store.lastNumber;
             mode = store.mode;
             firstOperator = store.firstOperator;
-            onDot = store.onDot;
             arrLogText = store.arrLogText;
 
             break;
@@ -36,7 +33,6 @@ export default ({displayText
                 lastNumber = store.lastNumber;
                 mode = store.mode;
                 firstOperator = store.firstOperator;
-                onDot = store.onDot;
                 arrLogText = store.arrLogText;
             }
             else{

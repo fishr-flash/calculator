@@ -47,6 +47,8 @@ export default ({displayText
         firstNumber = toFloat( displayText );
     }
 
+    ///FIXME: Везде отменить onDOT = false, флаг должен обнуляться только в местах имзенения числа
+    onDot = false;
     return{ displayText
         , firstNumber
         , lastNumber

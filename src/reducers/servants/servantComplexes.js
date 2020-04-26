@@ -9,7 +9,7 @@ export default ({displayText
                     , arrLogText
                 }, { type, value /*action*/})=>{
 
-    onDot = false;
+
 
     return{ displayText
         , firstNumber

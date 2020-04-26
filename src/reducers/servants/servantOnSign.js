@@ -10,6 +10,8 @@ export default ({displayText
                     , arrLogText
                 }, { type, value /*action*/})=>{
 
+    onDot = false;
+
     if( mode < MODES.FIRST_OPERATOR ){
         
         firstNumber *= -1;
