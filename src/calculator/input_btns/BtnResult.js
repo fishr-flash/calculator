@@ -6,7 +6,7 @@ const BtnResult = ( props )=>{
 
     return(
         < fieldset >
-            <button className="input_btns" id="btn_result" onClick={ () => props.onClick( )} />
+            <button className="input_btns btn_result" onClick={ () => props.onClick( )} />
         </fieldset>
     );
 }

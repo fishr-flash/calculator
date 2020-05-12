@@ -5,8 +5,8 @@ import React from "react";
 const BtnPercent = ( props )=>{
 
     return(
-        <fieldset id="fieldset_percent">
-            <button className="input_btns" id="btn_percent">%</button>
+        <fieldset className="fieldset_percent">
+            <button className="input_btns btn_percent" >%</button>
         </fieldset>
     );
 }

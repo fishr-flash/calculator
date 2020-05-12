@@ -5,11 +5,11 @@ import {ON_CLICK_SIMPLE_OPERATOR, SIMPLE_DIVISION, SIMPLE_MINUS, SIMPLE_MULTIPLY
 const SimpleOperators = ( props )=>{
 
     return(
-        <fieldset id="fieldset_simple_btns">
-            <button className="input_btns" id="btn_division" onClick={ () => props.onClick( SIMPLE_DIVISION )} />
-            <button className="input_btns" id="btn_multiply" onClick={ () => props.onClick( SIMPLE_MULTIPLY )} />
-            <button className="input_btns" id="btn_minus" onClick={ () => props.onClick( SIMPLE_MINUS )} />
-            <button className="input_btns" id="btn_plus" onClick={ () => props.onClick( SIMPLE_PLUS )} />
+        <fieldset className="fieldset_simple_btns">
+            <button className="input_btns btn_division" onClick={ () => props.onClick( SIMPLE_DIVISION )} />
+            <button className="input_btns btn_multiply" onClick={ () => props.onClick( SIMPLE_MULTIPLY )} />
+            <button className="input_btns btn_minus" onClick={ () => props.onClick( SIMPLE_MINUS )} />
+            <button className="input_btns btn_plus" onClick={ () => props.onClick( SIMPLE_PLUS )} />
         </fieldset>
     );
 };

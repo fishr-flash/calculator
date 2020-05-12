@@ -5,7 +5,7 @@ import {ON_CLICK_DOT, ON_CLICK_NUMBER, ON_CLICK_SIGN} from "../../constants";
 const NumsBoard = ( props ) => {
 
     return(
-        <fieldset id="fieldset_num_btns">
+        <fieldset className="fieldset_num_btns">
             <button className="input_btns nmr_btns" onClick={ () => props.clickNumber( 7 )}>7</button>
             <button className="input_btns nmr_btns" onClick={ () => props.clickNumber( 8 )}>8</button>
             <button className="input_btns nmr_btns" onClick={ () => props.clickNumber( 9 )}>9</button>
@@ -15,7 +15,7 @@ const NumsBoard = ( props ) => {
             <button className="input_btns nmr_btns" onClick={ () => props.clickNumber( 1 )}>1</button>
             <button className="input_btns nmr_btns" onClick={ () => props.clickNumber( 2 )}>2</button>
             <button className="input_btns nmr_btns" onClick={ () => props.clickNumber( 3 )}>3</button>
-            <button className="input_btns nmr_btns" id="btn_plus_minus" onClick={ () => props.clickSymbol( )}/>
+            <button className="input_btns nmr_btns btn_plus_minus" onClick={ () => props.clickSymbol( )}/>
             <button className="input_btns nmr_btns" id="btn_zerro" onClick={ () => props.clickNumber( 0 )}>0</button>
             <button className="input_btns nmr_btns" id="btn_dote" onClick={ () => props.clickSymbol( "." )}>,</button>
         </fieldset>

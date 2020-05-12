@@ -9,7 +9,7 @@ import ComplexesBtns from "./input_btns/ComplexesBtns";
 
 const Input = () => {
     return(
-        <section className="full_width" id="input">
+        <section className="full_width input_section" >
             <MemoryBtns/>
             <section className="input_fieldsets">
                 <BtnPercent/>

@@ -9,7 +9,7 @@ const MemoryBtns = ( props ) =>{
             <button className="mm_btns">M+</button>
             <button className="mm_btns">M-</button>
             <button className="mm_btns">MS</button>
-            <button className="mm_btns">M<sup id="down_arrow">▼</sup></button>
+            <button className="mm_btns ">M<sup className="down_arrow">▼</sup></button>
         </fieldset>
     );
 
