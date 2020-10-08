@@ -8,7 +8,7 @@ export default ({displayText
                     , firstOperator
                     , onDot
                     , arrLogText
-                }, { type, value /*action*/})=>{
+                })=>{
 
 
         onDot = false;
