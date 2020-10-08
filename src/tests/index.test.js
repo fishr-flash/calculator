@@ -1,19 +1,53 @@
-describe('', () => {
+import servantResult from "../reducers/servants/servantResult";
+import {MODES, SIMPLE_PLUS} from "../constants";
+import {flatDeep} from "../reducers/utils";
 
-    test( "check jest on work", ()=>{
-        console.log( "hello world");
-        const f = 2;
-        const s = 3;
-        const funct = ( f, s ) => f + s;
-        expect( funct( f, s ) ).toBe( 4 );
+describe( "trial check jest on example check work servantResult method ", ()=>{
+
+    test( "trial check servantResult", ()=>{
+
+        const inData = { displayText:"321"
+            , firstNumber: 123
+            , lastNumber: 321
+            , mode: MODES.LAST_NUMBER
+            , firstOperator: SIMPLE_PLUS
+            , onDot: false
+            , arrLogText: [ "123", "+" ]};
+        const sr = servantResult;
+
+        const outData = {
+            displayText: "444"
+            , firstNumber: 444
+            , lastNumber: 321
+            , mode: MODES.AFTER_RESULT
+            , firstOperator: SIMPLE_PLUS
+            , onDot: false
+            , arrLogText: [ "123", "+", "321", "=" ]
+        }
+
+        expect( sr( inData )).toStrictEqual( outData );
+
     });
-});
 
-    test( "check jest on work", ()=>{
-    console.log( "hello world");
-    const f = 2;
-    const s = 3;
-    const funct = ( f, s ) => f + s;
-    expect( funct( f, s ) ).toBe( 4 );
+    test( "check work the flatDeep function ( substitute the flat function js )", () =>{
+
+        const inData = [1, 2, [3, 4, [5, 6]]];
+        expect( flatDeep( inData )).toStrictEqual(  [1, 2, 3, 4, 5, 6] );
     });
 
+    test( "check the polyfill function flatDeep of MDN base ", ()=>{
+        ///https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flat
+        const arr = [1, 2, [3, 4, [5, 6]]];
+
+        // to enable deep level flatten use recursion with reduce and concat
+        function flatDeep(arr, d = 1) {
+            return d > 0 ? arr.reduce((acc, val) => acc.concat(Array.isArray(val) ? flatDeep(val, d - 1) : val), [])
+                : arr.slice();
+        };
+
+        expect(  flatDeep(arr, Infinity) ).toStrictEqual(  [1, 2, 3, 4, 5, 6] );
+        // [1, 2, 3, 4, 5, 6]
+    });
+
+
+})

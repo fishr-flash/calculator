@@ -2,7 +2,7 @@ import {SIMPLE_DIVISION, SIMPLE_MINUS, SIMPLE_MULTIPLY, SIMPLE_PLUS, SIMPLE_RESU
 
 export const getArrLogText = ( ...args ) =>{
 
-    let arr = args.flat( 10 ).map( v => {
+    let arr = flatDeep( args ).map( v => {
         let res ="";
         if( typeof v === "number" )
             res = v.toString().replace( ".", ",");
@@ -118,6 +118,18 @@ export const applyOneDivison = ( nm, log ) =>{
     }
     return negates;
 };
+
+export const flatDeep = ( arr, d = Infinity )=>{
+
+    /*return d > 0 ?
+        arr.reduce( ( acc, val ) => Array.isArray( acc ) ? acc.concat( Array.isArray( val )
+            ? flatDeep( val, d - 1 ) : val, []) : [ acc ].concat( Array.isArray( val )
+            ? flatDeep( val, d - 1 ) : val, []) )  : arr.slice();*/
+
+    return d > 0 ? arr.reduce((acc, val) => acc.concat(Array.isArray(val) ? flatDeep(val, d - 1) : val), [])
+        : arr.slice();
+};
+
 
 
 
