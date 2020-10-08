@@ -27,7 +27,9 @@ const logger = store => next => action => {
 
 const store = createStore( reducer, composeWithDevTools( applyMiddleware( logger ) ) );
 */
-const store = createStore( reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+const store = createStore( reducer,
+                        window.__REDUX_DEVTOOLS_EXTENSION__
+                                && window.__REDUX_DEVTOOLS_EXTENSION__());
 ReactDOM.render(
     <Provider store={ store  } >
           <React.StrictMode>

@@ -1,3 +1,6 @@
+import {MODES} from "../../constants";
+import {store} from "../index";
+
 export default ({displayText
                     , firstNumber
                     , lastNumber
@@ -6,6 +9,17 @@ export default ({displayText
                     , onDot
                     , arrLogText
                 }, { type, value /*action*/})=>{
+
+    if( mode === MODES.AFTER_RESULT ){
+        displayText = store.displayText;
+        firstNumber = store.firstNumber;
+        lastNumber = store.lastNumber;
+        mode = store.mode;
+        firstOperator = store.firstOperator;
+        onDot = store.onDot;
+        arrLogText = store.arrLogText;
+
+    }
 
     if( !displayText.includes( "," ) ){
         onDot = true;

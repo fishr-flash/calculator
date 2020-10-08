@@ -2,7 +2,7 @@ import {SIMPLE_DIVISION, SIMPLE_MINUS, SIMPLE_MULTIPLY, SIMPLE_PLUS, SIMPLE_RESU
 
 export const getArrLogText = ( ...args ) =>{
 
-    let arr = args.flat( 10 ).map( v => {
+    let arr = flatDeep( args ).map( v => {
         let res ="";
         if( typeof v === "number" )
             res = v.toString().replace( ".", ",");
@@ -15,14 +15,15 @@ export const getArrLogText = ( ...args ) =>{
 
     return arr.filter( v => v !== "" );
 };
-///TODO: Перестроить работу с перем. displayText, будет числом и только на выводе будет преобразовываться в текст
+
 export const toFloat = (displayText )=> {
-    const strNm = displayText.split( '' ).map( v =>{
-        return v === "," ? "." :  isNaN( parseInt( v ) ) ? '' : v;
-    }).join('');
-    return parseFloat( strNm );
+    return parseFloat(  displayText.replace( ",", '.'));
 };
 
+export const toDisplayText = ( nm )=>{
+
+    return nm.toString().replace( ".", ",");
+};
 export const getSimpleOperator = (operator )=>{
 
     let o = '';
@@ -85,13 +86,50 @@ export const getOutput = ( base, arg, dot ) =>{
 
 export const applyNegates = ( nm, log )=>{
     let negates = nm;
-
+    ///FIXME: Replace includes to indexOf, and flat to toFlat
     if( log && log.includes( 'negate')){
-        const countNegates = log.split( 'negate').length;
-        for (let i = 1; i < countNegates ; i++) {
-            negates = `negate( ${ negates } )`;
-        }
+        negates = `negate( ${ log } )`;
+    } else {
+        negates = `negate( ${ negates } )`;
     }
-    return `negate( ${ negates } )`;
+    return negates;
 };
+
+export const wrapperArg = ( nm, log, wrapText ) =>{
+
+    let result = `${ nm }`;
+    if( log && log.includes( wrapText )){
+        result = `${wrapText}(${ log })`;
+    } else {
+        result = `${wrapText}(${ nm })`;
+    }
+
+    return result;
+};
+
+export const applyOneDivison = ( nm, log ) =>{
+
+    let negates = nm;
+    ///FIXME: Replace includes to indexOf, and flat to toFlat
+    if( log && log.includes( 'negate')){
+        negates = `negate( ${ log } )`;
+    } else {
+        negates = `negate( ${ negates } )`;
+    }
+    return negates;
+};
+
+export const flatDeep = ( arr, d = Infinity )=>{
+
+    /*return d > 0 ?
+        arr.reduce( ( acc, val ) => Array.isArray( acc ) ? acc.concat( Array.isArray( val )
+            ? flatDeep( val, d - 1 ) : val, []) : [ acc ].concat( Array.isArray( val )
+            ? flatDeep( val, d - 1 ) : val, []) )  : arr.slice();*/
+
+    return d > 0 ? arr.reduce((acc, val) => acc.concat(Array.isArray(val) ? flatDeep(val, d - 1) : val), [])
+        : arr.slice();
+};
+
+
+
 

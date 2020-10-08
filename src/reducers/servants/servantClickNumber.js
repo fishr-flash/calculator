@@ -13,16 +13,15 @@ export default ({displayText
 
 
     if( mode === MODES.AFTER_RESULT ){
-        displayText = store.displayText;
-        firstNumber = store.firstNumber;
+        firstNumber = value;
         lastNumber = store.lastNumber;
-        mode = store.mode;
+        mode = MODES.BEGIN_MODE;
         firstOperator = store.firstOperator;
         onDot = store.onDot;
+        arrLogText = store.arrLogText;
+        displayText = getOutput( '', value, onDot );
 
-    }
-
-    if( mode === MODES.FIRST_OPERATOR  ){
+    } else if( mode === MODES.FIRST_OPERATOR  ){
         displayText = getOutput( lastNumber.toString(), value, onDot );
         lastNumber = toFloat( displayText );
         mode = MODES.LAST_NUMBER;
@@ -31,7 +30,7 @@ export default ({displayText
 
         if( arrLogText[ arrLogText.length - 1].includes( 'negate' )){
             lastNumber = value;
-            displayText =lastNumber;
+            displayText =lastNumber.toString();
             arrLogText = getArrLogText( arrLogText.slice( 0, -1 ) );
         } else {
             displayText = getOutput( lastNumber.toString(), value, onDot );
@@ -48,6 +47,8 @@ export default ({displayText
         firstNumber = toFloat( displayText );
     }
 
+    ///FIXME: Везде отменить onDOT = false, флаг должен обнуляться только в местах имзенения числа
+    onDot = false;
     return{ displayText
         , firstNumber
         , lastNumber

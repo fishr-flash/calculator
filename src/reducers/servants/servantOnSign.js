@@ -1,5 +1,5 @@
 import {MODES} from "../../constants";
-import {applyNegates, getArrLogText, toFloat} from "../utils";
+import {wrapperArg, getArrLogText, toDisplayText, toFloat } from "../utils";
 
 export default ({displayText
                     , firstNumber
@@ -10,13 +10,15 @@ export default ({displayText
                     , arrLogText
                 }, { type, value /*action*/})=>{
 
+    onDot = false;
+
     if( mode < MODES.FIRST_OPERATOR ){
         
         firstNumber *= -1;
-        displayText = firstNumber.toString();
+        displayText = toDisplayText( firstNumber );
 
         if( firstNumber === 0 ){
-            arrLogText = getArrLogText(  arrLogText, applyNegates( firstNumber, arrLogText.pop() ));
+            arrLogText = getArrLogText(  arrLogText, wrapperArg( firstNumber, arrLogText.pop(), 'negate' ));
         } else{
             arrLogText = [];
         }
@@ -24,27 +26,32 @@ export default ({displayText
 
         mode = MODES.LAST_NUMBER;
         lastNumber = firstNumber * -1;
-        displayText = lastNumber.toString();
-        arrLogText = getArrLogText(  firstNumber, firstOperator, applyNegates( firstNumber, arrLogText.pop() ) );
+        arrLogText = getArrLogText(  firstNumber, firstOperator, wrapperArg( displayText, arrLogText.pop(), 'negate' ) );
+        displayText = toDisplayText( lastNumber );
+
 
     } else if( mode === MODES.MULTIPLE_ACTION ) {
         lastNumber = toFloat( displayText ) * -1;
-        displayText = lastNumber.toString();
-        arrLogText = getArrLogText(  arrLogText
-                                    , applyNegates(
-                                            lastNumber * -1
-                                            , arrLogText[ arrLogText.length - 1].includes( 'negate')
-                                                                            ? arrLogText.pop() : '') );
+         arrLogText = getArrLogText(  arrLogText
+             ,  wrapperArg( displayText
+                 , arrLogText.length%2 ? arrLogText.pop() : '', 'negate' )  );
+
+        displayText = toDisplayText( lastNumber );
+
     } else if( mode === MODES.AFTER_RESULT ){
             firstNumber = toFloat( displayText ) * -1;
-            arrLogText = getArrLogText( ` ${ applyNegates( firstNumber * -1, arrLogText.pop() ) } ` );
-            displayText = firstNumber.toString();
+            arrLogText = getArrLogText( ` ${ wrapperArg( displayText , arrLogText.pop(), 'negate' ) } ` );
+            displayText = toDisplayText( firstNumber );
 
 
     } else if( mode === MODES.LAST_NUMBER ) {
 
         lastNumber *= -1;
-        displayText = lastNumber.toString();
+        ///TODO: Remove it
+       /* arrLogText = getArrLogText( arrLogText
+                                        ,  wrapperArg( displayText
+                                                        , arrLogText.length%2 ? arrLogText.pop() : '' )  );*/
+        displayText = toDisplayText( lastNumber );
 
         ///TODO: arrLogText.join( " " ) text-align = right
     }

@@ -28,15 +28,15 @@ function Output( props ) {
     };
 
     return(
-        <section className="full_width" id="output">
-            <div className="full_width" id="progress">
-                <button className="progress_arrows" id="left_progress_arrow"/>
-                <p id="progress_content">{ props.logText }</p>
-                <button className="progress_arrows" id="right_progress_arrow"/>
+        <section className="full_width">
+            <div className="full_width story_calc">
+                <button className="progress_arrows left_progress_arrow"/>
+                <p className="progress_content">{ props.logText }</p>
+                <button className="progress_arrows right_progress_arrow" />
             </div>
-            <div className="full_width" id="viewer">
+            <div className="full_width viewer_panel" id="viewer">
                 <blockquote>
-                    <p id="viewport">{formatDisplayText( props.displayText )}</p>
+                    <p className="viewport">{formatDisplayText( props.displayText )}</p>
                 </blockquote>
             </div>
         </section>
