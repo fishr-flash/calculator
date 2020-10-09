@@ -57,10 +57,12 @@ export default function reducer ( state = store, action ) {
 
     }
     ///TODO: Перегнать графику в свг
-    ///TODO: добавить полифил  для флэт https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flat
     ///TODO: Заменить инклюдес
     ///TODO: Проверить взаимодействие с кнопкой backspace
     ///TODO: Деление на нуль. Добавить текст: Деление на ноль невозможно
+    ///TODO: Оригинальный калькулятор имеет бОльшую высоту
+    ///TODO: Кнопка закрыть активна и работает неправильно
+    ///TODO: Активны кнопки М
     /////////////////////////////CONSOLE/////////////////////////////////////
         ///TODO: Console log in the code "INDEX_JS" line 32
         if( true ){
