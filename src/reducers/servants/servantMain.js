@@ -11,8 +11,6 @@ export default ({displayText
                     , arrLogText
                 }, { type, value /*action*/})=>{
 
-    onDot = false;
-
     switch ( value ) {
 
         case MAIN_CLEAR:

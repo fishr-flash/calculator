@@ -1,6 +1,7 @@
 import servantResult from "../reducers/servants/servantResult";
-import {MODES, SIMPLE_PLUS} from "../constants";
-import {flatDeep} from "../reducers/utils";
+import {MODES, ON_CLICK_SIGN, SIMPLE_PLUS} from "../constants";
+import {flatDeep, wrapperArg} from "../reducers/utils";
+import servantOnSign from "../reducers/servants/servantOnSign";
 
 describe( "trial check jest on example check work servantResult method ", ()=>{
 
@@ -115,5 +116,106 @@ describe( "trial many incoming data of servantResult ", ()=>{
         checkedData.forEach(( v, i ) =>{
            expect( servantResult( v.inData )).toStrictEqual( v.outData );
         });
+    });
+});
+
+
+describe( "check work of servantOnSign ", ()=>{
+
+    test( "test of servantOnSign", ()=> {
+
+        const checkedData = [
+            {
+                inData:{ displayText:""
+                    , firstNumber: 0
+                    , lastNumber: 0
+                    , mode: MODES.BEGIN_MODE
+                    , firstOperator: null
+                    , onDot: false
+                    , arrLogText: []}
+                , outData:{
+                    displayText: "0"
+                    , firstNumber: -0
+                    , lastNumber: 0
+                    , mode: MODES.BEGIN_MODE
+                    , firstOperator: null
+                    , onDot: false
+                    , arrLogText: []
+                }
+            }
+            , {
+                inData:{ displayText:""
+                    , firstNumber: 2
+                    , lastNumber: 0
+                    , mode: MODES.BEGIN_MODE
+                    , firstOperator: null
+                    , onDot: false
+                    , arrLogText: []}
+                , outData:{
+                    displayText: "-2"
+                    , firstNumber: -2
+                    , lastNumber: 0
+                    , mode: MODES.BEGIN_MODE
+                    , firstOperator: null
+                    , onDot: false
+                    , arrLogText: []
+                }
+            }
+
+            ];
+
+        checkedData.forEach(( v, i ) =>{
+            try{
+                expect( servantOnSign( v.inData )).toStrictEqual( v.outData );
+            }catch (e) {
+                /////////////////////////////CONSOLE/////////////////////////////////////
+                ///TODO: Console log in the code "INDEX_TEST_JS" line 152
+                if( true ){
+                    console.group( 'Console log in the code "INDEX_TEST_JS" line 147' );
+                    console.info( 'v: ', v );
+                    console.info( 'i: ', i );
+                    console.info( 'e: ', e );
+
+                    //console.table( this );
+                    console.groupEnd();
+                }
+                /////////////////////////////END CONSOLE/////////////////////////////////
+            }
+
+        });
+
+    });
+
+    test( "test of wrapperArg", ()=>{
+
+        const inData = [
+            [ 12, "", "negate", "negate(12)" ]
+            , [ 12, "negate(12)", "negate", "negate(negate(12))" ]
+            , [ "12", "negate(12)", "negate", "negate(negate(12))" ]
+            , [ 0, "", "negate", "" ]
+        ];
+
+        inData.forEach( ( v, i ) => {
+
+            try{
+                expect( wrapperArg( v[ 0 ], v[ 1 ], v[ 2 ]) ).toStrictEqual( v[ 3 ] );
+            }catch (e) {
+                /////////////////////////////CONSOLE/////////////////////////////////////
+                    ///TODO: Console log in the code "INDEX_TEST_JS" line 147
+                    if( true ){
+                        console.group( 'Console log in the code "INDEX_TEST_JS" line 147' );
+                        console.info( 'v: ', v );
+                        console.info( 'i: ', i );
+                        console.info( 'e: ', e );
+
+                        //console.table( this );
+                        console.groupEnd();
+                    }
+                /////////////////////////////END CONSOLE/////////////////////////////////
+            }
+
+        });
+
+
     });
 });

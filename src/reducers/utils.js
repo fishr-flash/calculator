@@ -95,6 +95,19 @@ export const applyNegates = ( nm, log )=>{
     return negates;
 };
 
+/**
+ *  Called when it is necessary to wrap a number in the text
+ *  of the calculator log in any special text structure,
+ *  such "wrapping" can be multiple
+ *
+ *  Вызывается при необходимости обернуть число в тексте лога
+ *  калькулятора в какую либо специальную текстовую контструкцию,
+ *  такое "обертывание" может быть множественным
+ * @param nm
+ * @param log
+ * @param wrapText
+ * @returns {string}
+ */
 export const wrapperArg = ( nm, log, wrapText ) =>{
 
     let result = `${ nm }`;

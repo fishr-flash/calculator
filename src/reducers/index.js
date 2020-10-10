@@ -33,7 +33,7 @@ export default function reducer ( state = store, action ) {
 
     switch ( action.type ) {
         case ON_CLICK_RESULT:
-            state = servantResult( state, action );
+            state = servantResult( state );
             break;
         case ON_CLICK_MAIN:
             state = servantMain( state, action );
@@ -42,7 +42,7 @@ export default function reducer ( state = store, action ) {
             state = servantOnDot( state, action );
             break;
         case ON_CLICK_SIGN:
-            state = servantOnSign( state, action );
+            state = servantOnSign( state );
            break;
         case ON_CLICK_NUMBER:
             state = servantClickNumber( state, action );

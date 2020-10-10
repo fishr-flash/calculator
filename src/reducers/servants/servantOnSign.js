@@ -8,7 +8,7 @@ export default ({displayText
                     , firstOperator
                     , onDot
                     , arrLogText
-                }, { type, value /*action*/})=>{
+                })=>{
 
     onDot = false;
 
@@ -17,11 +17,14 @@ export default ({displayText
         firstNumber *= -1;
         displayText = toDisplayText( firstNumber );
 
-        if( firstNumber === 0 ){
+        ///FIXME: Delete a block at the end of tests
+        /*if( firstNumber === 0 ){
             arrLogText = getArrLogText(  arrLogText, wrapperArg( firstNumber, arrLogText.pop(), 'negate' ));
         } else{
             arrLogText = [];
-        }
+        }*/
+
+        arrLogText = [];
     } else if( mode === MODES.FIRST_OPERATOR ) {
 
         mode = MODES.LAST_NUMBER;
