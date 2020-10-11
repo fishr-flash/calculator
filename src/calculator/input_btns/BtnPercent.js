@@ -6,7 +6,7 @@ const BtnPercent = ( props )=>{
 
     return(
         <fieldset className="fieldset_percent">
-            <button className="input_btns btn_percent" >%</button>
+            <button className="input_btns btn_percent" disabled={true} >%</button>
         </fieldset>
     );
 }

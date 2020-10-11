@@ -112,9 +112,9 @@ export const wrapperArg = ( nm, log, wrapText ) =>{
 
     let result = `${ nm }`;
     if( log && log.includes( wrapText )){
-        result = `${wrapText}(${ log })`;
+        result = `${wrapText}( ${ log } )`;
     } else {
-        result = `${wrapText}(${ nm })`;
+        result = `${wrapText}( ${ nm } )`;
     }
 
     return result;

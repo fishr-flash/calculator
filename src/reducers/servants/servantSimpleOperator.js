@@ -14,7 +14,7 @@ export default ({displayText
         if( mode === MODES.BEGIN_MODE
             || mode === MODES.AFTER_RESULT
             || mode === MODES.FIRST_OPERATOR ){
-            arrLogText = getArrLogText( firstNumber
+            arrLogText = getArrLogText( arrLogText.length ? arrLogText : firstNumber
                 , value );
             mode = MODES.FIRST_OPERATOR;
 
