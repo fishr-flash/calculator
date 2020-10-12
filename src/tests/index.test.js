@@ -1,8 +1,16 @@
 import servantResult from "../reducers/servants/servantResult";
-import {MODES, ON_CLICK_SIGN, ON_CLICK_SIMPLE_OPERATOR, SIMPLE_MINUS, SIMPLE_PLUS} from "../constants";
-import {flatDeep, wrapperArg} from "../reducers/utils";
+import {
+    MODES,
+    ON_CLICK_PERCENT,
+    ON_CLICK_SIGN,
+    ON_CLICK_SIMPLE_OPERATOR,
+    SIMPLE_MINUS,
+    SIMPLE_PLUS
+} from "../constants";
+import {flatDeep, getArrLogText, getOutput, toDisplayText, toFloat, wrapperArg} from "../reducers/utils";
 import servantOnSign from "../reducers/servants/servantOnSign";
 import servantSimpleOperator from "../reducers/servants/servantSimpleOperator";
+import servantPercentOperator from "../reducers/servants/servantPercentOperator";
 
 describe( "", ()=>{
 
@@ -89,8 +97,6 @@ describe( "", ()=>{
                 try{
                     expect( servantOnSign( v.inData )).toStrictEqual( v.outData );
                 }catch (e) {
-                    /////////////////////////////CONSOLE/////////////////////////////////////
-                    ///TODO: Console log in the code "INDEX_TEST_JS" line 152
                     if( true ){
                         console.group( 'Console log in the code "INDEX_TEST_JS" line 147' );
                         console.info( 'v: ', v );
@@ -100,7 +106,6 @@ describe( "", ()=>{
                         //console.table( this );
                         console.groupEnd();
                     }
-                    /////////////////////////////END CONSOLE/////////////////////////////////
                 }
 
             });
@@ -265,8 +270,6 @@ describe( "", ()=>{
                 try{
                     expect( servantSimpleOperator( ...v.inData )).toStrictEqual( v.outData );
                 }catch (e) {
-                    /////////////////////////////CONSOLE/////////////////////////////////////
-                    ///TODO: Console log in the code "INDEX_TEST_JS" line 152
                     if( true ){
                         console.group( 'Console log in the code "INDEX_TEST_JS" line 147' );
                         console.info( 'v: ', v );
@@ -276,7 +279,98 @@ describe( "", ()=>{
                         //console.table( this );
                         console.groupEnd();
                     }
-                    /////////////////////////////END CONSOLE/////////////////////////////////
+                }
+            });
+        });
+        test( "test of servantPercentOperator", ()=>{
+
+            let rnd = Math.random() * 1000;
+            if( Math.random() < .5 ) rnd *= -1;
+
+            const checkedData = [
+                {
+                    inData:{
+                        displayText: '0',
+                        firstNumber: 0,
+                        lastNumber: 0,
+                        mode: 0,
+                        firstOperator: null,
+                        onDot: false,
+                        arrLogText: []
+                        }
+                    , outData:{
+                        displayText: '0',
+                        firstNumber: 0,
+                        lastNumber: 0,
+                        mode: 0,
+                        firstOperator: null,
+                        onDot: false,
+                        arrLogText: [ "0" ]
+                    }
+                } /// первичный вариант
+                , {
+                    inData:{
+                        displayText: '0',
+                        firstNumber: rnd,
+                        lastNumber: 0,
+                        mode: 0,
+                        firstOperator: null,
+                        onDot: false,
+                        arrLogText: []
+                        }
+                    , outData:{
+                        displayText: '0',
+                        firstNumber: 0,
+                        lastNumber: 0,
+                        mode: 0,
+                        firstOperator: null,
+                        onDot: false,
+                        arrLogText: [ "0" ]
+                    }
+                } /// вариант с любой входящей первой цифрой
+                , {
+                    inData:{
+                        displayText: toDisplayText( rnd * ( rnd / 100 ) ),
+                        firstNumber: rnd,
+                        lastNumber: 0,
+                        mode: 1,
+                        firstOperator: 'simplePlus',
+                        onDot: false,
+                        arrLogText: [
+                            toDisplayText( rnd ),
+                            '+'
+                        ]
+                    }
+                    , outData:{
+                        displayText: toDisplayText( rnd * ( rnd / 100 ) ),
+                        firstNumber: rnd,
+                        lastNumber: rnd * ( rnd / 100 ),
+                        mode: MODES.LAST_NUMBER,
+                        firstOperator: 'simplePlus',
+                        onDot: false,
+                        arrLogText: [
+                            toDisplayText( rnd ),
+                            '+'
+                            , toDisplayText( rnd * ( rnd / 100 ) )
+                        ]
+                    }
+                } /// после любого простого оператора
+
+                ];
+
+            checkedData.forEach(( v, i ) =>{
+                try{
+                    expect( servantPercentOperator( v.inData )).toStrictEqual( v.outData );
+                }catch (e) {
+                    if( true ){
+                        console.group( 'Console log in the code "INDEX_TEST_JS" line 147' );
+                        console.info( 'v: ', v );
+                        console.info( 'i: ', i );
+                        console.info( 'e: ', e );
+
+                        //console.table( this );
+                        console.groupEnd();
+                    }
                 }
             });
         });
@@ -295,8 +389,6 @@ describe( "", ()=>{
                 try{
                     expect( wrapperArg( v.nm, v.log, v.wrapText) ).toStrictEqual( v.answer );
                 }catch (e) {
-                    /////////////////////////////CONSOLE/////////////////////////////////////
-                    ///TODO: Console log in the code "INDEX_TEST_JS" line 147
                     if( true ){
                         console.group( 'Console log in the code "INDEX_TEST_JS" line 147' );
                         console.info( 'v: ', v );
@@ -306,7 +398,6 @@ describe( "", ()=>{
                         //console.table( this );
                         console.groupEnd();
                     }
-                    /////////////////////////////END CONSOLE/////////////////////////////////
                 }
 
             });
@@ -330,6 +421,25 @@ describe( "", ()=>{
 
             expect(  flatDeep(arr, Infinity) ).toStrictEqual(  [1, 2, 3, 4, 5, 6] );
             // [1, 2, 3, 4, 5, 6]
+        });
+        test( "check the function getArrLogText ", ()=>{
+
+            let arr = new Array( 5 ).fill( 0 ).map( (v)=> { return Math.random() * 1000 * ( ( Math.random() < .5 ) ? -1 : 1 ) });
+
+            arr.forEach( ( v ) => {
+                try{
+
+                        expect( getArrLogText([12.32, "+"], v ) ).toStrictEqual( [12.32.toString().replace( ".", ",")
+                                                                            , "+", v.toString().replace( ".", ",") ] );
+                }catch (e) {
+                    if( true ){
+                        console.group( 'Console log in the code "INDEX_TEST_JS" line 147' );
+                        console.info( 'v: ', v );
+                        console.info( 'e: ', e );
+                        console.groupEnd();
+                    }
+                }
+            });
         });
     });
 });

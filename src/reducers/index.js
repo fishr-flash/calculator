@@ -3,7 +3,7 @@
 import {
     MODES, ON_CLICK_COMPLEXES,
     ON_CLICK_DOT, ON_CLICK_MAIN,
-    ON_CLICK_NUMBER,
+    ON_CLICK_NUMBER, ON_CLICK_PERCENT,
     ON_CLICK_RESULT,
     ON_CLICK_SIGN,
     ON_CLICK_SIMPLE_OPERATOR
@@ -15,6 +15,7 @@ import servantSimpleOperator from "./servants/servantSimpleOperator";
 import servantResult from "./servants/servantResult";
 import servantMain from "./servants/servantMain";
 import servantComplexes from "./servants/servantComplexes";
+import servantPercentOperator from "./servants/servantPercentOperator";
 
 // export default combineReducers({ setNumber });
 
@@ -52,6 +53,9 @@ export default function reducer ( state = store, action ) {
             break;
         case ON_CLICK_COMPLEXES:
             state = servantComplexes( state, action );
+            break;
+        case ON_CLICK_PERCENT:
+            state = servantPercentOperator( state );
             break;
         default:
 

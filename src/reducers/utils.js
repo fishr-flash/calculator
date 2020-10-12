@@ -5,10 +5,9 @@ export const getArrLogText = ( ...args ) =>{
     let arr = flatDeep( args ).map( v => {
         let res ="";
         if( typeof v === "number" )
-            res = v.toString().replace( ".", ",");
+            res = toDisplayText( v )
         else
             res = getSimpleOperator( v );
-
         if( res ) return res;
         return v;
     });
@@ -74,6 +73,14 @@ export const getResult = (  firstNumber, lastNumber, firstOperator ) =>{
     return result.toString().replace( ".", ",");
 };
 
+/**
+ * Prepares a number for output in the current number field
+ *
+ * @param base - perhaps the first part of the number ( before the separator )
+ * @param arg - enter digit
+ * @param dot - separator flag
+ * @returns {string} the result is in string format
+ */
 export const getOutput = ( base, arg, dot ) =>{
     if( base.includes( "," )  ) {
         dot = false;
@@ -84,16 +91,6 @@ export const getOutput = ( base, arg, dot ) =>{
         return  base === '0' ? `${ arg}` : `${base}${arg}`;
 };
 
-export const applyNegates = ( nm, log )=>{
-    let negates = nm;
-    ///FIXME: Replace includes to indexOf, and flat to toFlat
-    if( log && log.includes( 'negate')){
-        negates = `negate( ${ log } )`;
-    } else {
-        negates = `negate( ${ negates } )`;
-    }
-    return negates;
-};
 
 /**
  *  Called when it is necessary to wrap a number in the text
@@ -118,18 +115,6 @@ export const wrapperArg = ( nm, log, wrapText ) =>{
     }
 
     return result;
-};
-
-export const applyOneDivison = ( nm, log ) =>{
-
-    let negates = nm;
-    ///FIXME: Replace includes to indexOf, and flat to toFlat
-    if( log && log.includes( 'negate')){
-        negates = `negate( ${ log } )`;
-    } else {
-        negates = `negate( ${ negates } )`;
-    }
-    return negates;
 };
 
 export const flatDeep = ( arr, d = Infinity )=>{

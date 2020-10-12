@@ -6,6 +6,7 @@ export const ON_CLICK_SIMPLE_OPERATOR = "onClickSimpleOperator";
 export const ON_CLICK_RESULT = "onClickResult";
 export const ON_CLICK_MAIN = "onClickMain";
 export const ON_CLICK_COMPLEXES = "onClickComplexes";
+export const ON_CLICK_PERCENT = "onClickPercent";
 
 
 /// simple operators
@@ -22,6 +23,8 @@ export const MAIN_CLEAR_END = "mainClearEnd";
 
 /// complexes operators
 export const COMPLEXES_DIVISION_X = "complexesDevisionX";
+
+
 
 /// modes set
 
