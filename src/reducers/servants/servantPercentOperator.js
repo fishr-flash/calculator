@@ -1,5 +1,5 @@
 import {MODES} from "../../constants";
-import {getArrLogText, getOutput, toDisplayText} from "../utils";
+import {getArrLogText, roundNum, toDisplayText} from "../utils";
 
 export default ({displayText
                     , firstNumber
@@ -14,14 +14,18 @@ export default ({displayText
 
         if( mode === MODES.BEGIN_MODE ){
             firstNumber = 0;
-            displayText = getOutput( "", firstNumber, onDot );
+            displayText = toDisplayText( firstNumber );
             arrLogText = getArrLogText( firstNumber );
         } else if ( mode === MODES.FIRST_OPERATOR ){
-            ///TODO: Не забыть сократить число до N десятичных
-            lastNumber = firstNumber * ( firstNumber / 100 );
+            lastNumber = roundNum( firstNumber * ( firstNumber / 100 ) );
             mode = MODES.LAST_NUMBER;
             arrLogText = getArrLogText( arrLogText, lastNumber );
             displayText = toDisplayText( lastNumber );
+        } else if ( mode === MODES.LAST_NUMBER ){
+            lastNumber = roundNum( lastNumber * ( firstNumber / 100 ) );
+            arrLogText = getArrLogText( arrLogText, lastNumber );
+            displayText = toDisplayText( lastNumber );
+            mode = MODES.AFTER_RESULT;
         }
 
 

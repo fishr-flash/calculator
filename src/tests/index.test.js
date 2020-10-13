@@ -1,13 +1,18 @@
 import servantResult from "../reducers/servants/servantResult";
 import {
     MODES,
-    ON_CLICK_PERCENT,
-    ON_CLICK_SIGN,
     ON_CLICK_SIMPLE_OPERATOR,
-    SIMPLE_MINUS,
+    SIMPLE_MULTIPLY,
     SIMPLE_PLUS
 } from "../constants";
-import {flatDeep, getArrLogText, getOutput, toDisplayText, toFloat, wrapperArg} from "../reducers/utils";
+import {
+    flatDeep,
+    getArrLogText,
+    roundNum,
+    getResult,
+    toDisplayText,
+    wrapperArg
+} from "../reducers/utils";
 import servantOnSign from "../reducers/servants/servantOnSign";
 import servantSimpleOperator from "../reducers/servants/servantSimpleOperator";
 import servantPercentOperator from "../reducers/servants/servantPercentOperator";
@@ -149,7 +154,8 @@ describe( "", ()=>{
                         , onDot: false
                         , arrLogText: [ "123", "+", "321", "=" ]
                     }
-                }, {
+                }
+                , {
                     inData:{ displayText:"321"
                         , firstNumber: 123
                         , lastNumber: 321
@@ -167,9 +173,60 @@ describe( "", ()=>{
                         , arrLogText: [ "123", "+", "321", "=" ]
                     }
                 }
+                , {
+                    inData:{
+                                displayText: '-3',
+                                firstNumber: -3,
+                                lastNumber: 2,
+                                mode: 4,
+                                firstOperator: 'simplePlus',
+                                onDot: false,
+                                arrLogText: [
+                                    ' negate( 3 ) '
+                                ]
+                            }
+                    , outData:{
+                        displayText: '-1',
+                        firstNumber: -1,
+                        lastNumber: 2,
+                        mode: 4,
+                        firstOperator: 'simplePlus',
+                        onDot: false,
+                        arrLogText: [
+                            ' negate( 3 ) ',
+                            '+',
+                            '2',
+                            '='
+                        ]
+                    }
+                }
+                , {
+                    inData:{
+                        displayText: '0,2',
+                        firstNumber: 10,
+                        lastNumber: 0.2,
+                        mode: MODES.AFTER_RESULT,
+                        firstOperator: SIMPLE_PLUS,
+                        onDot: false,
+                        arrLogText: [
+                            '10',
+                            '+',
+                            '0,2'
+                        ]
+                    }
+                    , outData:{
+                        displayText: "10,2"
+                        , firstNumber: 10.2
+                        , lastNumber: 0.2
+                        , mode: MODES.AFTER_RESULT
+                        , firstOperator: SIMPLE_PLUS
+                        , onDot: false
+                        , arrLogText: [ "10", "+", "0,2", "=" ]
+                    }
+                }/// with before created percent
             ];
 
-            checkedData.forEach(( v, i ) =>{
+            checkedData.forEach(( v ) =>{
                 expect( servantResult( v.inData )).toStrictEqual( v.outData );
             });
         });
@@ -235,16 +292,19 @@ describe( "", ()=>{
                             ]
                         }
                 } /// множественное прибавление
-                , {
+                /*, {
                     inData:[{
-                                displayText: '-3',
-                                firstNumber: -3,
-                                lastNumber: 2,
+                                displayText: '10,2',
+                                firstNumber: 10.2,
+                                lastNumber: 0.2,
                                 mode: 4,
                                 firstOperator: 'simplePlus',
                                 onDot: false,
                                 arrLogText: [
-                                    ' negate( 3 ) '
+                                    '10',
+                                    '+',
+                                    '0,2',
+                                    '='
                                 ]
                             }
                             , {
@@ -252,18 +312,18 @@ describe( "", ()=>{
                                 value: 'simplePlus'
                             }]
                     , outData:{
-                                displayText: '-3',
-                                firstNumber: -3,
-                                lastNumber: 0,
-                                mode: 1,
+                                displayText: '10,2',
+                                firstNumber: 10.2,
+                                lastNumber: 10.2,
+                                mode: 3,
                                 firstOperator: 'simplePlus',
                                 onDot: false,
                                 arrLogText: [
-                                    ' negate( 3 ) ',
+                                    '10,2',
                                     '+'
                                 ]
                             }
-                } /// множественное прибавление
+                }*/ /// прибавление после получения результата с использованием перевода в проценты
                 ];
 
             checkedData.forEach(( v, i ) =>{
@@ -355,6 +415,33 @@ describe( "", ()=>{
                         ]
                     }
                 } /// после любого простого оператора
+                , {
+                    inData:{
+                        displayText: '2',
+                        firstNumber: 10,
+                        lastNumber: 2,
+                        mode: MODES.LAST_NUMBER,
+                        firstOperator: 'simplePlus',
+                        onDot: false,
+                        arrLogText: [
+                            '10',
+                            '+'
+                        ]
+                    }
+                    , outData:{
+                        displayText: '0,2',
+                        firstNumber: 10,
+                        lastNumber: 0.2,
+                        mode: MODES.AFTER_RESULT,
+                        firstOperator: 'simplePlus',
+                        onDot: false,
+                        arrLogText: [
+                            '10',
+                            '+',
+                            '0,2'
+                        ]
+                    }
+                } /// после ввода 2ой цифры
 
                 ];
 
@@ -441,5 +528,67 @@ describe( "", ()=>{
                 }
             });
         });
+        test( "check the function getResult ", ()=>{
+
+            //let arr = new Array( 5 ).fill( 0 ).map( (v)=> { return Math.random() * 1000 * ( ( Math.random() < .5 ) ? -1 : 1 ) });
+            let arr = [ 1 ]
+            arr.forEach( ( v, i ) => {
+                try{
+
+                        expect( getResult( 1, v,  SIMPLE_MULTIPLY ) ).toStrictEqual( "1" );
+                }catch (e) {
+                    if( true ){
+                        console.group( 'Console log in the code "INDEX_TEST_JS" line 147' );
+                        console.info( 'v: ', v );
+                        console.info( 'i: ', i );
+                        console.info( 'e: ', e );
+                        console.groupEnd();
+                    }
+                }
+            });
+        });
+        test( "check the function roundNum ", ()=>{
+
+            let arr = [ 0.00000000000327681, -2.34 ]
+            arr.forEach( ( v, i ) => {
+                try{
+
+                        expect( roundNum( v ) ).toStrictEqual( v );
+                }catch (e) {
+                    if( true ){
+                        console.group( 'Console log in the code "INDEX_TEST_JS" line 147' );
+                        console.info( 'v: ', v );
+                        console.info( 'i: ', i );
+                        console.info( 'e: ', e );
+                        console.groupEnd();
+                    }
+                }
+            });
+        });
     });
+
+    describe( 'different', ()=>{
+        test( "typeof of number", ()=>{
+           //expect( typeof "-3" === "number").toBe( true );
+           //expect( typeof "3,23" === "number").toBe( true );
+           //expect( Number( "negate( 34 )")).toBe( 0 );
+           //expect( Number( toFloat( "3,4" ))).toBe( 0 );
+
+            /*
+            const firstArgument = ( firstNumber, arrLogText ) =>{
+                  if( typeof toFloat( arrLogText ) !== 'number'
+                        && arrLogText.includes( toDisplayText( firstNumber )))
+                  return arrLogText;
+
+                  return firstNumber;
+
+                };
+             */
+            //expect( typeof toFloat( "negate( 3,5 )")).toBe( 0 );
+            //expect( toFloat( "negate( 3,5 )")).toBe( 0 );
+            //expect( isNaN( toFloat( "negate( 3,5 )" ) ) ).toBe( 0 );
+            //expect(  "negate( 3,5 )".includes( toDisplayText( 3.5 ) )  ).toBe( 0 );
+        });
+
+    })
 });
