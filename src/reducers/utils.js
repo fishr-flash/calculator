@@ -5,7 +5,7 @@ export const getArrLogText = ( ...args ) =>{
     let arr = flatDeep( args ).map( v => {
         let res ="";
         if( typeof v === "number" )
-            res = toDisplayText( v )
+            res = toDisplayText( v );
         else
             res = getSimpleOperator( v );
         if( res ) return res;
@@ -49,23 +49,24 @@ export const getSimpleOperator = (operator )=>{
 
     return o;
 };
+
 export const getResult = (  firstNumber, lastNumber, firstOperator ) =>{
 
     let result = 0;
     switch ( firstOperator ) {
 
         case SIMPLE_PLUS:
-            result = ( firstNumber + lastNumber ).toFixed( 10 ) * 1 /* exclude excess zeros*/;
+            result = roundNum( firstNumber + lastNumber );
             break;
 
         case SIMPLE_MINUS:
-            result = ( firstNumber - lastNumber ).toFixed( 10 ) * 1 /* exclude excess zeros*/;
+            result = roundNum( firstNumber - lastNumber );
             break;
         case SIMPLE_MULTIPLY:
-            result = ( firstNumber * lastNumber ).toFixed( 10 ) * 1 /* exclude excess zeros*/;
+            result = roundNum( firstNumber * lastNumber );
             break;
         case SIMPLE_DIVISION:
-            result = ( firstNumber / lastNumber ).toFixed( 10 ) * 1 /* exclude excess zeros*/;
+            result = roundNum( firstNumber / lastNumber );
             break;
         default:
     }
@@ -73,6 +74,9 @@ export const getResult = (  firstNumber, lastNumber, firstOperator ) =>{
     return result.toString().replace( ".", ",");
 };
 
+export const roundNum = (nm )=>{
+    return nm.toFixed( 17 ) * 1 /* exclude excess zeros*/;
+};
 /**
  * Prepares a number for output in the current number field
  *
@@ -118,14 +122,25 @@ export const wrapperArg = ( nm, log, wrapText ) =>{
 };
 
 export const flatDeep = ( arr, d = Infinity )=>{
-
-    /*return d > 0 ?
-        arr.reduce( ( acc, val ) => Array.isArray( acc ) ? acc.concat( Array.isArray( val )
-            ? flatDeep( val, d - 1 ) : val, []) : [ acc ].concat( Array.isArray( val )
-            ? flatDeep( val, d - 1 ) : val, []) )  : arr.slice();*/
-
     return d > 0 ? arr.reduce((acc, val) => acc.concat(Array.isArray(val) ? flatDeep(val, d - 1) : val), [])
         : arr.slice();
+};
+
+/**
+ *  analyzes the presence of a wrapped number
+ *  and looks for a match with the firstNumber
+ *
+ * @param firstNumber
+ * @param arrLogText - arrLogText[ 0 ]
+ * @returns String
+ */
+export const firstArgument = ( firstNumber, arrLogText ) =>{
+    if( isNaN( toFloat( arrLogText ) )
+        && arrLogText.includes( toDisplayText( Math.abs( firstNumber ) )))
+        return arrLogText;
+
+    return toDisplayText( firstNumber );
+
 };
 
 
