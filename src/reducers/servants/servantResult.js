@@ -8,6 +8,7 @@ export default ({displayText
                     , firstOperator
                     , onDot
                     , arrLogText
+                    , percentNumber
                 })=>{
 
 
@@ -55,6 +56,7 @@ export default ({displayText
         , firstOperator
         , onDot
         , arrLogText
+        , percentNumber
     };
 
 }

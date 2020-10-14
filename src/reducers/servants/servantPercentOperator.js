@@ -1,5 +1,5 @@
 import {MODES} from "../../constants";
-import {getArrLogText, roundNum, toDisplayText} from "../utils";
+import {getArrLogText, roundNum, toDisplayText, toFloat} from "../utils";
 
 export default ({displayText
                     , firstNumber
@@ -8,6 +8,7 @@ export default ({displayText
                     , firstOperator
                     , onDot
                     , arrLogText
+                    , percentNumber
                 })=>{
 
         onDot = false;
@@ -21,10 +22,17 @@ export default ({displayText
             mode = MODES.LAST_NUMBER;
             arrLogText = getArrLogText( arrLogText, lastNumber );
             displayText = toDisplayText( lastNumber );
+            percentNumber = firstNumber;
         } else if ( mode === MODES.LAST_NUMBER ){
             lastNumber = roundNum( lastNumber * ( firstNumber / 100 ) );
             arrLogText = getArrLogText( arrLogText, lastNumber );
             displayText = toDisplayText( lastNumber );
+            mode = MODES.AFTER_RESULT;
+        } else if ( mode === MODES.AFTER_RESULT ){
+            if( percentNumber === 0 ) percentNumber = firstNumber;
+            displayText = toDisplayText( roundNum( toFloat( displayText ) * ( percentNumber / 100 ) ) );
+            arrLogText = getArrLogText( displayText );
+            lastNumber = 0;
             mode = MODES.AFTER_RESULT;
         }
 
@@ -37,6 +45,7 @@ export default ({displayText
         , firstOperator
         , onDot
         , arrLogText
+        , percentNumber
     };
 
 }

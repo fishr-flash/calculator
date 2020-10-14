@@ -1,6 +1,6 @@
 import servantResult from "../reducers/servants/servantResult";
 import {
-    MODES,
+    MODES, ON_CLICK_NUMBER,
     ON_CLICK_SIMPLE_OPERATOR,
     SIMPLE_MULTIPLY,
     SIMPLE_PLUS
@@ -16,10 +16,161 @@ import {
 import servantOnSign from "../reducers/servants/servantOnSign";
 import servantSimpleOperator from "../reducers/servants/servantSimpleOperator";
 import servantPercentOperator from "../reducers/servants/servantPercentOperator";
+import servantClickNumber from "../reducers/servants/servantClickNumber";
 
-describe( "", ()=>{
+describe( "all indexes tests", ()=>{
 
     describe( "test of servants", ()=>{
+        test( "test of servantClickNumber", ()=> {
+
+            const checkedData = [
+                {
+                    inData: [ { displayText:"0"
+                        , firstNumber: 0
+                        , lastNumber: 0
+                        , mode: MODES.BEGIN_MODE
+                        , firstOperator: null
+                        , onDot: false
+                        , percentNumber: NaN
+                        , arrLogText: []}
+                        , {
+                            type: ON_CLICK_NUMBER
+                            , value: 1
+                        }
+                        ]
+                    , outData:{
+                        displayText: "1"
+                        , firstNumber: 1
+                        , lastNumber: 0
+                        , mode: MODES.BEGIN_MODE
+                        , firstOperator: null
+                        , onDot: false
+                        , percentNumber: NaN
+                        , arrLogText: []
+                    }
+                }// default mode
+                , {
+                    inData: [ {
+                        displayText: '20',
+                        firstNumber: 20,
+                        lastNumber: 10,
+                        mode: 4,
+                        firstOperator: 'simplePlus',
+                        onDot: false,
+                        arrLogText: [
+                            '10',
+                            '+',
+                            '10',
+                            '='
+                        ],
+                        percentNumber: NaN
+                        }
+                        , {
+                            type: ON_CLICK_NUMBER
+                            , value: 1
+                        }
+                        ]
+                    , outData:{
+                        displayText: '1',
+                        firstNumber: 1,
+                        lastNumber: 0,
+                        mode: 0,
+                        firstOperator: null,
+                        onDot: false,
+                        arrLogText: [],
+                        percentNumber: NaN
+                    }
+                }// after result mode
+                , {
+                    inData: [ {
+                                displayText: '1',
+                                firstNumber: 1,
+                                lastNumber: 0,
+                                mode: 1,
+                                firstOperator: 'simplePlus',
+                                onDot: false,
+                                arrLogText: [
+                                    '1',
+                                    '+'
+                                ],
+                                percentNumber: null
+                            }
+                        , {
+                            type: ON_CLICK_NUMBER
+                            , value: 1
+                        }
+                        ]
+                    , outData:{
+                        displayText: '1',
+                        firstNumber: 1,
+                        lastNumber: 1,
+                        mode: 3,
+                        firstOperator: 'simplePlus',
+                        onDot: false,
+                        arrLogText: [
+                            '1',
+                            '+'
+                        ],
+                        percentNumber: null
+                    }
+                }// first operator mode
+                , {
+                        inData: [ {
+                            displayText: '3',
+                            firstNumber: 3,
+                            lastNumber: 0,
+                            mode: 2,
+                            firstOperator: 'simplePlus',
+                            onDot: false,
+                            arrLogText: [
+                                '1',
+                                '+',
+                                '2',
+                                '+'
+                            ],
+                            percentNumber: null
+                        }
+                        , {
+                            type: ON_CLICK_NUMBER
+                            , value: 4
+                        }
+                        ]
+                    , outData:{
+                        displayText: '4',
+                        firstNumber: 3,
+                        lastNumber: 4,
+                        mode: 3,
+                        firstOperator: 'simplePlus',
+                        onDot: false,
+                        arrLogText: [
+                            '1',
+                            '+',
+                            '2',
+                            '+'
+                        ],
+                        percentNumber: null
+                    }
+                }// multiply action mode
+            ];
+
+            checkedData.forEach(( v, i ) =>{
+                try{
+                    expect( servantClickNumber( ...v.inData )).toStrictEqual( v.outData );
+                }catch (e) {
+                    if( true ){
+                        console.group( 'Console log in the code "INDEX_TEST_JS" line 147' );
+                        console.info( 'v: ', v );
+                        console.info( 'i: ', i );
+                        console.info( 'e: ', e );
+
+                        //console.table( this );
+                        console.groupEnd();
+                    }
+                }
+
+            });
+
+        });
         test( "test of servantOnSign", ()=> {
 
             const checkedData = [
@@ -226,8 +377,20 @@ describe( "", ()=>{
                 }/// with before created percent
             ];
 
-            checkedData.forEach(( v ) =>{
-                expect( servantResult( v.inData )).toStrictEqual( v.outData );
+            checkedData.forEach(( v, i ) =>{
+                try{
+                    expect( servantResult( v.inData )).toStrictEqual( v.outData );
+                }catch (e) {
+                    if( true ){
+                        console.group( 'Console log in the code "INDEX_TEST_JS" line 147' );
+                        console.info( 'v: ', v );
+                        console.info( 'i: ', i );
+                        console.info( 'e: ', e );
+
+                        //console.table( this );
+                        console.groupEnd();
+                    }
+                }
             });
         });
         test( "test of servantSimpleOperator", ()=>{
@@ -292,6 +455,66 @@ describe( "", ()=>{
                             ]
                         }
                 } /// множественное прибавление
+                , {
+                    inData:[{
+                                displayText: '1',
+                                firstNumber: 1,
+                                lastNumber: 0,
+                                mode: 1,
+                                firstOperator: 'simplePlus',
+                                onDot: false,
+                                arrLogText: [
+                                    '1',
+                                    '+'
+                                ],
+                                percentNumber: null
+                            }, {
+                        type: 'onClickSimpleOperator',
+                        value: 'simplePlus'
+                    }]
+                    , outData:{
+                                displayText: '2',
+                                firstNumber: 1,
+                                lastNumber: 2,
+                                mode: 3,
+                                firstOperator: 'simplePlus',
+                                onDot: false,
+                                arrLogText: [
+                                    '1',
+                                    '+'
+                                ],
+                                percentNumber: null
+                            }
+                } /// ввод второго оператора, переход на множественное действие
+                , {
+                    inData:[{
+                                displayText: '1,',
+                                firstNumber: 1,
+                                lastNumber: 0,
+                                mode: 0,
+                                firstOperator: null,
+                                onDot: true,
+                                arrLogText: [],
+                                percentNumber: null
+                            }
+                            , {
+                                type: 'onClickSimpleOperator',
+                                value: 'simplePlus'
+                            }]
+                    , outData:{
+                                displayText: '1',
+                                firstNumber: 1,
+                                lastNumber: 0,
+                                mode: 1,
+                                firstOperator: 'simplePlus',
+                                onDot: false,
+                                arrLogText: [
+                                    '1',
+                                    '+'
+                                ],
+                                percentNumber: null
+                            }
+                } /// ввод оператора после ввода десятичного разделителя
                 /*, {
                     inData:[{
                                 displayText: '10,2',
@@ -442,6 +665,58 @@ describe( "", ()=>{
                         ]
                     }
                 } /// после ввода 2ой цифры
+                /*, {
+                    inData:{
+                        displayText: '10',
+                        firstNumber: 10,
+                        lastNumber: 0,
+                        mode: MODES.FIRST_OPERATOR,
+                        firstOperator: 'simpleResult',
+                        onDot: false,
+                        arrLogText: [
+                            '10',
+                            '='
+                        ]
+                    }
+                    , outData:{
+                        displayText: '0',
+                        firstNumber: 0,
+                        lastNumber: 0,
+                        mode: MODES.LAST_NUMBER,
+                        firstOperator: 'simpleResult',
+                        onDot: false,
+                        arrLogText: [
+                            '0'
+                        ]
+                    }
+                }*/ /// после ввода первой цифры и выбора оператора "равно"
+                , {
+                    inData:{
+                        displayText: '11',
+                        firstNumber: 11,
+                        lastNumber: 1,
+                        mode: MODES.AFTER_RESULT,
+                        firstOperator: SIMPLE_PLUS,
+                        onDot: false,
+                        arrLogText: [
+                            '10',
+                            '+',
+                            '1',
+                            '='
+                        ]
+                    }
+                    , outData:{
+                        displayText: '1,21',
+                        firstNumber: 11,
+                        lastNumber: 0,
+                        mode: MODES.AFTER_RESULT,
+                        firstOperator: SIMPLE_PLUS,
+                        onDot: false,
+                        arrLogText: [
+                            '1,21'
+                        ]
+                    }
+                } /// после получения результата сложения двух цифр
 
                 ];
 
@@ -589,6 +864,8 @@ describe( "", ()=>{
             //expect( isNaN( toFloat( "negate( 3,5 )" ) ) ).toBe( 0 );
             //expect(  "negate( 3,5 )".includes( toDisplayText( 3.5 ) )  ).toBe( 0 );
         });
+
+
 
     })
 });

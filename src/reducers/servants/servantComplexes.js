@@ -7,6 +7,7 @@ export default ({displayText
                     , firstOperator
                     , onDot
                     , arrLogText
+                    , percentNumber
                 }, { type, value /*action*/})=>{
 
 
@@ -18,6 +19,7 @@ export default ({displayText
         , firstOperator
         , onDot
         , arrLogText
+        , percentNumber
     };
 
 }

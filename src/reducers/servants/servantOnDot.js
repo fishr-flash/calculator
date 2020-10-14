@@ -8,6 +8,7 @@ export default ({displayText
                     , firstOperator
                     , onDot
                     , arrLogText
+                    , percentNumber
                 }, { type, value /*action*/})=>{
 
     if( mode === MODES.AFTER_RESULT ){
@@ -18,6 +19,7 @@ export default ({displayText
         firstOperator = store.firstOperator;
         onDot = store.onDot;
         arrLogText = store.arrLogText;
+        percentNumber = store.percentNumber;
 
     }
 
@@ -34,6 +36,7 @@ export default ({displayText
         , firstOperator
         , onDot
         , arrLogText
+        , percentNumber
     };
 
 }

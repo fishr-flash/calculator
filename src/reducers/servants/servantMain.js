@@ -9,6 +9,7 @@ export default ({displayText
                     , firstOperator
                     , onDot
                     , arrLogText
+                    , percentNumber
                 }, { type, value /*action*/})=>{
 
     switch ( value ) {
@@ -20,6 +21,7 @@ export default ({displayText
             mode = store.mode;
             firstOperator = store.firstOperator;
             arrLogText = store.arrLogText;
+            percentNumber = store.percentNumber;
 
             break;
 
@@ -32,6 +34,7 @@ export default ({displayText
                 mode = store.mode;
                 firstOperator = store.firstOperator;
                 arrLogText = store.arrLogText;
+                percentNumber = store.percentNumber;
             }
             else{
                 lastNumber = store.lastNumber;
@@ -66,6 +69,7 @@ export default ({displayText
         , firstOperator
         , onDot
         , arrLogText
+        , percentNumber
     };
 
 }

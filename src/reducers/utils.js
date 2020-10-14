@@ -16,7 +16,7 @@ export const getArrLogText = ( ...args ) =>{
 };
 
 export const toFloat = (displayText )=> {
-    return parseFloat(  displayText.replace( ",", '.'));
+    return roundNum( parseFloat(  displayText.replace( ",", '.')) );
 };
 
 export const toDisplayText = ( nm )=>{
@@ -78,14 +78,14 @@ export const roundNum = (nm )=>{
     return nm.toFixed( 17 ) * 1 /* exclude excess zeros*/;
 };
 /**
- * Prepares a number for output in the current number field
+ * Prepares a number for output in the main current number field
  *
  * @param base - perhaps the first part of the number ( before the separator )
  * @param arg - enter digit
  * @param dot - separator flag
  * @returns {string} the result is in string format
  */
-export const getOutput = ( base, arg, dot ) =>{
+export const getOutput = ( base, arg, dot = false ) =>{
     if( base.includes( "," )  ) {
         dot = false;
     }
@@ -127,6 +127,7 @@ export const flatDeep = ( arr, d = Infinity )=>{
 };
 
 /**
+ *
  *  analyzes the presence of a wrapped number
  *  and looks for a match with the firstNumber
  *

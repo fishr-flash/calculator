@@ -24,8 +24,10 @@ export const store = {
     , firstNumber: 0
     , lastNumber: 0
     , mode: MODES.BEGIN_MODE
+    ///TODO: Для firstOperator дефолтным значением стоило бы сделать какое то специальное
     , firstOperator: null
     , onDot: false
+    , percentNumber: NaN
     , arrLogText: []
 
 };

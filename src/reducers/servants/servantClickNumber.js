@@ -9,15 +9,14 @@ export default ({displayText
                     , firstOperator
                     , onDot
                     , arrLogText
+                    , percentNumber
                 }, { type, value /*action*/})=>{
-
 
     if( mode === MODES.AFTER_RESULT ){
         firstNumber = value;
         lastNumber = store.lastNumber;
-        mode = MODES.BEGIN_MODE;
+        mode = store.mode;
         firstOperator = store.firstOperator;
-        onDot = store.onDot;
         arrLogText = store.arrLogText;
         displayText = getOutput( '', value, onDot );
 
@@ -28,7 +27,14 @@ export default ({displayText
 
     } else if ( mode === MODES.MULTIPLE_ACTION ){
 
-        if( arrLogText[ arrLogText.length - 1].includes( 'negate' )){
+        // Нам нужно установить является ли число которое мы хотим поправить
+        // "обернутым", но мы не знаем что хранится в последней ячейке массива
+        // лога, ранее введенные цифры или знак арифм. действия ( если число только
+        // начало формироваться), зная, что операторы всегда хранятся в четных ячейках
+        // проверяем является ли последняя ячейка нечетной, если да - там хранится число
+        // которое можно проверять на "обернутость"
+        if( arrLogText%2 && isNaN( toFloat(  arrLogText[ arrLogText.length - 1] )) ){
+            ///TODO: Не уверен, что правильно работает с "обернутыми" числами, надо проверить!
             lastNumber = value;
             displayText =lastNumber.toString();
             arrLogText = getArrLogText( arrLogText.slice( 0, -1 ) );
@@ -47,7 +53,7 @@ export default ({displayText
         firstNumber = toFloat( displayText );
     }
 
-    ///FIXME: Везде отменить onDOT = false, флаг должен обнуляться только в местах имзенения числа
+    ///FIXME: Везде отменить onDOT = false, флаг должен обнуляться только в местах изменения числа
     onDot = false;
     return{ displayText
         , firstNumber
@@ -56,6 +62,7 @@ export default ({displayText
         , firstOperator
         , onDot
         , arrLogText
+        , percentNumber
     };
 
 }
