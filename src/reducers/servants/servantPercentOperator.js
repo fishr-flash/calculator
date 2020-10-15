@@ -25,15 +25,16 @@ export default ({displayText
             percentNumber = firstNumber;
         } else if ( mode === MODES.LAST_NUMBER ){
             lastNumber = roundNum( lastNumber * ( firstNumber / 100 ) );
-            arrLogText = getArrLogText( arrLogText, lastNumber );
+
+            // если и последующие нажатие на кнопку проценты, значит вторая цифра уже выведена в лог
+            // ее надо заменить, если первое то лог заканчивается еще пока последним оператором
+            arrLogText = getArrLogText( arrLogText.length%2 ? arrLogText.slice( 0, -1 ) : arrLogText, lastNumber );
             displayText = toDisplayText( lastNumber );
-            mode = MODES.AFTER_RESULT;
         } else if ( mode === MODES.AFTER_RESULT ){
-            if( percentNumber === 0 ) percentNumber = firstNumber;
-            displayText = toDisplayText( roundNum( toFloat( displayText ) * ( percentNumber / 100 ) ) );
+            displayText = toDisplayText( roundNum( toFloat( displayText ) * ( firstNumber / 100 ) ) );
+            //firstNumber = toFloat( displayText );
             arrLogText = getArrLogText( displayText );
-            lastNumber = 0;
-            mode = MODES.AFTER_RESULT;
+            //lastNumber = 0;
         }
 
 

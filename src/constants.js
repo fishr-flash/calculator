@@ -19,7 +19,7 @@ export const SIMPLE_RESULT = "simpleResult";
 /// main operators
 export const MAIN_BACKSPACE = "mainBackspace";
 export const MAIN_CLEAR = "mainClear";
-export const MAIN_CLEAR_END = "mainClearEnd";
+export const MAIN_CLEAR_LAST = "mainClearLast";
 
 /// complexes operators
 export const COMPLEXES_DIVISION_X = "complexesDevisionX";

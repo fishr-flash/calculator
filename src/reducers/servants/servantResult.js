@@ -1,5 +1,5 @@
 import {MODES, SIMPLE_RESULT} from "../../constants";
-import {firstArgument, getArrLogText, getResult, toFloat} from "../utils";
+import {selectNumber, getArrLogText, getResult, toFloat} from "../utils";
 
 export default ({displayText
                     , firstNumber
@@ -24,15 +24,14 @@ export default ({displayText
 
             if( mode === MODES.AFTER_RESULT ){
 
-                arrLogText = getArrLogText( firstArgument( firstNumber, arrLogText[ 0 ])
+                arrLogText = getArrLogText( selectNumber( firstNumber, arrLogText[ 0 ])
                     , firstOperator
                     , lastNumber
                     , SIMPLE_RESULT );
             }
             else{
                 arrLogText = getArrLogText( arrLogText
-                    ///TODO: эта инструкция нерабочая надо поправить
-                    , arrLogText[ arrLogText.length - 1 ].includes( 'negate') ? '' : lastNumber
+                    , selectNumber( lastNumber, arrLogText[ arrLogText.length - 1 ])
                     , SIMPLE_RESULT);
             }
 

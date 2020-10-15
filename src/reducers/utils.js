@@ -132,13 +132,13 @@ export const flatDeep = ( arr, d = Infinity )=>{
  *  and looks for a match with the firstNumber
  *
  * @param firstNumber
- * @param arrLogText - arrLogText[ 0 ]
+ * @param quantityOfStrFormat - arrLogText[ N ]
  * @returns String
  */
-export const firstArgument = ( firstNumber, arrLogText ) =>{
-    if( isNaN( toFloat( arrLogText ) )
-        && arrLogText.includes( toDisplayText( Math.abs( firstNumber ) )))
-        return arrLogText;
+export const selectNumber = (firstNumber, quantityOfStrFormat ) =>{
+    if( isNaN( toFloat( quantityOfStrFormat ) )
+        && quantityOfStrFormat.includes( toDisplayText( Math.abs( firstNumber ) )))
+        return quantityOfStrFormat;
 
     return toDisplayText( firstNumber );
 

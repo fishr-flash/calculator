@@ -1,4 +1,4 @@
-import {MAIN_BACKSPACE, MAIN_CLEAR, MAIN_CLEAR_END, MODES} from "../../constants";
+import {MAIN_BACKSPACE, MAIN_CLEAR, MAIN_CLEAR_LAST, MODES} from "../../constants";
 import {toFloat} from "../utils";
 import {store} from "../index";
 
@@ -25,7 +25,7 @@ export default ({displayText
 
             break;
 
-        case MAIN_CLEAR_END:
+        case MAIN_CLEAR_LAST:
 
             if( mode === MODES.BEGIN_MODE
                 || mode === MODES.AFTER_RESULT ){
@@ -49,11 +49,16 @@ export default ({displayText
                     displayText = displayText.slice( 0, -1 ) || "0";
 
                     if( mode < MODES.LAST_NUMBER )
+                    {
+                        ///TODO: При введении функционала процентов проверить все места изменения первого числа
                         firstNumber = toFloat( displayText );
+                        //percentNumber = firstNumber;
+                    }
                     else
                         lastNumber =  toFloat( displayText );
                 }else {
                     firstNumber = toFloat( displayText );
+                    //percentNumber = firstNumber;
                     arrLogText = [];
                 }
             }

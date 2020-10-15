@@ -1,6 +1,7 @@
 import servantResult from "../reducers/servants/servantResult";
 import {
-    MODES, ON_CLICK_NUMBER,
+    MAIN_CLEAR,
+    MODES, ON_CLICK_MAIN, ON_CLICK_NUMBER,
     ON_CLICK_SIMPLE_OPERATOR,
     SIMPLE_MULTIPLY,
     SIMPLE_PLUS
@@ -17,6 +18,7 @@ import servantOnSign from "../reducers/servants/servantOnSign";
 import servantSimpleOperator from "../reducers/servants/servantSimpleOperator";
 import servantPercentOperator from "../reducers/servants/servantPercentOperator";
 import servantClickNumber from "../reducers/servants/servantClickNumber";
+import servantMain from "../reducers/servants/servantMain";
 
 describe( "all indexes tests", ()=>{
 
@@ -93,7 +95,7 @@ describe( "all indexes tests", ()=>{
                                     '1',
                                     '+'
                                 ],
-                                percentNumber: null
+                                percentNumber: NaN
                             }
                         , {
                             type: ON_CLICK_NUMBER
@@ -111,7 +113,7 @@ describe( "all indexes tests", ()=>{
                             '1',
                             '+'
                         ],
-                        percentNumber: null
+                        percentNumber: NaN
                     }
                 }// first operator mode
                 , {
@@ -128,7 +130,7 @@ describe( "all indexes tests", ()=>{
                                 '2',
                                 '+'
                             ],
-                            percentNumber: null
+                            percentNumber: NaN
                         }
                         , {
                             type: ON_CLICK_NUMBER
@@ -148,7 +150,7 @@ describe( "all indexes tests", ()=>{
                             '2',
                             '+'
                         ],
-                        percentNumber: null
+                        percentNumber: NaN
                     }
                 }// multiply action mode
             ];
@@ -156,6 +158,57 @@ describe( "all indexes tests", ()=>{
             checkedData.forEach(( v, i ) =>{
                 try{
                     expect( servantClickNumber( ...v.inData )).toStrictEqual( v.outData );
+                }catch (e) {
+                    if( true ){
+                        console.group( 'Console log in the code "INDEX_TEST_JS" line 147' );
+                        console.info( 'v: ', v );
+                        console.info( 'i: ', i );
+                        console.info( 'e: ', e );
+
+                        //console.table( this );
+                        console.groupEnd();
+                    }
+                }
+
+            });
+
+        });
+        test( "test of servantMain", ()=> {
+
+            const checkedData = [
+                {
+                    inData: [ {
+                                displayText: '0',
+                                firstNumber: 0,
+                                lastNumber: 0,
+                                mode: 0,
+                                firstOperator: null,
+                                onDot: false,
+                                percentNumber: NaN,
+                                arrLogText: []
+                            }
+                        , {
+                            type: ON_CLICK_MAIN
+                            , value: MAIN_CLEAR
+                        }
+                        ]
+                    , outData:{
+                            displayText: '0',
+                            firstNumber: 0,
+                            lastNumber: 0,
+                            mode: 0,
+                            firstOperator: null,
+                            onDot: false,
+                            arrLogText: [],
+                            percentNumber: NaN
+                        }
+                }// default mode
+
+            ];
+
+            checkedData.forEach(( v, i ) =>{
+                try{
+                    expect( servantMain( ...v.inData )).toStrictEqual( v.outData );
                 }catch (e) {
                     if( true ){
                         console.group( 'Console log in the code "INDEX_TEST_JS" line 147' );
@@ -180,8 +233,10 @@ describe( "all indexes tests", ()=>{
                         , lastNumber: 0
                         , mode: MODES.BEGIN_MODE
                         , firstOperator: null
-                        , onDot: false
-                        , arrLogText: []}
+                        , onDot: false,
+                                percentNumber: NaN,
+                                arrLogText: []
+                            }
                     , outData:{
                         displayText: "0"
                         , firstNumber: -0
@@ -189,6 +244,7 @@ describe( "all indexes tests", ()=>{
                         , mode: MODES.BEGIN_MODE
                         , firstOperator: null
                         , onDot: false
+                        , percentNumber: NaN
                         , arrLogText: []
                     }
                 }
@@ -198,8 +254,10 @@ describe( "all indexes tests", ()=>{
                         , lastNumber: 0
                         , mode: MODES.BEGIN_MODE
                         , firstOperator: null
-                        , onDot: false
-                        , arrLogText: []}
+                        , onDot: false,
+                                percentNumber: NaN,
+                                arrLogText: []
+                            }
                     , outData:{
                         displayText: "-1"
                         , firstNumber: -1
@@ -207,6 +265,7 @@ describe( "all indexes tests", ()=>{
                         , mode: MODES.BEGIN_MODE
                         , firstOperator: null
                         , onDot: false
+                        , percentNumber: NaN
                         , arrLogText: []
                     }
                 }
@@ -216,8 +275,10 @@ describe( "all indexes tests", ()=>{
                         , lastNumber: 0
                         , mode: MODES.BEGIN_MODE
                         , firstOperator: null
-                        , onDot: false
-                        , arrLogText: []}
+                        , onDot: false,
+                                percentNumber: NaN,
+                                arrLogText: []
+                            }
                     , outData:{
                         displayText: "1"
                         , firstNumber: 1
@@ -225,6 +286,7 @@ describe( "all indexes tests", ()=>{
                         , mode: MODES.BEGIN_MODE
                         , firstOperator: null
                         , onDot: false
+                        , percentNumber: NaN
                         , arrLogText: []
                     }
                 }
@@ -234,8 +296,10 @@ describe( "all indexes tests", ()=>{
                         , lastNumber: 0
                         , mode: MODES.BEGIN_MODE
                         , firstOperator: null
-                        , onDot: false
-                        , arrLogText: []}
+                        , onDot: false,
+                                percentNumber: NaN,
+                                arrLogText: []
+                            }
                     , outData:{
                         displayText: "-2"
                         , firstNumber: -2
@@ -243,6 +307,7 @@ describe( "all indexes tests", ()=>{
                         , mode: MODES.BEGIN_MODE
                         , firstOperator: null
                         , onDot: false
+                        , percentNumber: NaN
                         , arrLogText: []
                     }
                 }
@@ -277,6 +342,7 @@ describe( "all indexes tests", ()=>{
                         , mode: MODES.LAST_NUMBER
                         , firstOperator: SIMPLE_PLUS
                         , onDot: false
+                        , percentNumber: NaN
                         , arrLogText: [ "123", "+" ]}
                     , outData:{
                         displayText: "444"
@@ -285,6 +351,7 @@ describe( "all indexes tests", ()=>{
                         , mode: MODES.AFTER_RESULT
                         , firstOperator: SIMPLE_PLUS
                         , onDot: false
+                        , percentNumber: NaN
                         , arrLogText: [ "123", "+", "321", "=" ]
                     }
                 }
@@ -295,6 +362,7 @@ describe( "all indexes tests", ()=>{
                         , mode: MODES.LAST_NUMBER
                         , firstOperator: SIMPLE_PLUS
                         , onDot: false
+                        , percentNumber: NaN
                         , arrLogText: [ "123", "+" ]}
                     , outData:{
                         displayText: "444"
@@ -303,6 +371,7 @@ describe( "all indexes tests", ()=>{
                         , mode: MODES.AFTER_RESULT
                         , firstOperator: SIMPLE_PLUS
                         , onDot: false
+                        , percentNumber: NaN
                         , arrLogText: [ "123", "+", "321", "=" ]
                     }
                 }
@@ -312,6 +381,7 @@ describe( "all indexes tests", ()=>{
                         , lastNumber: 321
                         , mode: MODES.LAST_NUMBER
                         , firstOperator: SIMPLE_PLUS
+                        , percentNumber: NaN
                         , onDot: false
                         , arrLogText: [ "123", "+" ]}
                     , outData:{
@@ -321,6 +391,7 @@ describe( "all indexes tests", ()=>{
                         , mode: MODES.AFTER_RESULT
                         , firstOperator: SIMPLE_PLUS
                         , onDot: false
+                        , percentNumber: NaN
                         , arrLogText: [ "123", "+", "321", "=" ]
                     }
                 }
@@ -332,6 +403,7 @@ describe( "all indexes tests", ()=>{
                                 mode: 4,
                                 firstOperator: 'simplePlus',
                                 onDot: false,
+                                percentNumber: NaN,
                                 arrLogText: [
                                     ' negate( 3 ) '
                                 ]
@@ -343,6 +415,7 @@ describe( "all indexes tests", ()=>{
                         mode: 4,
                         firstOperator: 'simplePlus',
                         onDot: false,
+                        percentNumber: NaN,
                         arrLogText: [
                             ' negate( 3 ) ',
                             '+',
@@ -351,30 +424,8 @@ describe( "all indexes tests", ()=>{
                         ]
                     }
                 }
-                , {
-                    inData:{
-                        displayText: '0,2',
-                        firstNumber: 10,
-                        lastNumber: 0.2,
-                        mode: MODES.AFTER_RESULT,
-                        firstOperator: SIMPLE_PLUS,
-                        onDot: false,
-                        arrLogText: [
-                            '10',
-                            '+',
-                            '0,2'
-                        ]
-                    }
-                    , outData:{
-                        displayText: "10,2"
-                        , firstNumber: 10.2
-                        , lastNumber: 0.2
-                        , mode: MODES.AFTER_RESULT
-                        , firstOperator: SIMPLE_PLUS
-                        , onDot: false
-                        , arrLogText: [ "10", "+", "0,2", "=" ]
-                    }
-                }/// with before created percent
+
+
             ];
 
             checkedData.forEach(( v, i ) =>{
@@ -404,6 +455,7 @@ describe( "all indexes tests", ()=>{
                         mode: 0,
                         firstOperator: null,
                         onDot: false,
+                        percentNumber: NaN,
                         arrLogText: []
                         }
                         , {
@@ -417,6 +469,7 @@ describe( "all indexes tests", ()=>{
                         mode: 1,
                         firstOperator: 'simplePlus',
                         onDot: false,
+                        percentNumber: NaN,
                         arrLogText: [
                             '1',
                             '+'
@@ -431,6 +484,7 @@ describe( "all indexes tests", ()=>{
                             mode: 3,
                             firstOperator: 'simplePlus',
                             onDot: false,
+                            percentNumber: NaN,
                             arrLogText: [
                                 '1',
                                 '+'
@@ -447,6 +501,7 @@ describe( "all indexes tests", ()=>{
                             mode: 2,
                             firstOperator: 'simplePlus',
                             onDot: false,
+                            percentNumber: NaN,
                             arrLogText: [
                                 '1',
                                 '+',
@@ -459,23 +514,7 @@ describe( "all indexes tests", ()=>{
                     inData:[{
                                 displayText: '1',
                                 firstNumber: 1,
-                                lastNumber: 0,
-                                mode: 1,
-                                firstOperator: 'simplePlus',
-                                onDot: false,
-                                arrLogText: [
-                                    '1',
-                                    '+'
-                                ],
-                                percentNumber: null
-                            }, {
-                        type: 'onClickSimpleOperator',
-                        value: 'simplePlus'
-                    }]
-                    , outData:{
-                                displayText: '2',
-                                firstNumber: 1,
-                                lastNumber: 2,
+                                lastNumber: 1,
                                 mode: 3,
                                 firstOperator: 'simplePlus',
                                 onDot: false,
@@ -483,8 +522,25 @@ describe( "all indexes tests", ()=>{
                                     '1',
                                     '+'
                                 ],
-                                percentNumber: null
-                            }
+                                percentNumber: NaN
+                            }, {
+                                type: 'onClickSimpleOperator',
+                                value: 'simplePlus'
+                            }]
+                    , outData:{
+                            displayText: '2',
+                            firstNumber: 2,
+                            lastNumber: 0,
+                            mode: 2,
+                            firstOperator: 'simplePlus',
+                            onDot: false,
+                            arrLogText: [
+                                '1',
+                                '+',
+                                '1',
+                                '+'
+                            ],
+                            percentNumber: NaN }
                 } /// ввод второго оператора, переход на множественное действие
                 , {
                     inData:[{
@@ -495,7 +551,7 @@ describe( "all indexes tests", ()=>{
                                 firstOperator: null,
                                 onDot: true,
                                 arrLogText: [],
-                                percentNumber: null
+                                percentNumber: NaN
                             }
                             , {
                                 type: 'onClickSimpleOperator',
@@ -512,41 +568,40 @@ describe( "all indexes tests", ()=>{
                                     '1',
                                     '+'
                                 ],
-                                percentNumber: null
+                                percentNumber: NaN
                             }
                 } /// ввод оператора после ввода десятичного разделителя
-                /*, {
+                , {
                     inData:[{
-                                displayText: '10,2',
-                                firstNumber: 10.2,
-                                lastNumber: 0.2,
+                                displayText: '4',
+                                firstNumber: 20,
+                                lastNumber: 0,
                                 mode: 4,
                                 firstOperator: 'simplePlus',
                                 onDot: false,
                                 arrLogText: [
-                                    '10',
-                                    '+',
-                                    '0,2',
-                                    '='
-                                ]
+                                    '4'
+                                ],
+                                percentNumber: null
                             }
                             , {
                                 type: 'onClickSimpleOperator',
                                 value: 'simplePlus'
                             }]
                     , outData:{
-                                displayText: '10,2',
-                                firstNumber: 10.2,
-                                lastNumber: 10.2,
-                                mode: 3,
-                                firstOperator: 'simplePlus',
-                                onDot: false,
-                                arrLogText: [
-                                    '10,2',
-                                    '+'
-                                ]
-                            }
-                }*/ /// прибавление после получения результата с использованием перевода в проценты
+                            displayText: '4',
+                            firstNumber: 20,
+                            lastNumber: 0,
+                            mode: 1,
+                            firstOperator: 'simplePlus',
+                            onDot: false,
+                            arrLogText: [
+                                '20',
+                                '+'
+                            ],
+                            percentNumber: null
+                        },
+                } /// прибавление после получения результата с использованием перевода в проценты
                 ];
 
             checkedData.forEach(( v, i ) =>{
@@ -569,7 +624,7 @@ describe( "all indexes tests", ()=>{
 
             let rnd = Math.random() * 1000;
             if( Math.random() < .5 ) rnd *= -1;
-
+            ///FIXME: получить результат сложения, применить проценты, затем получить еще раз результат
             const checkedData = [
                 {
                     inData:{
@@ -579,6 +634,7 @@ describe( "all indexes tests", ()=>{
                         mode: 0,
                         firstOperator: null,
                         onDot: false,
+                        percentNumber: NaN,
                         arrLogText: []
                         }
                     , outData:{
@@ -588,135 +644,70 @@ describe( "all indexes tests", ()=>{
                         mode: 0,
                         firstOperator: null,
                         onDot: false,
+                        percentNumber: NaN,
                         arrLogText: [ "0" ]
                     }
                 } /// первичный вариант
                 , {
                     inData:{
-                        displayText: '0',
-                        firstNumber: rnd,
-                        lastNumber: 0,
-                        mode: 0,
-                        firstOperator: null,
-                        onDot: false,
-                        arrLogText: []
-                        }
-                    , outData:{
-                        displayText: '0',
-                        firstNumber: 0,
-                        lastNumber: 0,
-                        mode: 0,
-                        firstOperator: null,
-                        onDot: false,
-                        arrLogText: [ "0" ]
-                    }
-                } /// вариант с любой входящей первой цифрой
-                , {
-                    inData:{
-                        displayText: toDisplayText( rnd * ( rnd / 100 ) ),
-                        firstNumber: rnd,
-                        lastNumber: 0,
-                        mode: 1,
-                        firstOperator: 'simplePlus',
-                        onDot: false,
-                        arrLogText: [
-                            toDisplayText( rnd ),
-                            '+'
-                        ]
-                    }
-                    , outData:{
-                        displayText: toDisplayText( rnd * ( rnd / 100 ) ),
-                        firstNumber: rnd,
-                        lastNumber: rnd * ( rnd / 100 ),
-                        mode: MODES.LAST_NUMBER,
-                        firstOperator: 'simplePlus',
-                        onDot: false,
-                        arrLogText: [
-                            toDisplayText( rnd ),
-                            '+'
-                            , toDisplayText( rnd * ( rnd / 100 ) )
-                        ]
-                    }
-                } /// после любого простого оператора
-                , {
-                    inData:{
-                        displayText: '2',
+                        displayText: '1',
                         firstNumber: 10,
-                        lastNumber: 2,
-                        mode: MODES.LAST_NUMBER,
-                        firstOperator: 'simplePlus',
-                        onDot: false,
-                        arrLogText: [
-                            '10',
-                            '+'
-                        ]
-                    }
-                    , outData:{
-                        displayText: '0,2',
-                        firstNumber: 10,
-                        lastNumber: 0.2,
-                        mode: MODES.AFTER_RESULT,
-                        firstOperator: 'simplePlus',
-                        onDot: false,
-                        arrLogText: [
-                            '10',
-                            '+',
-                            '0,2'
-                        ]
-                    }
-                } /// после ввода 2ой цифры
-                /*, {
-                    inData:{
-                        displayText: '10',
-                        firstNumber: 10,
-                        lastNumber: 0,
-                        mode: MODES.FIRST_OPERATOR,
-                        firstOperator: 'simpleResult',
-                        onDot: false,
-                        arrLogText: [
-                            '10',
-                            '='
-                        ]
-                    }
-                    , outData:{
-                        displayText: '0',
-                        firstNumber: 0,
-                        lastNumber: 0,
-                        mode: MODES.LAST_NUMBER,
-                        firstOperator: 'simpleResult',
-                        onDot: false,
-                        arrLogText: [
-                            '0'
-                        ]
-                    }
-                }*/ /// после ввода первой цифры и выбора оператора "равно"
-                , {
-                    inData:{
-                        displayText: '11',
-                        firstNumber: 11,
                         lastNumber: 1,
-                        mode: MODES.AFTER_RESULT,
-                        firstOperator: SIMPLE_PLUS,
+                        mode: 3,
+                        firstOperator: 'simplePlus',
                         onDot: false,
                         arrLogText: [
                             '10',
                             '+',
-                            '1',
-                            '='
-                        ]
+                            '1'
+                        ],
+                        percentNumber: null
                     }
                     , outData:{
-                        displayText: '1,21',
-                        firstNumber: 11,
-                        lastNumber: 0,
-                        mode: MODES.AFTER_RESULT,
-                        firstOperator: SIMPLE_PLUS,
+                        displayText: '0,1',
+                        firstNumber: 10,
+                        lastNumber: 0.1,
+                        mode: 3,
+                        firstOperator: 'simplePlus',
                         onDot: false,
                         arrLogText: [
-                            '1,21'
-                        ]
+                            '10',
+                            '+',
+                            '0,1'
+                        ],
+                        percentNumber: null
+                    }
+                }
+                , {
+                    inData:{
+                        displayText: '20',
+                        firstNumber: 20,
+                        lastNumber: 10,
+                        mode: 4,
+                        firstOperator: 'simplePlus',
+                        onDot: false,
+                        arrLogText: [
+                            '10',
+                            '+',
+                            '10',
+                            '='
+                        ],
+                        percentNumber: null
+                    }
+                    , outData:{
+                        displayText: '4',
+                        firstNumber: 20,
+                        lastNumber: 10,
+                        mode: 4,
+                        firstOperator: 'simplePlus',
+                        onDot: false,
+                        arrLogText: [
+                            '4'
+                        ],
+                        percentNumber: null
                     }
                 } /// после получения результата сложения двух цифр
+
 
                 ];
 
@@ -824,7 +815,7 @@ describe( "all indexes tests", ()=>{
         });
         test( "check the function roundNum ", ()=>{
 
-            let arr = [ 0.00000000000327681, -2.34 ]
+            let arr = [ 0.00000000000327681, -2.34, 0.03200000000000001 ]
             arr.forEach( ( v, i ) => {
                 try{
 
@@ -850,7 +841,7 @@ describe( "all indexes tests", ()=>{
            //expect( Number( toFloat( "3,4" ))).toBe( 0 );
 
             /*
-            const firstArgument = ( firstNumber, arrLogText ) =>{
+            const selectNumber = ( firstNumber, arrLogText ) =>{
                   if( typeof toFloat( arrLogText ) !== 'number'
                         && arrLogText.includes( toDisplayText( firstNumber )))
                   return arrLogText;
@@ -863,6 +854,22 @@ describe( "all indexes tests", ()=>{
             //expect( toFloat( "negate( 3,5 )")).toBe( 0 );
             //expect( isNaN( toFloat( "negate( 3,5 )" ) ) ).toBe( 0 );
             //expect(  "negate( 3,5 )".includes( toDisplayText( 3.5 ) )  ).toBe( 0 );
+            const a = NaN;
+            expect(  isNaN( a )).toBe( true );
+            expect(  a ).toBe( NaN );
+        });
+        test( "slice and splice", ()=>{
+
+            expect(  [1, 2, 3, 4 ].splice( -1, 1 )).toStrictEqual( [ 4 ] );
+            expect(  [1, 2, 3, 4 ].slice( 0, -1 )).toStrictEqual( [1, 2, 3] );
+
+        });
+
+        test( "how work the symbol %", ()=>{
+
+            expect( 3%2 ).toBe( 1 );
+
+
         });
 
 

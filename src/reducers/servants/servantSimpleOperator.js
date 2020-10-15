@@ -1,5 +1,5 @@
 import {MODES} from "../../constants";
-import {firstArgument, getArrLogText, getResult, toFloat} from "../utils";
+import {selectNumber, getArrLogText, getResult, toDisplayText, toFloat} from "../utils";
 
 export default ({displayText
                     , firstNumber
@@ -14,6 +14,7 @@ export default ({displayText
         onDot = false;
         if( mode === MODES.BEGIN_MODE
             || mode === MODES.FIRST_OPERATOR ){
+            displayText = toDisplayText( firstNumber );
             arrLogText = getArrLogText( arrLogText.length ? arrLogText : firstNumber
                 , value );
             mode = MODES.FIRST_OPERATOR;
@@ -21,7 +22,7 @@ export default ({displayText
         } else if(   mode === MODES.AFTER_RESULT ){
 
             //arrLogText = getArrLogText(  arrLogText.length ? arrLogText[ 0 ] : firstNumber
-            arrLogText = getArrLogText( firstArgument( firstNumber, arrLogText[ 0 ])
+            arrLogText = getArrLogText( selectNumber( firstNumber, arrLogText[ 0 ])
                 , value );
             lastNumber = 0;////toFloat( displayText );
             mode = MODES.FIRST_OPERATOR;
