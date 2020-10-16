@@ -3,7 +3,6 @@ import {connect} from "react-redux";
 import React from "react";
 
 const BtnPercent = ( props )=>{
-
     return(
         <fieldset className="fieldset_percent">
             <button className="input_btns btn_percent" onClick={ () => props.onClick( ) } >%</button>

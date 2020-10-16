@@ -1,5 +1,5 @@
 import {MODES} from "../../constants";
-import {selectNumber, getArrLogText, getResult, toDisplayText, toFloat} from "../utils";
+import {getArrLogText, getResult, selectNumber, toDisplayText, toFloat} from "../utils";
 
 export default ({displayText
                     , firstNumber

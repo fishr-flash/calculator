@@ -1,5 +1,5 @@
 import {MODES, SIMPLE_RESULT} from "../../constants";
-import {selectNumber, getArrLogText, getResult, toFloat} from "../utils";
+import {getArrLogText, getResult, selectNumber, toFloat} from "../utils";
 
 export default ({displayText
                     , firstNumber
@@ -28,8 +28,7 @@ export default ({displayText
                     , firstOperator
                     , lastNumber
                     , SIMPLE_RESULT );
-            }
-            else{
+            } else {
                 /// если после получения результата был нажат оператор процентов,
                 // то лог будет иметь иметь не "стандартный" вид,
                 // кол-во его ячеек будет нечетным т.к. в последней будет храниться число

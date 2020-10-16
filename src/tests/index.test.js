@@ -1,19 +1,15 @@
 import servantResult from "../reducers/servants/servantResult";
 import {
     MAIN_CLEAR,
-    MODES, ON_CLICK_MAIN, ON_CLICK_NUMBER,
+    MODES,
+    NOT_OPERATOR,
+    ON_CLICK_MAIN,
+    ON_CLICK_NUMBER,
     ON_CLICK_SIMPLE_OPERATOR,
     SIMPLE_MULTIPLY,
-    SIMPLE_PLUS, NOT_OPERATOR
+    SIMPLE_PLUS
 } from "../constants";
-import {
-    flatDeep,
-    getArrLogText,
-    roundNum,
-    getResult,
-    toDisplayText,
-    wrapperArg
-} from "../reducers/utils";
+import {flatDeep, getArrLogText, getResult, roundNum, wrapperArg} from "../reducers/utils";
 import servantOnSign from "../reducers/servants/servantOnSign";
 import servantSimpleOperator from "../reducers/servants/servantSimpleOperator";
 import servantPercentOperator from "../reducers/servants/servantPercentOperator";
@@ -455,6 +451,34 @@ describe( "all indexes tests", ()=>{
                                 percentNumber: 4.16
                             }
                 } /// сложили, получили результат, применили процент, сложили, применили процент, выводим результат
+                , {
+                    inData:{
+                                displayText: '0',
+                                firstNumber: 10,
+                                lastNumber: 0,
+                                mode: 3,
+                                firstOperator: 'simpleDivision',
+                                onDot: false,
+                                arrLogText: [
+                                    '10',
+                                    '÷'
+                                ],
+                                percentNumber: 10
+                            }
+                    , outData:{
+                                displayText: 'Деление на ноль невозможно',
+                                firstNumber: Infinity,
+                                lastNumber: 0,
+                                mode: 4,
+                                firstOperator: 'simpleDivision',
+                                onDot: false,
+                                arrLogText: [
+                                    '10',
+                                    '÷'
+                                ],
+                                percentNumber: Infinity
+                            }
+                } /// деление на нуль
 
 
             ];
@@ -707,9 +731,37 @@ describe( "all indexes tests", ()=>{
                         ],
                         percentNumber: 10
                     }
-                }
+                }/// после получения результата сложения двух цифр
+                , {
+                    inData:{
+                        displayText: '-9',
+                        firstNumber: -9,
+                        lastNumber: 1,
+                        mode: 4,
+                        firstOperator: 'simplePlus',
+                        onDot: false,
+                        arrLogText: [
+                            '-10',
+                            '+',
+                            '1',
+                            '='
+                        ],
+                        percentNumber: -9 }
+                    , outData:{
+                            displayText: '0,8099999999999999',
+                            firstNumber: 0.8099999999999999,
+                            lastNumber: 1,
+                            mode: 4,
+                            firstOperator: 'simplePlus',
+                            onDot: false,
+                            arrLogText: [
+                                '0,8099999999999999'
+                            ],
+                            percentNumber: -9
+                        }
+                }/// работа с отрицательными значенпиями
 
-                 /// после получения результата сложения двух цифр
+
 
 
                 ];
@@ -836,46 +888,4 @@ describe( "all indexes tests", ()=>{
         });
     });
 
-    describe( 'different', ()=>{
-        test( "typeof of number", ()=>{
-           //expect( typeof "-3" === "number").toBe( true );
-           //expect( typeof "3,23" === "number").toBe( true );
-           //expect( Number( "negate( 34 )")).toBe( 0 );
-           //expect( Number( toFloat( "3,4" ))).toBe( 0 );
-
-            /*
-            const selectNumber = ( firstNumber, arrLogText ) =>{
-                  if( typeof toFloat( arrLogText ) !== 'number'
-                        && arrLogText.includes( toDisplayText( firstNumber )))
-                  return arrLogText;
-
-                  return firstNumber;
-
-                };
-             */
-            //expect( typeof toFloat( "negate( 3,5 )")).toBe( 0 );
-            //expect( toFloat( "negate( 3,5 )")).toBe( 0 );
-            //expect( isNaN( toFloat( "negate( 3,5 )" ) ) ).toBe( 0 );
-            //expect(  "negate( 3,5 )".includes( toDisplayText( 3.5 ) )  ).toBe( 0 );
-            const a = NaN;
-            expect(  isNaN( a )).toBe( true );
-            expect(  a ).toBe( NaN );
-        });
-        test( "slice and splice", ()=>{
-
-            expect(  [1, 2, 3, 4 ].splice( -1, 1 )).toStrictEqual( [ 4 ] );
-            expect(  [1, 2, 3, 4 ].slice( 0, -1 )).toStrictEqual( [1, 2, 3] );
-
-        });
-
-        test( "how work the symbol %", ()=>{
-
-            expect( 3%2 ).toBe( 1 );
-
-
-        });
-
-
-
-    })
 });

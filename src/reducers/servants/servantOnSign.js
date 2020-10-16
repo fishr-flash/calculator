@@ -1,5 +1,5 @@
 import {MODES} from "../../constants";
-import {wrapperArg, getArrLogText, toDisplayText, toFloat } from "../utils";
+import {getArrLogText, toDisplayText, toFloat, wrapperArg} from "../utils";
 
 export default ({displayText
                     , firstNumber
