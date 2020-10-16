@@ -30,7 +30,10 @@ export default ({displayText
                     , SIMPLE_RESULT );
             }
             else{
-                arrLogText = getArrLogText( arrLogText
+                /// если после получения результата был нажат оператор процентов,
+                // то лог будет иметь иметь не "стандартный" вид,
+                // кол-во его ячеек будет нечетным т.к. в последней будет храниться число
+                arrLogText = getArrLogText( arrLogText.length%2 ? arrLogText.slice( 0, -1 ) : arrLogText
                     , selectNumber( lastNumber, arrLogText[ arrLogText.length - 1 ])
                     , SIMPLE_RESULT);
             }
@@ -47,6 +50,7 @@ export default ({displayText
 
         }
 
+        percentNumber = firstNumber;
 
     return{ displayText
         , firstNumber

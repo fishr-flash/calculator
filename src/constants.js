@@ -16,6 +16,11 @@ export const SIMPLE_MULTIPLY = "simpleMultiply";
 export const SIMPLE_DIVISION = "simpleDivision";
 export const SIMPLE_RESULT = "simpleResult";
 
+/// default value of the firstOperator var
+export const NOT_OPERATOR = "notOperator";
+
+
+
 /// main operators
 export const MAIN_BACKSPACE = "mainBackspace";
 export const MAIN_CLEAR = "mainClear";

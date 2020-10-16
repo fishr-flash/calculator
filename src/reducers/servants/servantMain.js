@@ -50,15 +50,12 @@ export default ({displayText
 
                     if( mode < MODES.LAST_NUMBER )
                     {
-                        ///TODO: При введении функционала процентов проверить все места изменения первого числа
                         firstNumber = toFloat( displayText );
-                        //percentNumber = firstNumber;
                     }
                     else
                         lastNumber =  toFloat( displayText );
                 }else {
                     firstNumber = toFloat( displayText );
-                    //percentNumber = firstNumber;
                     arrLogText = [];
                 }
             }

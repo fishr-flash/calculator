@@ -33,8 +33,8 @@ export default ({displayText
         // начало формироваться), зная, что операторы всегда хранятся в четных ячейках
         // проверяем является ли последняя ячейка нечетной, если да - там хранится число
         // которое можно проверять на "обернутость"
-        if( arrLogText%2 && isNaN( toFloat(  arrLogText[ arrLogText.length - 1] )) ){
-            ///TODO: Не уверен, что правильно работает с "обернутыми" числами, надо проверить!
+        if( arrLogText.length%2 && isNaN( toFloat(  arrLogText[ arrLogText.length - 1] )) ){
+            ///FIXME: Не уверен, что правильно работает с "обернутыми" числами, надо проверить!
             lastNumber = value;
             displayText =lastNumber.toString();
             arrLogText = getArrLogText( arrLogText.slice( 0, -1 ) );

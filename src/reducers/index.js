@@ -1,7 +1,7 @@
 // import { combineReducers } from 'redux';
 // import setNumber from "./setNumber";
 import {
-    MODES, ON_CLICK_COMPLEXES,
+    MODES, NOT_OPERATOR, ON_CLICK_COMPLEXES,
     ON_CLICK_DOT, ON_CLICK_MAIN,
     ON_CLICK_NUMBER, ON_CLICK_PERCENT,
     ON_CLICK_RESULT,
@@ -25,7 +25,7 @@ export const store = {
     , lastNumber: 0
     , mode: MODES.BEGIN_MODE
     ///TODO: Для firstOperator дефолтным значением стоило бы сделать какое то специальное
-    , firstOperator: null
+    , firstOperator: NOT_OPERATOR
     , onDot: false
     , percentNumber: NaN
     , arrLogText: []
@@ -64,11 +64,8 @@ export default function reducer ( state = store, action ) {
     }
     ///TODO: Перегнать графику в свг
     ///TODO: Заменить инклюдес
-    ///TODO: Проверить взаимодействие с кнопкой backspace
     ///TODO: Деление на нуль. Добавить текст: Деление на ноль невозможно
     ///TODO: Оригинальный калькулятор имеет бОльшую высоту
-    ///TODO: Кнопка закрыть активна и работает неправильно
-    ///TODO: Активны кнопки М
     ///TODO: Реализовать поведение панели при использовании "сложных операторов" как на 2020-10-10_14-57-46 ( в папке doc )
     /////////////////////////////CONSOLE/////////////////////////////////////
         ///TODO: Console log in the code "INDEX_JS" line 32

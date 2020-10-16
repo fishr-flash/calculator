@@ -20,11 +20,9 @@ export default ({displayText
             mode = MODES.FIRST_OPERATOR;
             lastNumber = 0;
         } else if(   mode === MODES.AFTER_RESULT ){
-
-            //arrLogText = getArrLogText(  arrLogText.length ? arrLogText[ 0 ] : firstNumber
             arrLogText = getArrLogText( selectNumber( firstNumber, arrLogText[ 0 ])
                 , value );
-            lastNumber = 0;////toFloat( displayText );
+            lastNumber = 0;
             mode = MODES.FIRST_OPERATOR;
         } else if(  mode !== MODES.MULTIPLE_ACTION ){
             displayText = getResult( firstNumber, lastNumber, firstOperator );
@@ -50,7 +48,7 @@ export default ({displayText
             lastNumber = 0;
         }
 
-
+        percentNumber = firstNumber;
         firstOperator = value;
 
 

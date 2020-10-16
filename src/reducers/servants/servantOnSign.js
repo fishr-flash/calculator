@@ -17,14 +17,6 @@ export default ({displayText
         
         firstNumber *= -1;
         displayText = toDisplayText( firstNumber );
-
-        ///FIXME: Delete a block at the end of tests
-        /*if( firstNumber === 0 ){
-            arrLogText = getArrLogText(  arrLogText, wrapperArg( firstNumber, arrLogText.pop(), 'negate' ));
-        } else{
-            arrLogText = [];
-        }*/
-
         arrLogText = [];
     } else if( mode === MODES.FIRST_OPERATOR ) {
 
@@ -51,13 +43,7 @@ export default ({displayText
     } else if( mode === MODES.LAST_NUMBER ) {
 
         lastNumber *= -1;
-        ///TODO: Remove it
-       /* arrLogText = getArrLogText( arrLogText
-                                        ,  wrapperArg( displayText
-                                                        , arrLogText.length%2 ? arrLogText.pop() : '' )  );*/
         displayText = toDisplayText( lastNumber );
-
-        ///TODO: arrLogText.join( " " ) text-align = right
     }
 
     return{ displayText
