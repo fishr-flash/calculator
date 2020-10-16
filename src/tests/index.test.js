@@ -657,6 +657,47 @@ describe( "all indexes tests", ()=>{
                             percentNumber: 4
                         },
                 } /// прибавление после получения результата с использованием перевода в проценты
+                , {
+                    inData:[{
+                                displayText: '-64',
+                                firstNumber: -64,
+                                lastNumber: 0,
+                                mode: 1,
+                                firstOperator: 'simplePlus',
+                                onDot: false,
+                                arrLogText: [
+                                    '-64',
+                                    '+',
+                                    '-',
+                                    '+',
+                                    '-',
+                                    '+'
+                                ],
+                                percentNumber: -64
+                            }
+                            , {
+                                type: 'onClickSimpleOperator',
+                                value: 'simplePlus'
+                            }]
+                    , outData:{
+                            displayText: '-64',
+                            firstNumber: -64,
+                            lastNumber: 0,
+                            mode: 1,
+                            firstOperator: 'simpleMinus',
+                            onDot: false,
+                            arrLogText: [
+                                '-64',
+                                '+',
+                                '-',
+                                '+',
+                                '-',
+                                '+',
+                                '-'
+                            ],
+                        percentNumber: -64
+                    },
+                } //попеременное нажати +/- после ввода любого числа
                 ];
 
             checkedData.forEach(( v, i ) =>{

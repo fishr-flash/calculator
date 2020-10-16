@@ -2,11 +2,13 @@ import {ON_CLICK_RESULT} from "../../constants";
 import {connect} from "react-redux";
 import React from "react";
 
-const BtnResult = ( props )=>{
+const BtnResult = ( {
+                        onClick
+                    } )=>{
 
     return(
         < fieldset >
-            <button className="input_btns btn_result" onClick={ () => props.onClick( )} />
+            <button className="input_btns btn_result" onClick={ () => onClick( )} />
         </fieldset>
     );
 }

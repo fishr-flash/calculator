@@ -24,10 +24,10 @@ export const store = {
     , firstNumber: 0
     , lastNumber: 0
     , mode: MODES.BEGIN_MODE
-    ///TODO: Для firstOperator дефолтным значением стоило бы сделать какое то специальное
     , firstOperator: NOT_OPERATOR
     , onDot: false
     , percentNumber: NaN
+    , divisionByZeroBlocking: false
     , arrLogText: []
 
 };
@@ -67,6 +67,8 @@ export default function reducer ( state = store, action ) {
     ///TODO: Деление на нуль. Добавить текст: Деление на ноль невозможно
     ///TODO: Оригинальный калькулятор имеет бОльшую высоту
     ///TODO: Реализовать поведение панели при использовании "сложных операторов" как на 2020-10-10_14-57-46 ( в папке doc )
+    ///FIXME: Кнопки сложных операторов, а также кнопка +/-  и кнопки простых операторов неправильно обрабатывают дизейбл
+
     /////////////////////////////CONSOLE/////////////////////////////////////
         ///TODO: Console log in the code "INDEX_JS" line 32
         if( true ){

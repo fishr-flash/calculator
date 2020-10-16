@@ -1,7 +1,10 @@
 import React from "react";
 import {connect} from "react-redux";
 
-function Output( props ) {
+function Output( {
+                     displayText
+                    , logText
+                 } ) {
 
     const formatDisplayText = ( displayText )=>{
 
@@ -31,12 +34,12 @@ function Output( props ) {
         <section className="full_width">
             <div className="full_width story_calc">
                 <button className="progress_arrows left_progress_arrow"/>
-                <p className="progress_content">{ props.logText }</p>
+                <p className="progress_content">{ logText }</p>
                 <button className="progress_arrows right_progress_arrow" />
             </div>
             <div className="full_width viewer_panel" id="viewer">
                 <blockquote>
-                    <p className="viewport">{formatDisplayText( props.displayText )}</p>
+                    <p className="viewport">{formatDisplayText( displayText )}</p>
                 </blockquote>
             </div>
         </section>

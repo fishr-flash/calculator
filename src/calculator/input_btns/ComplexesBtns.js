@@ -2,20 +2,31 @@ import React from "react";
 import {connect} from "react-redux";
 import {COMPLEXES_DIVISION_X, ON_CLICK_COMPLEXES} from "../../constants";
 
-const ComplexesBtns = ( props )=>{
+const ComplexesBtns = ( {
+                            onClick
+                            , divisionByZeroBlocking
+                        } )=>{
 
     return(
         <fieldset className="fieldset_complexes_btns" disabled={ true }>
-            <button className="input_btns btn_one_x" onClick={ () => props.onClick( COMPLEXES_DIVISION_X )} />
-            <button className="input_btns btn_x2" disabled={ true } />
-            <button className="input_btns btn_2x" disabled={ true } />
+            <button className="input_btns btn_one_x"
+                    disabled={ divisionByZeroBlocking || true  }
+                    onClick={ () => onClick( COMPLEXES_DIVISION_X )} />
+            <button className="input_btns btn_x2"
+                    disabled={ divisionByZeroBlocking || true } />
+            <button className="input_btns btn_2x"
+                    disabled={ divisionByZeroBlocking || true} />
         </fieldset>
     );
 };
 
 
 export default connect(
-    null,
+    state => {
+        return ({
+            divisionByZeroBlocking: state.divisionByZeroBlocking
+        });
+    },
     dispatch => ({
         onClick: ( v ) => {
             dispatch( {type: ON_CLICK_COMPLEXES, value: v })

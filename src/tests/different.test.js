@@ -38,6 +38,23 @@ describe( "all different", ()=>{
 
         });
 
+        test( "how work spread objects", ()=>{
+
+            const obj = {
+                a:1
+                , b: 2
+                , c: 3
+                , d:{
+                    e: 4
+                    , f: 5
+                }
+            };
+
+            const fn = ( { a, b, e })=> a + b + e;
+
+            expect( fn( { ...obj, ...obj.d } ) ).toBe( 7 );
+            expect( { ...obj, ...obj.d } ).toStrictEqual( {a:1, b:2, c:3, d:{ e:4, f: 5 }, e: 4, f: 5 } );
+        });
 
 
     })
