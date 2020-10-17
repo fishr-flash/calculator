@@ -659,44 +659,35 @@ describe( "all indexes tests", ()=>{
                 } /// прибавление после получения результата с использованием перевода в проценты
                 , {
                     inData:[{
-                                displayText: '-64',
-                                firstNumber: -64,
+                                displayText: '1',
+                                firstNumber: 1,
                                 lastNumber: 0,
                                 mode: 1,
-                                firstOperator: 'simplePlus',
+                                firstOperator: 'simpleMultiply',
                                 onDot: false,
                                 arrLogText: [
-                                    '-64',
-                                    '+',
-                                    '-',
-                                    '+',
-                                    '-',
-                                    '+'
+                                    '1',
+                                    '×'
                                 ],
-                                percentNumber: -64
+                                percentNumber: 1
                             }
                             , {
                                 type: 'onClickSimpleOperator',
                                 value: 'simplePlus'
                             }]
                     , outData:{
-                            displayText: '-64',
-                            firstNumber: -64,
-                            lastNumber: 0,
-                            mode: 1,
-                            firstOperator: 'simpleMinus',
-                            onDot: false,
-                            arrLogText: [
-                                '-64',
-                                '+',
-                                '-',
-                                '+',
-                                '-',
-                                '+',
-                                '-'
-                            ],
-                        percentNumber: -64
-                    },
+                                displayText: '1',
+                                firstNumber: 1,
+                                lastNumber: 0,
+                                mode: 1,
+                                firstOperator: 'simplePlus',
+                                onDot: false,
+                                arrLogText: [
+                                    '1',
+                                    '+'
+                                ],
+                                percentNumber: 1
+                            },
                 } //попеременное нажати +/- после ввода любого числа
                 ];
 

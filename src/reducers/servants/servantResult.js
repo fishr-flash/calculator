@@ -42,6 +42,16 @@ export default ({displayText
 
         } else {
 
+            /////////////////////////////CONSOLE/////////////////////////////////////
+                ///TODO: Console log in the code "SERVANT_RESULT_JS" line 46
+                if( true ){
+                    console.group( 'Console log in the code "SERVANT_RESULT_JS" line 46' );
+                    console.info( 'arrLogText: ', arrLogText );
+                    console.info( 'this: ', this );
+                    //console.table( this );
+                    console.groupEnd();
+                }
+            /////////////////////////////END CONSOLE/////////////////////////////////
             firstNumber = toFloat( displayText );
             firstOperator = SIMPLE_RESULT;
             arrLogText = getArrLogText( firstNumber, firstOperator );

@@ -15,7 +15,8 @@ export default ({displayText
         if( mode === MODES.BEGIN_MODE
             || mode === MODES.FIRST_OPERATOR ){
             displayText = toDisplayText( firstNumber );
-            arrLogText = getArrLogText( arrLogText.length ? arrLogText : firstNumber
+            const firstPart = mode === MODES.FIRST_OPERATOR ? arrLogText.length ? arrLogText.slice( 0, -1 ) : firstNumber : arrLogText.length ? arrLogText : firstNumber
+            arrLogText = getArrLogText( firstPart
                 , value );
             mode = MODES.FIRST_OPERATOR;
             lastNumber = 0;
