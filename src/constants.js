@@ -28,6 +28,7 @@ export const MAIN_CLEAR_LAST = "mainClearLast";
 
 /// complexes operators
 export const COMPLEXES_DIVISION_X = "complexesDevisionX";
+export const DIVISION_BY_ZERO_IS_NOT_POSSIBLE = "Деление на ноль невозможно";
 
 
 

@@ -1,11 +1,12 @@
 import servantResult from "../reducers/servants/servantResult";
 import {
+    DIVISION_BY_ZERO_IS_NOT_POSSIBLE,
     MAIN_CLEAR,
     MODES,
     NOT_OPERATOR,
     ON_CLICK_MAIN,
     ON_CLICK_NUMBER,
-    ON_CLICK_SIMPLE_OPERATOR,
+    ON_CLICK_SIMPLE_OPERATOR, SIMPLE_DIVISION,
     SIMPLE_MULTIPLY,
     SIMPLE_PLUS
 } from "../constants";
@@ -15,6 +16,7 @@ import servantSimpleOperator from "../reducers/servants/servantSimpleOperator";
 import servantPercentOperator from "../reducers/servants/servantPercentOperator";
 import servantClickNumber from "../reducers/servants/servantClickNumber";
 import servantMain from "../reducers/servants/servantMain";
+import reducer from "../reducers";
 
 describe( "all indexes tests", ()=>{
 
@@ -339,6 +341,7 @@ describe( "all indexes tests", ()=>{
                         , firstOperator: SIMPLE_PLUS
                         , onDot: false
                         , percentNumber: NaN
+                        , divisionByZeroBlocking: false
                         , arrLogText: [ "123", "+" ]}
                     , outData:{
                         displayText: "444"
@@ -347,6 +350,7 @@ describe( "all indexes tests", ()=>{
                         , mode: MODES.AFTER_RESULT
                         , firstOperator: SIMPLE_PLUS
                         , onDot: false
+                        , divisionByZeroBlocking: false
                         , percentNumber: 444
                         , arrLogText: [ "123", "+", "321", "=" ]
                     }
@@ -359,6 +363,7 @@ describe( "all indexes tests", ()=>{
                         , firstOperator: SIMPLE_PLUS
                         , onDot: false
                         , percentNumber: NaN
+                        , divisionByZeroBlocking: false
                         , arrLogText: [ "123", "+" ]}
                     , outData:{
                         displayText: "444"
@@ -367,6 +372,7 @@ describe( "all indexes tests", ()=>{
                         , mode: MODES.AFTER_RESULT
                         , firstOperator: SIMPLE_PLUS
                         , onDot: false
+                        , divisionByZeroBlocking: false
                         , percentNumber: 444
                         , arrLogText: [ "123", "+", "321", "=" ]
                     }
@@ -379,6 +385,7 @@ describe( "all indexes tests", ()=>{
                         , firstOperator: SIMPLE_PLUS
                         , percentNumber: NaN
                         , onDot: false
+                        , divisionByZeroBlocking: false
                         , arrLogText: [ "123", "+" ]}
                     , outData:{
                         displayText: "444"
@@ -387,6 +394,7 @@ describe( "all indexes tests", ()=>{
                         , mode: MODES.AFTER_RESULT
                         , firstOperator: SIMPLE_PLUS
                         , onDot: false
+                        , divisionByZeroBlocking: false
                         , percentNumber: 444
                         , arrLogText: [ "123", "+", "321", "=" ]
                     }
@@ -399,6 +407,7 @@ describe( "all indexes tests", ()=>{
                                 mode: 4,
                                 firstOperator: 'simplePlus',
                                 onDot: false,
+                                divisionByZeroBlocking: false,
                                 percentNumber: NaN,
                                 arrLogText: [
                                     ' negate( 3 ) '
@@ -411,6 +420,7 @@ describe( "all indexes tests", ()=>{
                         mode: 4,
                         firstOperator: 'simplePlus',
                         onDot: false,
+                        divisionByZeroBlocking: false,
                         percentNumber: -1,
                         arrLogText: [
                             ' negate( 3 ) ',
@@ -428,6 +438,7 @@ describe( "all indexes tests", ()=>{
                                 mode: 3,
                                 firstOperator: 'simplePlus',
                                 onDot: false,
+                                divisionByZeroBlocking: false,
                                 arrLogText: [
                                     '4',
                                     '+',
@@ -442,6 +453,7 @@ describe( "all indexes tests", ()=>{
                                 mode: 4,
                                 firstOperator: 'simplePlus',
                                 onDot: false,
+                                divisionByZeroBlocking: false,
                                 arrLogText: [
                                     '4',
                                     '+',
@@ -459,6 +471,7 @@ describe( "all indexes tests", ()=>{
                         mode: MODES.FIRST_OPERATOR ,
                         firstOperator: 'simplePlus',
                         onDot: false,
+                        divisionByZeroBlocking: false,
                         arrLogText: [
                             '1',
                             '+'
@@ -472,6 +485,7 @@ describe( "all indexes tests", ()=>{
                         mode: MODES.AFTER_RESULT,
                         firstOperator: 'simplePlus',
                         onDot: false,
+                        divisionByZeroBlocking: false,
                         arrLogText: [
                             '1',
                             '+',
@@ -489,6 +503,7 @@ describe( "all indexes tests", ()=>{
                         mode: 0,
                         firstOperator: NOT_OPERATOR,
                         onDot: false,
+                        divisionByZeroBlocking: false,
                         arrLogText: [
                             '1',
                             '='
@@ -502,6 +517,7 @@ describe( "all indexes tests", ()=>{
                         mode: 0,
                         firstOperator: NOT_OPERATOR,
                         onDot: false,
+                        divisionByZeroBlocking: false,
                         arrLogText: [
                             '1',
                             '='
@@ -509,7 +525,7 @@ describe( "all indexes tests", ()=>{
                         percentNumber: 1
                     }
                 } /// нажатие на равно после нажания на равно после введение первого и единственного номера ( 1== )
-                , /*{
+                , {
                     inData:{
                                 displayText: '0',
                                 firstNumber: 10,
@@ -521,22 +537,24 @@ describe( "all indexes tests", ()=>{
                                     '10',
                                     '÷'
                                 ],
-                                percentNumber: 10
+                                percentNumber: 10,
+                                divisionByZeroBlocking: false
                             }
                     , outData:{
                                 displayText: 'Деление на ноль невозможно',
-                                firstNumber: Infinity,
+                                firstNumber: 10,
                                 lastNumber: 0,
-                                mode: 4,
-                                firstOperator: 'simpleDivision',
+                                mode: MODES.LAST_NUMBER,
+                                firstOperator: SIMPLE_DIVISION,
                                 onDot: false,
                                 arrLogText: [
                                     '10',
                                     '÷'
                                 ],
-                                percentNumber: Infinity
+                                percentNumber: 10,
+                                divisionByZeroBlocking: true
                             }
-                }*/ /// деление на нуль
+                } /// деление на нуль
 
 
 
@@ -921,6 +939,58 @@ describe( "all indexes tests", ()=>{
             checkedData.forEach(( v, i ) =>{
                 try{
                     expect( servantPercentOperator( v.inData )).toStrictEqual( v.outData );
+                }catch (e) {
+                    if( true ){
+                        console.group( 'Console log in the code "INDEX_TEST_JS" line 147' );
+                        console.info( 'v: ', v );
+                        console.info( 'i: ', i );
+                        console.info( 'e: ', e );
+
+                        //console.table( this );
+                        console.groupEnd();
+                    }
+                }
+            });
+        });
+        test( "test of reducer", ()=>{
+
+            let rnd = Math.random() * 1000;
+            if( Math.random() < .5 ) rnd *= -1;
+            const checkedData = [
+                { inData:  { state: {
+                        displayText: DIVISION_BY_ZERO_IS_NOT_POSSIBLE,
+                        firstNumber: 0,
+                        lastNumber: 0,
+                        mode: 0,
+                        firstOperator: 'notOperator',
+                        onDot: false,
+                        arrLogText: [
+                            '10',
+                            '÷'
+                        ] ,
+                        percentNumber: NaN,
+                        divisionByZeroBlocking: true
+                    }
+                    , action: {
+                        type: ON_CLICK_NUMBER
+                        , value: 7
+                    }}
+                , outData:{
+                        displayText: '7',
+                        firstNumber: 7,
+                        lastNumber: 0,
+                        mode: 0,
+                        firstOperator: 'notOperator',
+                        onDot: false,
+                        arrLogText: [],
+                        percentNumber: NaN
+                    }
+            }// DIVISION_BY_ZERO_IS_NOT_POSSIBLE
+                ];
+
+            checkedData.forEach(( v, i ) =>{
+                try{
+                    expect( reducer( v.inData.state, v.inData.action )).toStrictEqual( v.outData );
                 }catch (e) {
                     if( true ){
                         console.group( 'Console log in the code "INDEX_TEST_JS" line 147' );

@@ -30,7 +30,6 @@ describe( "all different", ()=>{
             expect(  [1, 2, 3, 4 ].slice( 0, -1 )).toStrictEqual( [1, 2, 3] );
 
         });
-
         test( "how work the symbol %", ()=>{
 
             expect( 3%2 ).toBe( 1 );

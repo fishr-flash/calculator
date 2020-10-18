@@ -1,9 +1,13 @@
 // import { combineReducers } from 'redux';
 // import setNumber from "./setNumber";
 import {
-    MODES, NOT_OPERATOR, ON_CLICK_COMPLEXES,
-    ON_CLICK_DOT, ON_CLICK_MAIN,
-    ON_CLICK_NUMBER, ON_CLICK_PERCENT,
+    MODES,
+    NOT_OPERATOR,
+    ON_CLICK_COMPLEXES,
+    ON_CLICK_DOT,
+    ON_CLICK_MAIN,
+    ON_CLICK_NUMBER,
+    ON_CLICK_PERCENT,
     ON_CLICK_RESULT,
     ON_CLICK_SIGN,
     ON_CLICK_SIMPLE_OPERATOR
@@ -33,6 +37,14 @@ export const store = {
 };
 
 export default function reducer ( state = store, action ) {
+
+    if ( state.divisionByZeroBlocking ) state = { ...store };
+
+    // значение divisionByZeroBlocking устанавливается только в servantResult, по нему
+    // ориентируются только веб элементы меняя состояние disabled, нажатие любой активной
+    // кнопки меняет состояние divisionByZeroBlocking на false, никакие servant'ы, кроме
+    // servantResult, не используют его значение, поэтому в них не передается
+    state.divisionByZeroBlocking = false;
 
     switch ( action.type ) {
         case ON_CLICK_RESULT:

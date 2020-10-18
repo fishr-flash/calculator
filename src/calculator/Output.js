@@ -7,27 +7,35 @@ function Output( {
                  } ) {
 
     const formatDisplayText = ( displayText )=>{
+        ///TODO: Сделать форматирование размера текста в зависимости от длинны
 
-        const parts = displayText.split( ',');
-        let onMinus = false;
+        if( isNaN( displayText )){
+            return  displayText;
+        } else {
+            const parts = displayText.split( ',');
+            let onMinus = false;
 
-        if( parseInt( parts[ 0 ] ) < 0 ){
-            onMinus = true;
-            parts[ 0 ] = parts[ 0 ].slice( 1 );
+            if( parseInt( parts[ 0 ] ) < 0 ){
+                onMinus = true;
+                parts[ 0 ] = parts[ 0 ].slice( 1 );
+            }
+
+
+            const len = parts[ 0 ].length;
+            let abs = "";
+
+            for (let i = len -1; i >= 0; i--) {
+                abs += ( len - i )%3?parts[ 0 ][ i ]: `${ parts[ 0 ][ i ] } `;
+            }
+
+            const invert = abs.split('').reverse();
+            parts[ 0 ] = invert.join('').trim();
+
+            return `${ onMinus? "-": ''}${parts.join(",")}`;
         }
 
 
-        const len = parts[ 0 ].length;
-        let abs = "";
 
-        for (let i = len -1; i >= 0; i--) {
-            abs += ( len - i )%3?parts[ 0 ][ i ]: `${ parts[ 0 ][ i ] } `;
-        }
-
-        const invert = abs.split('').reverse();
-        parts[ 0 ] = invert.join('').trim();
-
-        return `${ onMinus? "-": ''}${parts.join(",")}`;
     };
 
     return(
@@ -39,7 +47,7 @@ function Output( {
             </div>
             <div className="full_width viewer_panel" id="viewer">
                 <blockquote>
-                    <p className="viewport">{formatDisplayText( displayText )}</p>
+                    <p className="viewport">{ formatDisplayText( displayText )}</p>
                 </blockquote>
             </div>
         </section>
