@@ -13,6 +13,8 @@ export default ({displayText
 
 
         onDot = false;
+        
+
 
         if( mode > MODES.FIRST_OPERATOR && firstOperator !== SIMPLE_RESULT ){
 
@@ -23,7 +25,6 @@ export default ({displayText
             displayText = getResult( firstNumber, lastNumber, firstOperator );
 
             if( mode === MODES.AFTER_RESULT ){
-
                 arrLogText = getArrLogText( selectNumber( firstNumber, arrLogText[ 0 ])
                     , firstOperator
                     , lastNumber
@@ -40,23 +41,21 @@ export default ({displayText
             firstNumber = toFloat( displayText );
             mode = MODES.AFTER_RESULT;
 
-        } else {
-
-            /////////////////////////////CONSOLE/////////////////////////////////////
-                ///TODO: Console log in the code "SERVANT_RESULT_JS" line 46
-                if( true ){
-                    console.group( 'Console log in the code "SERVANT_RESULT_JS" line 46' );
-                    console.info( 'arrLogText: ', arrLogText );
-                    console.info( 'this: ', this );
-                    //console.table( this );
-                    console.groupEnd();
-                }
-            /////////////////////////////END CONSOLE/////////////////////////////////
+        } else if( mode === MODES.FIRST_OPERATOR ) {
+            lastNumber = toFloat( displayText );
+            displayText = getResult( firstNumber, lastNumber, firstOperator );
+            arrLogText = getArrLogText( selectNumber( firstNumber, arrLogText[ 0 ])
+                , firstOperator
+                , lastNumber
+                , SIMPLE_RESULT );
             firstNumber = toFloat( displayText );
-            firstOperator = SIMPLE_RESULT;
-            arrLogText = getArrLogText( firstNumber, firstOperator );
-            mode = MODES.FIRST_OPERATOR;
-
+            mode = MODES.AFTER_RESULT;
+        } else {
+            ///TODO: Закомментированно экспериментально, пока не ясно приведет ли это к багу
+            //firstNumber = toFloat( displayText );
+            //firstOperator = SIMPLE_RESULT;
+            arrLogText = getArrLogText( firstNumber, SIMPLE_RESULT );
+            //mode = MODES.FIRST_OPERATOR;
         }
 
         percentNumber = firstNumber;

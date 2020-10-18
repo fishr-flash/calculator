@@ -12,10 +12,10 @@ export default ({displayText
                 }, { type, value /*action*/})=>{
 
         onDot = false;
-        if( mode === MODES.BEGIN_MODE
-            || mode === MODES.FIRST_OPERATOR ){
+        if( mode < MODES.MULTIPLE_ACTION  ){
             displayText = toDisplayText( firstNumber );
-            const firstPart = mode === MODES.FIRST_OPERATOR ? arrLogText.length ? arrLogText.slice( 0, -1 ) : firstNumber : arrLogText.length ? arrLogText : firstNumber
+            //const firstPart = mode === MODES.FIRST_OPERATOR ? arrLogText.length ? arrLogText.slice( 0, -1 ) : firstNumber : arrLogText.length ? arrLogText : firstNumber
+            const firstPart = mode === MODES.FIRST_OPERATOR && arrLogText.length ? arrLogText.slice( 0, -1 ) : firstNumber;
             arrLogText = getArrLogText( firstPart
                 , value );
             mode = MODES.FIRST_OPERATOR;

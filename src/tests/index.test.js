@@ -453,6 +453,64 @@ describe( "all indexes tests", ()=>{
                 } /// сложили, получили результат, применили процент, сложили, применили процент, выводим результат
                 , {
                     inData:{
+                        displayText: '1',
+                        firstNumber: 1,
+                        lastNumber: 0,
+                        mode: MODES.FIRST_OPERATOR ,
+                        firstOperator: 'simplePlus',
+                        onDot: false,
+                        arrLogText: [
+                            '1',
+                            '+'
+                        ],
+                        percentNumber: 1
+                    }
+                    , outData:{
+                        displayText: '2',
+                        firstNumber: 2,
+                        lastNumber: 1,
+                        mode: MODES.AFTER_RESULT,
+                        firstOperator: 'simplePlus',
+                        onDot: false,
+                        arrLogText: [
+                            '1',
+                            '+',
+                            '1',
+                            '='
+                        ],
+                        percentNumber: 2
+                    }
+                } /// нажатие на равно после выбора только первого номера и любого простого оператора ( 1+= )
+                , {
+                    inData:{
+                        displayText: '1',
+                        firstNumber: 1,
+                        lastNumber: 0,
+                        mode: 0,
+                        firstOperator: NOT_OPERATOR,
+                        onDot: false,
+                        arrLogText: [
+                            '1',
+                            '='
+                        ],
+                        percentNumber: 1
+                    }
+                    , outData:{
+                        displayText: '1',
+                        firstNumber: 1,
+                        lastNumber: 0,
+                        mode: 0,
+                        firstOperator: NOT_OPERATOR,
+                        onDot: false,
+                        arrLogText: [
+                            '1',
+                            '='
+                        ],
+                        percentNumber: 1
+                    }
+                } /// нажатие на равно после нажания на равно после введение первого и единственного номера ( 1== )
+                , /*{
+                    inData:{
                                 displayText: '0',
                                 firstNumber: 10,
                                 lastNumber: 0,
@@ -478,7 +536,8 @@ describe( "all indexes tests", ()=>{
                                 ],
                                 percentNumber: Infinity
                             }
-                } /// деление на нуль
+                }*/ /// деление на нуль
+
 
 
             ];
@@ -689,6 +748,38 @@ describe( "all indexes tests", ()=>{
                                 percentNumber: 1
                             },
                 } //попеременное нажати +/- после ввода любого числа
+                , {
+                    inData:[{
+                                displayText: '1',
+                                firstNumber: 1,
+                                lastNumber: 0,
+                                mode: 0,
+                                firstOperator: 'notOperator',
+                                onDot: false,
+                                arrLogText: [
+                                    '1',
+                                    '='
+                                ],
+                                percentNumber: 1
+                            }
+                            , {
+                                type: 'onClickSimpleOperator',
+                                value: 'simplePlus'
+                            }]
+                    , outData:{
+                            displayText: '1',
+                            firstNumber: 1,
+                            lastNumber: 0,
+                            mode: 1,
+                            firstOperator: 'simplePlus',
+                            onDot: false,
+                            arrLogText: [
+                                '1',
+                                '+'
+                            ],
+                            percentNumber: 1
+                        },
+                } // порядок действий ввод числа, нажатие на ровно, ввод оператора ( 1=+ )
                 ];
 
             checkedData.forEach(( v, i ) =>{
