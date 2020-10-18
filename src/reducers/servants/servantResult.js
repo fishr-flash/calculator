@@ -1,4 +1,4 @@
-import {MODES, SIMPLE_RESULT} from "../../constants";
+import {DIVISION_BY_ZERO_IS_NOT_POSSIBLE, MODES, SIMPLE_DIVISION, SIMPLE_RESULT} from "../../constants";
 import {getArrLogText, getResult, selectNumber, toFloat} from "../utils";
 
 export default ({displayText
@@ -9,11 +9,8 @@ export default ({displayText
                     , onDot
                     , arrLogText
                     , percentNumber
+                    , divisionByZeroBlocking
                 })=>{
-
-
-        onDot = false;
-        
 
 
         if( mode > MODES.FIRST_OPERATOR && firstOperator !== SIMPLE_RESULT ){
@@ -29,6 +26,17 @@ export default ({displayText
                     , firstOperator
                     , lastNumber
                     , SIMPLE_RESULT );
+
+                firstNumber = toFloat( displayText );
+                mode = MODES.AFTER_RESULT;
+                percentNumber = firstNumber;
+                /// если произведено деление на ноль
+            } else if( mode === MODES.LAST_NUMBER
+                && firstOperator === SIMPLE_DIVISION
+                && lastNumber === 0 ){
+
+                displayText = DIVISION_BY_ZERO_IS_NOT_POSSIBLE;
+                divisionByZeroBlocking = true;
             } else {
                 /// если после получения результата был нажат оператор процентов,
                 // то лог будет иметь иметь не "стандартный" вид,
@@ -36,10 +44,13 @@ export default ({displayText
                 arrLogText = getArrLogText( arrLogText.length%2 ? arrLogText.slice( 0, -1 ) : arrLogText
                     , selectNumber( lastNumber, arrLogText[ arrLogText.length - 1 ])
                     , SIMPLE_RESULT);
+
+                firstNumber = toFloat( displayText );
+                mode = MODES.AFTER_RESULT;
+                percentNumber = firstNumber;
             }
 
-            firstNumber = toFloat( displayText );
-            mode = MODES.AFTER_RESULT;
+
 
         } else if( mode === MODES.FIRST_OPERATOR ) {
             lastNumber = toFloat( displayText );
@@ -50,15 +61,17 @@ export default ({displayText
                 , SIMPLE_RESULT );
             firstNumber = toFloat( displayText );
             mode = MODES.AFTER_RESULT;
+            percentNumber = firstNumber;
         } else {
             ///TODO: Закомментированно экспериментально, пока не ясно приведет ли это к багу
             //firstNumber = toFloat( displayText );
             //firstOperator = SIMPLE_RESULT;
             arrLogText = getArrLogText( firstNumber, SIMPLE_RESULT );
             //mode = MODES.FIRST_OPERATOR;
+            percentNumber = firstNumber;
         }
 
-        percentNumber = firstNumber;
+
 
     return{ displayText
         , firstNumber
@@ -68,6 +81,7 @@ export default ({displayText
         , onDot
         , arrLogText
         , percentNumber
+        , divisionByZeroBlocking
     };
 
 }
