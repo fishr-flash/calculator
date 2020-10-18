@@ -21,7 +21,9 @@ export default ({displayText
             mode = MODES.FIRST_OPERATOR;
             lastNumber = 0;
         } else if(   mode === MODES.AFTER_RESULT ){
-            arrLogText = getArrLogText( selectNumber( firstNumber, arrLogText[ 0 ])
+            /// когда после получения результата был нажат backspace лог удаляется
+            const selectedNumber = arrLogText.length ? selectNumber( firstNumber, arrLogText[ 0 ]) : firstNumber;
+            arrLogText = getArrLogText( selectedNumber
                 , value );
             lastNumber = 0;
             mode = MODES.FIRST_OPERATOR;

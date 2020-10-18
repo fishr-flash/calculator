@@ -780,6 +780,35 @@ describe( "all indexes tests", ()=>{
                             percentNumber: 1
                         },
                 } // порядок действий ввод числа, нажатие на ровно, ввод оператора ( 1=+ )
+                , {
+                    inData:[{
+                                displayText: '444',
+                                firstNumber: 444,
+                                lastNumber: 321,
+                                mode: 4,
+                                firstOperator: 'simplePlus',
+                                onDot: false,
+                                arrLogText: [],
+                                percentNumber: 444
+                            }
+                            , {
+                                type: 'onClickSimpleOperator',
+                                value: 'simplePlus'
+                            }]
+                    , outData:{
+                                displayText: '444',
+                                firstNumber: 444,
+                                lastNumber: 0,
+                                mode: 1,
+                                firstOperator: 'simplePlus',
+                                onDot: false,
+                                arrLogText: [
+                                        "444",
+                                        "+",
+                                        ],
+                                percentNumber: 444
+                            },
+                } // выполнение сложения, равно, backspace, простой оператор
                 ];
 
             checkedData.forEach(( v, i ) =>{
