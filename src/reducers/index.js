@@ -94,6 +94,8 @@ export default function reducer ( state = store, action ) {
         }
     /////////////////////////////END CONSOLE/////////////////////////////////
 
+    ///TODO: исправил поведение кнопок дисаблед
+
     return  state;
 
 }

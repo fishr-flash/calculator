@@ -8,9 +8,9 @@ const ComplexesBtns = ( {
                         } )=>{
 
     return(
-        <fieldset className="fieldset_complexes_btns" disabled={ true }>
+        <fieldset className="fieldset_complexes_btns" disabled={ false }>
             <button className="input_btns btn_one_x"
-                    disabled={ divisionByZeroBlocking || true  }
+                    disabled={ divisionByZeroBlocking }
                     onClick={ () => onClick( COMPLEXES_DIVISION_X )} />
             <button className="input_btns btn_x2"
                     disabled={ divisionByZeroBlocking || true } />

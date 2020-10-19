@@ -452,6 +452,7 @@ button:disabled
 , .max_btn:disabled
 , .menu_btn:disabled
 , .stick_btn:disabled
+, .input_btns:disabled
 , .journal_btn:disabled{
     background-color: rgba( 0, 0, 0, 0 );
     border: 1px solid rgba(0,0,0, 0);
