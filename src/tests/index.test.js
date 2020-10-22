@@ -1097,7 +1097,6 @@ describe( "all indexes tests", ()=>{
             });
         });
         test( "test of servantComplexes complexesDivisionX", ()=>{
-            ///TODO: добавить обработку деления на ноль
             let rnd = Math.random() * 1000;
             if( Math.random() < .5 ) rnd *= -1;
             const checkedData = [
@@ -1126,7 +1125,8 @@ describe( "all indexes tests", ()=>{
                         firstOperator: 'notOperator',
                         onDot: false,
                         arrLogText: [ "1/( 10 )" ],
-                        percentNumber: null
+                        percentNumber: null,
+                        divisionByZeroBlocking: false
                     }
                 }// default mode
                 , {
@@ -1156,9 +1156,40 @@ describe( "all indexes tests", ()=>{
                         arrLogText: [
                             '1/( negate( 1/( 10 ) ) )'
                         ],
-                        percentNumber: NaN
+                        percentNumber: NaN,
+                        divisionByZeroBlocking: false
                     }
                 }// 10, 1/x, +/-, 1/x
+                , {
+                    inData:  [{
+                        displayText: '0',
+                        firstNumber: 0,
+                        lastNumber: 0,
+                        mode: 0,
+                        firstOperator: 'notOperator',
+                        onDot: false,
+                        arrLogText: [],
+                        percentNumber: NaN,
+                        divisionByZeroBlocking: false
+                    }, {
+                        type: ON_CLICK_COMPLEXES
+                        , value: COMPLEXES_DIVISION_X
+                    } ]
+                    , outData: {
+                        displayText: DIVISION_BY_ZERO_IS_NOT_POSSIBLE,
+                        firstNumber: 0,
+                        lastNumber: 0,
+                        mode: 0,
+                        firstOperator: 'notOperator',
+                        onDot: false,
+                        arrLogText: [
+                            '1/( 0 )'
+                        ],
+                        percentNumber: NaN,
+                        divisionByZeroBlocking: true
+
+                    }
+                }// 0, 1/x
 
                 ];
 
