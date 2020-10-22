@@ -1,6 +1,6 @@
 //const DIVISION_WARNING = 'Деление на ноль невозможно';
 
-import {COMPLEXES_DIVISION_X, MODES} from "../../constants";
+import {COMPLEXES_DIVISION_X, DIVISION_BY_ZERO_IS_NOT_POSSIBLE, MODES} from "../../constants";
 import {getArrLogText, selectArgumentToWrap, toDisplayText, wrapperArg} from "../utils";
 
 export default ({displayText
@@ -11,6 +11,7 @@ export default ({displayText
                     , onDot
                     , arrLogText
                     , percentNumber
+                    , divisionByZeroBlocking
                 }, { type, value /*action*/})=>{
 
     switch ( value ) {
@@ -18,14 +19,22 @@ export default ({displayText
         case COMPLEXES_DIVISION_X:
 
             if( mode < MODES.FIRST_OPERATOR ){
+
                 arrLogText = getArrLogText(
-                                    wrapperArg(
-                                        selectArgumentToWrap( arrLogText[ 0 ], firstNumber )
-                                        , ""
-                                        , "1/")
-                            );
-                firstNumber = 1 / firstNumber;
-                displayText = toDisplayText( firstNumber );
+                    wrapperArg(
+                        selectArgumentToWrap( arrLogText[ 0 ], firstNumber )
+                        , ""
+                        , "1/")
+                );
+
+                if( firstNumber === 0 ){
+                    displayText = DIVISION_BY_ZERO_IS_NOT_POSSIBLE;
+                    divisionByZeroBlocking = true;
+                } else {
+                    firstNumber = 1 / firstNumber;
+                    displayText = toDisplayText( firstNumber );
+                }
+
             }
 
 
@@ -42,6 +51,7 @@ export default ({displayText
         , onDot
         , arrLogText
         , percentNumber
+        , divisionByZeroBlocking
     };
 
 }
