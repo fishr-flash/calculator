@@ -14,10 +14,14 @@ export default ({displayText
     onDot = false;
 
     if( mode < MODES.FIRST_OPERATOR ){
-        
+        /// если в первой ячейке массива лога содержится выражение, напр 1/(10)
+        if( arrLogText[ 0 ] !== undefined && isNaN( arrLogText[ 0 ] ) ){
+            arrLogText = getArrLogText( wrapperArg( arrLogText[ 0 ], "", 'negate' ) );
+        }
         firstNumber *= -1;
         displayText = toDisplayText( firstNumber );
-        arrLogText = [];
+        //percentNumber = firstNumber;
+        //arrLogText = [];
     } else if( mode === MODES.FIRST_OPERATOR ) {
 
         mode = MODES.LAST_NUMBER;

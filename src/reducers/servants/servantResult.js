@@ -65,7 +65,7 @@ export default ({displayText
         } else {
             ///TODO: Закомментированно экспериментально, пока не ясно приведет ли это к багу
             //firstNumber = toFloat( displayText );
-            //firstOperator = SIMPLE_RESULT;
+            firstOperator = SIMPLE_RESULT;
             arrLogText = getArrLogText( firstNumber, SIMPLE_RESULT );
             //mode = MODES.FIRST_OPERATOR;
             percentNumber = firstNumber;

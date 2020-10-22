@@ -1,5 +1,5 @@
 import {MODES} from "../../constants";
-import {getArrLogText, getResult, selectNumber, toDisplayText, toFloat} from "../utils";
+import {getArrLogText, getResult, selectArgumentToWrap, selectNumber, toDisplayText, toFloat} from "../utils";
 
 export default ({displayText
                     , firstNumber
@@ -14,18 +14,27 @@ export default ({displayText
         onDot = false;
         if( mode < MODES.MULTIPLE_ACTION  ){
             displayText = toDisplayText( firstNumber );
-            //const firstPart = mode === MODES.FIRST_OPERATOR ? arrLogText.length ? arrLogText.slice( 0, -1 ) : firstNumber : arrLogText.length ? arrLogText : firstNumber
-            const firstPart = mode === MODES.FIRST_OPERATOR && arrLogText.length ? arrLogText.slice( 0, -1 ) : firstNumber;
+
+                let firstPart = '';
+                /// если попеременно нажимаются разные операторы
+                if( mode === MODES.FIRST_OPERATOR && arrLogText.length ){
+                    firstPart = arrLogText.slice( 0, -1 ) ;
+                } else {
+                    // если первый аргумент есть и он обернут выражение
+                    firstPart = selectArgumentToWrap( arrLogText[ 0 ], firstNumber );
+
+                }
+
             arrLogText = getArrLogText( firstPart
                 , value );
             mode = MODES.FIRST_OPERATOR;
-            lastNumber = 0;
+
         } else if(   mode === MODES.AFTER_RESULT ){
             /// когда после получения результата был нажат backspace лог удаляется
             const selectedNumber = arrLogText.length ? selectNumber( firstNumber, arrLogText[ 0 ]) : firstNumber;
             arrLogText = getArrLogText( selectedNumber
                 , value );
-            lastNumber = 0;
+
             mode = MODES.FIRST_OPERATOR;
         } else if(  mode !== MODES.MULTIPLE_ACTION ){
             displayText = getResult( firstNumber, lastNumber, firstOperator );
@@ -48,9 +57,10 @@ export default ({displayText
                 mode = MODES.FIRST_OPERATOR;
             }
 
-            lastNumber = 0;
+
         }
 
+        lastNumber = 0;
         percentNumber = firstNumber;
         firstOperator = value;
 

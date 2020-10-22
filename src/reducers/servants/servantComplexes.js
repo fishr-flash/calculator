@@ -1,7 +1,7 @@
 //const DIVISION_WARNING = 'Деление на ноль невозможно';
 
-import {COMPLEXES_DIVISION_X} from "../../constants";
-import {getArrLogText, toDisplayText, wrapperArg} from "../utils";
+import {COMPLEXES_DIVISION_X, MODES} from "../../constants";
+import {getArrLogText, selectArgumentToWrap, toDisplayText, wrapperArg} from "../utils";
 
 export default ({displayText
                     , firstNumber
@@ -16,9 +16,18 @@ export default ({displayText
     switch ( value ) {
 
         case COMPLEXES_DIVISION_X:
-                arrLogText = getArrLogText( wrapperArg( firstNumber, "", "1/") );
+
+            if( mode < MODES.FIRST_OPERATOR ){
+                arrLogText = getArrLogText(
+                                    wrapperArg(
+                                        selectArgumentToWrap( arrLogText[ 0 ], firstNumber )
+                                        , ""
+                                        , "1/")
+                            );
                 firstNumber = 1 / firstNumber;
                 displayText = toDisplayText( firstNumber );
+            }
+
 
 
             break;

@@ -6,10 +6,10 @@ import {
     MODES,
     NOT_OPERATOR, ON_CLICK_COMPLEXES,
     ON_CLICK_MAIN,
-    ON_CLICK_NUMBER,
+    ON_CLICK_NUMBER, ON_CLICK_SIGN,
     ON_CLICK_SIMPLE_OPERATOR, SIMPLE_DIVISION,
     SIMPLE_MULTIPLY,
-    SIMPLE_PLUS
+    SIMPLE_PLUS, SIMPLE_RESULT
 } from "../constants";
 import {flatDeep, getArrLogText, getResult, roundNum, wrapperArg} from "../reducers/utils";
 import servantOnSign from "../reducers/servants/servantOnSign";
@@ -159,7 +159,7 @@ describe( "all indexes tests", ()=>{
                         firstNumber: 10,
                         lastNumber: 0,
                         mode: 0,
-                        firstOperator: 'notOperator',
+                        firstOperator: SIMPLE_RESULT,
                         onDot: false,
                         arrLogText: [
                             '10',
@@ -183,10 +183,10 @@ describe( "all indexes tests", ()=>{
                             '10',
                             '='
                         ],
-                        percentNumber: 2,
+                        percentNumber: 10,
 
                     }
-                } /// порядок ввод числа, равно, ввод другого числа
+                } /// порядок: ввод числа, равно, ввод другого числа
             ];
 
             checkedData.forEach(( v, i ) =>{
@@ -345,6 +345,33 @@ describe( "all indexes tests", ()=>{
                         , arrLogText: []
                     }
                 }
+                , {
+                    inData:  {
+                        displayText: '0,1',
+                        firstNumber: 0.1,
+                        lastNumber: 0,
+                        mode: 0,
+                        firstOperator: 'notOperator',
+                        onDot: false,
+                        arrLogText: [
+                            '1/( 10 )'
+                        ],
+                        percentNumber: NaN
+                    }
+                    , outData: {
+                        displayText: '-0,1',
+                        firstNumber: -0.1,
+                        lastNumber: 0,
+                        mode: 0,
+                        firstOperator: 'notOperator',
+                        onDot: false,
+                        arrLogText: [
+                            'negate( 1/( 10 ) )'
+                        ],
+                        percentNumber: NaN
+                    }
+                }// 10, 1/x, +/-
+
 
             ];
 
@@ -551,7 +578,7 @@ describe( "all indexes tests", ()=>{
                         firstNumber: 1,
                         lastNumber: 0,
                         mode: 0,
-                        firstOperator: NOT_OPERATOR,
+                        firstOperator: SIMPLE_RESULT,
                         onDot: false,
                         divisionByZeroBlocking: false,
                         arrLogText: [
@@ -860,6 +887,38 @@ describe( "all indexes tests", ()=>{
                                 percentNumber: 444
                             },
                 } // выполнение сложения, равно, backspace, простой оператор
+                , {
+                    inData:[{
+                                displayText: '-10',
+                                firstNumber: -10,
+                                lastNumber: 0,
+                                mode: 0,
+                                firstOperator: 'notOperator',
+                                onDot: false,
+                                arrLogText: [
+                                    '1/( negate( 1/( 10 ) ) )'
+                                ],
+                                percentNumber: NaN
+                            }
+                            , {
+                                type: 'onClickSimpleOperator',
+                                value: 'simplePlus'
+                            }]
+                    , outData:{
+                                displayText: '-10',
+                                firstNumber: -10,
+                                lastNumber: 0,
+                                mode: 1,
+                                firstOperator: 'simplePlus',
+                                onDot: false,
+                                arrLogText: [
+                                    '1/( negate( 1/( 10 ) ) )',
+                                    '+'
+
+                                ],
+                                percentNumber: -10
+                            },
+                } // // 10, 1/x, +/-, 1/x, =
                 ];
 
             checkedData.forEach(( v, i ) =>{
@@ -1038,7 +1097,7 @@ describe( "all indexes tests", ()=>{
             });
         });
         test( "test of servantComplexes complexesDivisionX", ()=>{
-
+            ///TODO: добавить обработку деления на ноль
             let rnd = Math.random() * 1000;
             if( Math.random() < .5 ) rnd *= -1;
             const checkedData = [
@@ -1070,6 +1129,37 @@ describe( "all indexes tests", ()=>{
                         percentNumber: null
                     }
                 }// default mode
+                , {
+                    inData:  [{
+                        displayText: '-0,1',
+                        firstNumber: -0.1,
+                        lastNumber: 0,
+                        mode: 0,
+                        firstOperator: 'notOperator',
+                        onDot: false,
+                        arrLogText: [
+                            'negate( 1/( 10 ) )'
+                        ],
+                        percentNumber: NaN,
+                        divisionByZeroBlocking: false
+                    }, {
+                        type: ON_CLICK_COMPLEXES
+                        , value: COMPLEXES_DIVISION_X
+                    } ]
+                    , outData: {
+                        displayText: '-10',
+                        firstNumber: -10,
+                        lastNumber: 0,
+                        mode: 0,
+                        firstOperator: 'notOperator',
+                        onDot: false,
+                        arrLogText: [
+                            '1/( negate( 1/( 10 ) ) )'
+                        ],
+                        percentNumber: NaN
+                    }
+                }// 10, 1/x, +/-, 1/x
+
                 ];
 
             checkedData.forEach(( v, i ) =>{

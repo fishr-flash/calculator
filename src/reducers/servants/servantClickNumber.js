@@ -1,5 +1,5 @@
-import {MODES} from "../../constants";
-import {getArrLogText, getOutput, toFloat} from "../utils";
+import {MODES, NOT_OPERATOR, SIMPLE_RESULT} from "../../constants";
+import {getArrLogText, getOutput, toDisplayText, toFloat} from "../utils";
 import {store} from "../index";
 
 export default ({displayText
@@ -49,8 +49,18 @@ export default ({displayText
         displayText = getOutput( displayText, value, onDot );
         lastNumber = toFloat( displayText );
     } else {
-        displayText = getOutput( displayText, value, onDot );
-        firstNumber = toFloat( displayText );
+        if( firstOperator === SIMPLE_RESULT ){
+            firstNumber = value;
+            displayText = toDisplayText( firstNumber );
+            firstOperator = NOT_OPERATOR;
+
+        } else {
+            displayText = getOutput( displayText, value, onDot );
+            firstNumber = toFloat( displayText );
+
+
+        }
+
     }
 
     ///FIXME: Везде отменить onDOT = false, флаг должен обнуляться только в местах изменения числа
