@@ -144,6 +144,11 @@ export const selectNumber = (firstNumber, quantityOfStrFormat ) =>{
 
 };
 
-
-
+/**
+ *
+ * @param argWrap commonly arrLogText[ 0 ]
+ * @param firstNumber
+ * @returns {*}
+ */
+export const selectArgumentToWrap =  (argWrap, firstNumber ) => argWrap !== undefined && isNaN( argWrap) ? argWrap : firstNumber;
 
