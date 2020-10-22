@@ -35,6 +35,11 @@ export default ({displayText
                     displayText = toDisplayText( firstNumber );
                 }
 
+            } else if( mode === MODES.FIRST_OPERATOR ){
+                lastNumber = 1 / firstNumber;
+                arrLogText = getArrLogText( arrLogText, wrapperArg( firstNumber, "", '1/'));
+                displayText = toDisplayText( lastNumber );
+                mode = MODES.LAST_NUMBER;
             }
 
 

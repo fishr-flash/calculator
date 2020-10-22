@@ -1190,6 +1190,40 @@ describe( "all indexes tests", ()=>{
 
                     }
                 }// 0, 1/x
+                , {
+                    inData:  [{
+                        displayText: '10',
+                        firstNumber: 10,
+                        lastNumber: 0,
+                        mode: 1,
+                        firstOperator: 'simplePlus',
+                        onDot: false,
+                        arrLogText: [
+                            '10',
+                            '+'
+                        ],
+                        percentNumber: 10,
+                        divisionByZeroBlocking: false
+                    }, {
+                        type: ON_CLICK_COMPLEXES
+                        , value: COMPLEXES_DIVISION_X
+                    } ]
+                    , outData: {
+                        displayText: '0,1',
+                        firstNumber: 10,
+                        lastNumber: 0.1,
+                        mode: MODES.LAST_NUMBER,
+                        firstOperator: 'simplePlus',
+                        onDot: false,
+                        arrLogText: [
+                            '10',
+                            '+',
+                            '1/( 10 )'
+                        ],
+                        percentNumber: 10,
+                        divisionByZeroBlocking: false
+                    }
+                }// 0, 1/x
 
                 ];
 
