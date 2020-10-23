@@ -40,10 +40,11 @@ export default ({displayText
                 arrLogText = getArrLogText( arrLogText, wrapperArg( firstNumber, "", '1/'));
                 displayText = toDisplayText( lastNumber );
                 mode = MODES.LAST_NUMBER;
+            } else if( mode === MODES.LAST_NUMBER ){
+                arrLogText = getArrLogText( arrLogText, wrapperArg( lastNumber, "", '1/'));
+                lastNumber = 1 / lastNumber;
+                displayText = toDisplayText( lastNumber );
             }
-
-
-
             break;
         default:
     }

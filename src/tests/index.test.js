@@ -23,6 +23,17 @@ import servantComplexes from "../reducers/servants/servantComplexes";
 describe( "all indexes tests", ()=>{
 
     describe( "test of servants", ()=>{
+
+        /// Порядок отладки внедрения нового оператора
+        /**
+         *  - реализация во всех модах последовательно
+         *    - BEGIN_MODE: 0
+         ,    - FIRST_OPERATOR: 1
+         ,    - MULTIPLE_ACTION: 2
+         ,    - LAST_NUMBER: 3
+         ,    - AFTER_RESULT: 4
+            - реализация в вышеуказанных случаях когда одно из чисел "обернуто" один и более раз
+         */
         test( "test of servantClickNumber", ()=> {
 
             const checkedData = [
@@ -1256,7 +1267,41 @@ describe( "all indexes tests", ()=>{
                         percentNumber: 10,
                         divisionByZeroBlocking: false
                     }
-                }// 0, 1/x
+                }// 10, +, 1/x
+                , {
+                    inData:  [{
+                        displayText: '20',
+                        firstNumber: 10,
+                        lastNumber: 20,
+                        mode: 3,
+                        firstOperator: 'simplePlus',
+                        onDot: false,
+                        arrLogText: [
+                            '10',
+                            '+'
+                        ],
+                        percentNumber: 10,
+                        divisionByZeroBlocking: false
+                    }, {
+                        type: ON_CLICK_COMPLEXES
+                        , value: COMPLEXES_DIVISION_X
+                    } ]
+                    , outData: {
+                        displayText: '0,05',
+                        firstNumber: 10,
+                        lastNumber: 0.05,
+                        mode: 3,
+                        firstOperator: 'simplePlus',
+                        onDot: false,
+                        arrLogText: [
+                            '10',
+                            '+',
+                            '1/( 20 )'
+                        ],
+                        percentNumber: 10,
+                        divisionByZeroBlocking: false
+                    }
+                }// 10, +, 20, 1/x
 
                 ];
 
