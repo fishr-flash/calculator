@@ -618,6 +618,39 @@ describe( "all indexes tests", ()=>{
                                 divisionByZeroBlocking: true
                             }
                 } /// деление на нуль
+                , {
+                    inData:{
+                                displayText: '0,1',
+                                firstNumber: 10,
+                                lastNumber: 0.1,
+                                mode: 3,
+                                firstOperator: 'simplePlus',
+                                onDot: false,
+                                arrLogText: [
+                                    '10',
+                                    '+',
+                                    '1/( 10 )'
+                                ],
+                                percentNumber: 10,
+                                divisionByZeroBlocking: false
+                            }
+                    , outData:{
+                                displayText: '10,1',
+                                firstNumber: 10.1,
+                                lastNumber: 0.1,
+                                mode: 4,
+                                firstOperator: 'simplePlus',
+                                onDot: false,
+                                arrLogText: [
+                                    '10',
+                                    '+',
+                                    '1/( 10 )',
+                                    '='
+                                ],
+                                percentNumber: 10.1,
+                                divisionByZeroBlocking: false
+                            }
+                } /// если ко второму члену уравнения применено 1/10
             ];
 
             checkedData.forEach(( v, i ) =>{

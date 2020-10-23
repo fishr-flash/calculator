@@ -1,5 +1,5 @@
 import {DIVISION_BY_ZERO_IS_NOT_POSSIBLE, MODES, SIMPLE_DIVISION, SIMPLE_RESULT} from "../../constants";
-import {getArrLogText, getResult, selectNumber, toFloat} from "../utils";
+import {getArrLogText, getResult, selectArgumentToWrap, selectNumber, toFloat} from "../utils";
 
 export default ({displayText
                     , firstNumber
@@ -38,11 +38,13 @@ export default ({displayText
                 displayText = DIVISION_BY_ZERO_IS_NOT_POSSIBLE;
                 divisionByZeroBlocking = true;
             } else {
+
                 /// если после получения результата был нажат оператор процентов,
                 // то лог будет иметь иметь не "стандартный" вид,
                 // кол-во его ячеек будет нечетным т.к. в последней будет храниться число
                 arrLogText = getArrLogText( arrLogText.length%2 ? arrLogText.slice( 0, -1 ) : arrLogText
                     , selectNumber( lastNumber, arrLogText[ arrLogText.length - 1 ])
+                    //, selectArgumentToWrap( arrLogText[ arrLogText.length - 1 ], selectNumber( lastNumber, arrLogText[ arrLogText.length - 1 ]) )
                     , SIMPLE_RESULT);
 
                 firstNumber = toFloat( displayText );
