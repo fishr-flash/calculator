@@ -1,5 +1,5 @@
 import {DIVISION_BY_ZERO_IS_NOT_POSSIBLE, MODES, SIMPLE_DIVISION, SIMPLE_RESULT} from "../../constants";
-import {getArrLogText, getResult, selectArgumentToWrap, selectNumber, toFloat} from "../utils";
+import {getArrLogText, getResult, selectNumber, toFloat} from "../utils";
 
 export default ({displayText
                     , firstNumber
