@@ -48,6 +48,7 @@ export default ({displayText
                 arrLogText = [ wrapperArg( firstNumber, "", '1/') ];
                 firstNumber = 1 / firstNumber;
                 displayText = toDisplayText( firstNumber );
+                mode = MODES.LAST_NUMBER;
             }
             break;
         default:

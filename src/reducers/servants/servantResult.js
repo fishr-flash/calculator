@@ -1,5 +1,5 @@
 import {DIVISION_BY_ZERO_IS_NOT_POSSIBLE, MODES, SIMPLE_DIVISION, SIMPLE_RESULT} from "../../constants";
-import {getArrLogText, getResult, argumentOfWrap, toFloat} from "../utils";
+import {getArrLogText, getResult, argumentOfWrap, toFloat, toDisplayText, getSimpleOperator} from "../utils";
 
 export default ({displayText
                     , firstNumber
@@ -22,13 +22,13 @@ export default ({displayText
             displayText = getResult( firstNumber, lastNumber, firstOperator );
 
             if( mode === MODES.AFTER_RESULT ){
-                arrLogText = getArrLogText( argumentOfWrap( arrLogText[ 0 ], firstNumber )
+                ///FIXME:arrLogText = getArrLogText( argumentOfWrap( arrLogText[ 0 ], firstNumber )
+                     arrLogText = getArrLogText(  firstNumber
                     , firstOperator
                     , lastNumber
                     , SIMPLE_RESULT );
 
                 firstNumber = toFloat( displayText );
-                mode = MODES.AFTER_RESULT;
                 percentNumber = firstNumber;
                 /// если произведено деление на ноль
             } else if( mode === MODES.LAST_NUMBER
@@ -38,17 +38,19 @@ export default ({displayText
                 displayText = DIVISION_BY_ZERO_IS_NOT_POSSIBLE;
                 divisionByZeroBlocking = true;
             } else {
-
-
                 /// если после получения результата был нажат оператор процентов,
                 // то лог будет иметь иметь не "стандартный" вид,
                 // кол-во его ячеек будет нечетным т.к. в последней будет храниться число
                 let firstArgument = arrLogText;
                 let secondArgument = lastNumber;
-                if( arrLogText.length%2 ){
+                if( arrLogText.length > 1 && arrLogText.length%2 ){
                     firstArgument = arrLogText.slice( 0, -1 );
                     secondArgument = argumentOfWrap( arrLogText[ arrLogText.length - 1 ], lastNumber );
+                } else if( arrLogText.length === 1 ){
+                    firstArgument = [ arrLogText[ 0 ], getSimpleOperator( firstOperator )];
+                    secondArgument = toDisplayText( lastNumber );
                 }
+
                 arrLogText = getArrLogText( firstArgument, secondArgument, SIMPLE_RESULT);
 
                 firstNumber = toFloat( displayText );

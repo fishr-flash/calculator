@@ -42,7 +42,7 @@ export default ({displayText
             firstNumber = toFloat( displayText ) * -1;
             arrLogText = getArrLogText( ` ${ wrapperArg( displayText , arrLogText.pop(), 'negate' ) } ` );
             displayText = toDisplayText( firstNumber );
-
+            mode = MODES.LAST_NUMBER;
 
     } else if( mode === MODES.LAST_NUMBER ) {
 

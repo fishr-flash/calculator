@@ -497,13 +497,13 @@ describe( "all indexes tests", ()=>{
                         divisionByZeroBlocking: false,
                         percentNumber: -1,
                         arrLogText: [
-                            ' negate( 3 ) ',
+                            '-3',
                             '+',
                             '2',
                             '='
                         ]
                     }
-                }
+                }/// 3, +/-, +, 2, =, +/-, =
                 , {
                     inData:{
                                 displayText: '0,16',
@@ -661,7 +661,39 @@ describe( "all indexes tests", ()=>{
                                 percentNumber: 10.1,
                                 divisionByZeroBlocking: false
                             }
-                } /// если ко второму члену уравнения применено 1/10
+                } /// если ко второму члену уравнения применено 1/x
+                , {
+                    inData:{
+                                displayText: '0,09950248756218905',
+                                firstNumber: 0.09950248756218905,
+                                lastNumber: 0.05,
+                                mode: 3,
+                                firstOperator: 'simplePlus',
+                                onDot: false,
+                                arrLogText: [
+                                    '1/( 10,05 )'
+                                ],
+                                percentNumber: 10.05,
+                                divisionByZeroBlocking: false
+                            }
+                    , outData:{
+                                displayText: '0,14950248756218903',
+                                firstNumber: 0.14950248756218903,
+                                lastNumber: 0.05,
+                                mode: 4,
+                                firstOperator: 'simplePlus',
+                                onDot: false,
+                                arrLogText: [
+                                    '1/( 10,05 )',
+                                    '+',
+                                    '0,05',
+                                    '='
+                                ],
+                                percentNumber: 0.14950248756218903,
+                                divisionByZeroBlocking: false
+                            }
+                } /// 10, +, 20, 1/x, =, 1/x, =, =
+
             ];
 
             checkedData.forEach(( v, i ) =>{
@@ -1398,7 +1430,7 @@ describe( "all indexes tests", ()=>{
                         displayText: '0,09950248756218905',
                         firstNumber: 0.09950248756218905,
                         lastNumber: 0.05,
-                        mode: 4,
+                        mode: 3,
                         firstOperator: 'simplePlus',
                         onDot: false,
                         arrLogText: [
@@ -1410,38 +1442,36 @@ describe( "all indexes tests", ()=>{
                 }// 10, +, 20, 1/x, =, 1/x
                 , {
                     inData:  [{
-                        displayText: '10,05',
-                        firstNumber: 10.05,
-                        lastNumber: 0.05,
-                        mode: 4,
+                        displayText: '0,06666666666666667',
+                        firstNumber: 0.06666666666666667,
+                        lastNumber: 5,
+                        mode: 3,
                         firstOperator: 'simplePlus',
                         onDot: false,
                         arrLogText: [
-                            '10',
-                            '+',
-                            '1/( 20 )',
-                            '='
+                            '1/( 15 )'
                         ],
-                        percentNumber: 10.05,
+                        percentNumber: 15,
                         divisionByZeroBlocking: false
                     }, {
                         type: ON_CLICK_COMPLEXES
                         , value: COMPLEXES_DIVISION_X
                     } ]
                     , outData: {
-                        displayText: '0,09950248756218905',
-                        firstNumber: 0.09950248756218905,
-                        lastNumber: 0.05,
-                        mode: 4,
+                        displayText: '0,2',
+                        firstNumber: 0.06666666666666667,
+                        lastNumber: 0.2,
+                        mode: 3,
                         firstOperator: 'simplePlus',
                         onDot: false,
                         arrLogText: [
-                            '1/( 10,05 )'
+                            '1/( 15 )',
+                            '1/( 5 )'
                         ],
-                        percentNumber: 10.05,
+                        percentNumber: 15,
                         divisionByZeroBlocking: false
                     }
-                }// 10, +, 20, 1/x, =, 1/x
+                }// 10, +, 20, =, 1/x, 1/x
 
                 ];
 
