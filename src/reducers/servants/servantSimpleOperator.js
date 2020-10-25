@@ -1,4 +1,4 @@
-import {MODES} from "../../constants";
+import {MODES, SIMPLE_RESULT} from "../../constants";
 import {getArrLogText, getResult, argumentOfWrap, toDisplayText, toFloat} from "../utils";
 
 export default ({displayText
@@ -42,10 +42,13 @@ export default ({displayText
 
             if( mode === MODES.LAST_NUMBER ){
                 /// в последовательности, например, 4, +, %, + сложится массив [ 4, +, 0,16, 0,16 ]
-                arrLogText = getArrLogText( arrLogText.length%2 ? arrLogText.slice( 0, -1 ) : arrLogText
-                    , lastNumber
-                    , value);
-
+                let firstArgument = arrLogText;
+                let secondArgument = lastNumber;
+                if( arrLogText.length%2 ){
+                    firstArgument = arrLogText.slice( 0, -1 );
+                    secondArgument = argumentOfWrap( arrLogText[ arrLogText.length - 1 ], lastNumber );
+                }
+                arrLogText = getArrLogText( firstArgument, secondArgument, value);
                 mode = MODES.MULTIPLE_ACTION;
             } else{
                 arrLogText = getArrLogText( arrLogText

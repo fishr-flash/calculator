@@ -999,7 +999,7 @@ describe( "all indexes tests", ()=>{
                                 percentNumber: 4.16
                             },
                 } // 4, +, %, +
-                , /*{
+                , {
                     inData:[{
                                 displayText: '0,05',
                                 firstNumber: 10,
@@ -1034,7 +1034,7 @@ describe( "all indexes tests", ()=>{
                                 ],
                                 percentNumber: 10.05
                             },
-                }*/ // 10, +, 20, 1/x, +
+                } // 10, +, 20, 1/x, +
                 ];
 
             checkedData.forEach(( v, i ) =>{
