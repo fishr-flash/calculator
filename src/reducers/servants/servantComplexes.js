@@ -44,6 +44,10 @@ export default ({displayText
                 arrLogText = getArrLogText( arrLogText, wrapperArg( lastNumber, "", '1/'));
                 lastNumber = 1 / lastNumber;
                 displayText = toDisplayText( lastNumber );
+            } else if( mode === MODES.AFTER_RESULT ){
+                arrLogText = [ wrapperArg( firstNumber, "", '1/') ];
+                firstNumber = 1 / firstNumber;
+                displayText = toDisplayText( firstNumber );
             }
             break;
         default:

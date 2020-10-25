@@ -1374,6 +1374,74 @@ describe( "all indexes tests", ()=>{
                         divisionByZeroBlocking: false
                     }
                 }// 10, +, 20, 1/x
+                , {
+                    inData:  [{
+                        displayText: '10,05',
+                        firstNumber: 10.05,
+                        lastNumber: 0.05,
+                        mode: 4,
+                        firstOperator: 'simplePlus',
+                        onDot: false,
+                        arrLogText: [
+                            '10',
+                            '+',
+                            '1/( 20 )',
+                            '='
+                        ],
+                        percentNumber: 10.05,
+                        divisionByZeroBlocking: false
+                    }, {
+                        type: ON_CLICK_COMPLEXES
+                        , value: COMPLEXES_DIVISION_X
+                    } ]
+                    , outData: {
+                        displayText: '0,09950248756218905',
+                        firstNumber: 0.09950248756218905,
+                        lastNumber: 0.05,
+                        mode: 4,
+                        firstOperator: 'simplePlus',
+                        onDot: false,
+                        arrLogText: [
+                            '1/( 10,05 )'
+                        ],
+                        percentNumber: 10.05,
+                        divisionByZeroBlocking: false
+                    }
+                }// 10, +, 20, 1/x, =, 1/x
+                , {
+                    inData:  [{
+                        displayText: '10,05',
+                        firstNumber: 10.05,
+                        lastNumber: 0.05,
+                        mode: 4,
+                        firstOperator: 'simplePlus',
+                        onDot: false,
+                        arrLogText: [
+                            '10',
+                            '+',
+                            '1/( 20 )',
+                            '='
+                        ],
+                        percentNumber: 10.05,
+                        divisionByZeroBlocking: false
+                    }, {
+                        type: ON_CLICK_COMPLEXES
+                        , value: COMPLEXES_DIVISION_X
+                    } ]
+                    , outData: {
+                        displayText: '0,09950248756218905',
+                        firstNumber: 0.09950248756218905,
+                        lastNumber: 0.05,
+                        mode: 4,
+                        firstOperator: 'simplePlus',
+                        onDot: false,
+                        arrLogText: [
+                            '1/( 10,05 )'
+                        ],
+                        percentNumber: 10.05,
+                        divisionByZeroBlocking: false
+                    }
+                }// 10, +, 20, 1/x, =, 1/x
 
                 ];
 
