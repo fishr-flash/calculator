@@ -1,7 +1,7 @@
 //const DIVISION_WARNING = 'Деление на ноль невозможно';
 
 import {COMPLEXES_DIVISION_X, DIVISION_BY_ZERO_IS_NOT_POSSIBLE, MODES} from "../../constants";
-import {getArrLogText, selectArgumentToWrap, toDisplayText, wrapperArg} from "../utils";
+import {getArrLogText, argumentOfWrap, toDisplayText, wrapperArg} from "../utils";
 
 export default ({displayText
                     , firstNumber
@@ -22,7 +22,7 @@ export default ({displayText
 
                 arrLogText = getArrLogText(
                     wrapperArg(
-                        selectArgumentToWrap( arrLogText[ 0 ], firstNumber )
+                        argumentOfWrap( arrLogText[ 0 ], firstNumber )
                         , ""
                         , "1/")
                 );

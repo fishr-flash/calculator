@@ -407,7 +407,7 @@ describe( "all indexes tests", ()=>{
         test( "test of servantResult", ()=>{
 
             const checkedData = [
-                { /// обычное сравнение
+                {
                     inData:{ displayText:"321"
                         , firstNumber: 123
                         , lastNumber: 321
@@ -428,7 +428,7 @@ describe( "all indexes tests", ()=>{
                         , percentNumber: 444
                         , arrLogText: [ "123", "+", "321", "=" ]
                     }
-                }
+                } // 123, +, 321, =
                 , {
                     inData:{ displayText:"321"
                         , firstNumber: 123
@@ -963,6 +963,78 @@ describe( "all indexes tests", ()=>{
                                 percentNumber: -10
                             },
                 } // // 10, 1/x, +/-, 1/x, =
+                , {
+                    inData:[{
+                                displayText: '0,16',
+                                firstNumber: 4,
+                                lastNumber: 0.16,
+                                mode: 3,
+                                firstOperator: 'simplePlus',
+                                onDot: false,
+                                arrLogText: [
+                                    '4',
+                                    '+',
+                                    '0,16'
+                                ],
+                                percentNumber: 4,
+                                divisionByZeroBlocking: false
+                            }
+                            , {
+                                type: 'onClickSimpleOperator',
+                                value: 'simplePlus'
+                            }]
+                    , outData:{
+                                displayText: '4,16',
+                                firstNumber: 4.16,
+                                lastNumber: 0,
+                                mode: 2,
+                                firstOperator: 'simplePlus',
+                                onDot: false,
+                                arrLogText: [
+                                    '4',
+                                    '+',
+                                    '0,16',
+                                    '+'
+                                ],
+                                percentNumber: 4.16
+                            },
+                } // 4, +, %, +
+                , /*{
+                    inData:[{
+                                displayText: '0,05',
+                                firstNumber: 10,
+                                lastNumber: 0.05,
+                                mode: 3,
+                                firstOperator: 'simplePlus',
+                                onDot: false,
+                                arrLogText: [
+                                    '10',
+                                    '+',
+                                    '1/( 20 )'
+                                ],
+                                percentNumber: 10,
+                                divisionByZeroBlocking: false
+                            }
+                            , {
+                                type: 'onClickSimpleOperator',
+                                value: 'simplePlus'
+                            }]
+                    , outData:{
+                                displayText: '10,05',
+                                firstNumber: 10.05,
+                                lastNumber: 0,
+                                mode: 2,
+                                firstOperator: 'simplePlus',
+                                onDot: false,
+                                arrLogText: [
+                                    '10',
+                                    '+',
+                                    '1/( 20 )',
+                                    '+'
+                                ],
+                                percentNumber: 10.05
+                            },
+                }*/ // 10, +, 20, 1/x, +
                 ];
 
             checkedData.forEach(( v, i ) =>{

@@ -1,5 +1,5 @@
 import {DIVISION_BY_ZERO_IS_NOT_POSSIBLE, MODES, SIMPLE_DIVISION, SIMPLE_RESULT} from "../../constants";
-import {getArrLogText, getResult, selectNumber, toFloat} from "../utils";
+import {getArrLogText, getResult, argumentOfWrap, toFloat} from "../utils";
 
 export default ({displayText
                     , firstNumber
@@ -22,7 +22,7 @@ export default ({displayText
             displayText = getResult( firstNumber, lastNumber, firstOperator );
 
             if( mode === MODES.AFTER_RESULT ){
-                arrLogText = getArrLogText( selectNumber( firstNumber, arrLogText[ 0 ])
+                arrLogText = getArrLogText( argumentOfWrap( arrLogText[ 0 ], firstNumber )
                     , firstOperator
                     , lastNumber
                     , SIMPLE_RESULT );
@@ -39,13 +39,17 @@ export default ({displayText
                 divisionByZeroBlocking = true;
             } else {
 
+
                 /// если после получения результата был нажат оператор процентов,
                 // то лог будет иметь иметь не "стандартный" вид,
                 // кол-во его ячеек будет нечетным т.к. в последней будет храниться число
-                arrLogText = getArrLogText( arrLogText.length%2 ? arrLogText.slice( 0, -1 ) : arrLogText
-                    , selectNumber( lastNumber, arrLogText[ arrLogText.length - 1 ])
-                    //, selectArgumentToWrap( arrLogText[ arrLogText.length - 1 ], selectNumber( lastNumber, arrLogText[ arrLogText.length - 1 ]) )
-                    , SIMPLE_RESULT);
+                let firstArgument = arrLogText;
+                let secondArgument = lastNumber;
+                if( arrLogText.length%2 ){
+                    firstArgument = arrLogText.slice( 0, -1 );
+                    secondArgument = argumentOfWrap( arrLogText[ arrLogText.length - 1 ], lastNumber );
+                }
+                arrLogText = getArrLogText( firstArgument, secondArgument, SIMPLE_RESULT);
 
                 firstNumber = toFloat( displayText );
                 mode = MODES.AFTER_RESULT;
@@ -57,7 +61,7 @@ export default ({displayText
         } else if( mode === MODES.FIRST_OPERATOR ) {
             lastNumber = toFloat( displayText );
             displayText = getResult( firstNumber, lastNumber, firstOperator );
-            arrLogText = getArrLogText( selectNumber( firstNumber, arrLogText[ 0 ])
+            arrLogText = getArrLogText( argumentOfWrap( arrLogText[ 0 ], firstNumber )
                 , firstOperator
                 , lastNumber
                 , SIMPLE_RESULT );
@@ -65,11 +69,8 @@ export default ({displayText
             mode = MODES.AFTER_RESULT;
             percentNumber = firstNumber;
         } else {
-            ///TODO: Закомментированно экспериментально, пока не ясно приведет ли это к багу
-            //firstNumber = toFloat( displayText );
             firstOperator = SIMPLE_RESULT;
             arrLogText = getArrLogText( firstNumber, SIMPLE_RESULT );
-            //mode = MODES.FIRST_OPERATOR;
             percentNumber = firstNumber;
         }
 

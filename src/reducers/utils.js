@@ -128,30 +128,10 @@ export const flatDeep = ( arr, d = Infinity )=>{
 
 /**
  *
- *  analyzes the presence of a wrapped number
- *  and looks for a match with the verificationNumber
- *
- * @param verificationNumber
- * @param quantityOfStrFormat - arrLogText[ N ]
- * @returns String
- */
-export const selectNumber = (verificationNumber, quantityOfStrFormat ) =>{
-    const operators = [ '+', '-', '÷', '×', '=' ];
-    if( ( isNaN( toFloat( quantityOfStrFormat ) ) || toFloat( quantityOfStrFormat ) !== verificationNumber )
-        ///TODO: Delete after a while
-        //&& quantityOfStrFormat.includes( toDisplayText( Math.abs( verificationNumber ) )))
-        && operators.indexOf( quantityOfStrFormat ) === -1 )
-        return quantityOfStrFormat;
-
-    return toDisplayText( verificationNumber );
-
-};
-
-/**
- *
  * @param argWrap commonly arrLogText[ 0 ]
  * @param verificationNumber
- * @returns {*}
+ * @returns {*} String
  */
-export const selectArgumentToWrap =  (argWrap, verificationNumber ) => argWrap !== undefined && isNaN( argWrap) ? argWrap : verificationNumber;
+///FIXME: а если вотрой аргумент
+export const argumentOfWrap =  (argWrap, verificationNumber ) => argWrap !== undefined && isNaN( argWrap) ? argWrap : toDisplayText( verificationNumber );
 

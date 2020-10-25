@@ -1,5 +1,5 @@
 import {MODES} from "../../constants";
-import {getArrLogText, getResult, selectArgumentToWrap, selectNumber, toDisplayText, toFloat} from "../utils";
+import {getArrLogText, getResult, argumentOfWrap, toDisplayText, toFloat} from "../utils";
 
 export default ({displayText
                     , firstNumber
@@ -21,7 +21,7 @@ export default ({displayText
                     firstPart = arrLogText.slice( 0, -1 ) ;
                 } else {
                     // если первый аргумент есть и он обернут выражение
-                    firstPart = selectArgumentToWrap( arrLogText[ 0 ], firstNumber );
+                    firstPart = argumentOfWrap( arrLogText[ 0 ], firstNumber );
 
                 }
 
@@ -31,7 +31,7 @@ export default ({displayText
 
         } else if(   mode === MODES.AFTER_RESULT ){
             /// когда после получения результата был нажат backspace лог удаляется
-            const selectedNumber = arrLogText.length ? selectNumber( firstNumber, arrLogText[ 0 ]) : firstNumber;
+            const selectedNumber = arrLogText.length ? argumentOfWrap( arrLogText[ 0 ], firstNumber ) : firstNumber;
             arrLogText = getArrLogText( selectedNumber
                 , value );
 
@@ -41,8 +41,8 @@ export default ({displayText
             firstNumber = toFloat( displayText );
 
             if( mode === MODES.LAST_NUMBER ){
-
-                arrLogText = getArrLogText( arrLogText
+                /// в последовательности, например, 4, +, %, + сложится массив [ 4, +, 0,16, 0,16 ]
+                arrLogText = getArrLogText( arrLogText.length%2 ? arrLogText.slice( 0, -1 ) : arrLogText
                     , lastNumber
                     , value);
 

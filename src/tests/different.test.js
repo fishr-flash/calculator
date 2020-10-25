@@ -1,3 +1,5 @@
+import {toFloat} from "../reducers/utils";
+
 describe( "all different", ()=>{
     describe( 'different', ()=>{
         test( "typeof of number", ()=>{
@@ -53,6 +55,16 @@ describe( "all different", ()=>{
 
             expect( fn( { ...obj, ...obj.d } ) ).toBe( 7 );
             expect( { ...obj, ...obj.d } ).toStrictEqual( {a:1, b:2, c:3, d:{ e:4, f: 5 }, e: 4, f: 5 } );
+        });
+        test( "how work isNaN", ()=>{
+
+            const foo = '1/( 10 )';
+
+            expect( toFloat( foo ) ).toBe( 1 );
+            expect( isNaN( toFloat( foo ) ) ).toBe( false );
+            expect( isNaN( foo ) ).toBe( true );
+            expect( isNaN( '12.12' ) ).toBe( false );
+            expect( isNaN( '12,12' ) ).toBe( true );
         });
 
 
