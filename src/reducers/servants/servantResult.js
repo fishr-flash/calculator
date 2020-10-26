@@ -22,7 +22,6 @@ export default ({displayText
             displayText = getResult( firstNumber, lastNumber, firstOperator );
 
             if( mode === MODES.AFTER_RESULT ){
-                ///FIXME:arrLogText = getArrLogText( argumentOfWrap( arrLogText[ 0 ], firstNumber )
                      arrLogText = getArrLogText(  firstNumber
                     , firstOperator
                     , lastNumber

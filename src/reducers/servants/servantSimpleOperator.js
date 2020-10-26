@@ -1,5 +1,5 @@
-import {MODES, SIMPLE_RESULT} from "../../constants";
-import {getArrLogText, getResult, argumentOfWrap, toDisplayText, toFloat} from "../utils";
+import {MODES} from "../../constants";
+import {argumentOfWrap, getArrLogText, getResult, toDisplayText, toFloat} from "../utils";
 
 export default ({displayText
                     , firstNumber

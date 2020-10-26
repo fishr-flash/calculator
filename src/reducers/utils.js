@@ -121,6 +121,36 @@ export const flatDeep = ( arr, d = Infinity )=>{
  * @param verificationNumber
  * @returns {*} String
  */
-///FIXME: а если вотрой аргумент
 export const argumentOfWrap =  (argWrap, verificationNumber ) => argWrap !== undefined && isNaN( argWrap) ? argWrap : toDisplayText( verificationNumber );
+
+
+/**
+ * Анализирует последнюю ячейку массива лога, если кол-во ячеек нечетное,
+ * то в последней ячейке содержится либо число, либо "обернутое" выражение,
+ * тогда она извлекается из массива, оборачивается в требуемое выражение
+ * и затем включается в последовательность лога. Иначе, если последняя часть
+ * массива лога - оператор ( +, -... ), в последовательность лога включается
+ * сообщенный второй аргумент, чаще всего это число из переменной firstNumber или
+ * lastNumber
+ *
+ * @param arrLog
+ * @param nm
+ * @param wrapText
+ */
+export const updateArrLogText = ( arrLog, nm, wrapText )=>{
+
+    let firstArgument = '';
+    let secondArgument = '';
+
+    if( arrLog.length > 1 && arrLog.length%2 ){
+        firstArgument = arrLog.slice( 0, -1 );
+        secondArgument = wrapperArg( arrLog.pop(), wrapText );
+    } else {
+        firstArgument = arrLog;
+        secondArgument = wrapperArg( toDisplayText( nm ), wrapText );
+    }
+
+    return getArrLogText( firstArgument, secondArgument );
+
+};
 

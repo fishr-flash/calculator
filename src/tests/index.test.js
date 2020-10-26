@@ -382,6 +382,106 @@ describe( "all indexes tests", ()=>{
                         percentNumber: NaN
                     }
                 }// 10, 1/x, +/-
+                , {
+                    inData:  {
+                                displayText: '3',
+                                firstNumber: 3,
+                                lastNumber: 2,
+                                mode: 4,
+                                firstOperator: 'simplePlus',
+                                onDot: false,
+                                arrLogText: [
+                                    '1',
+                                    '+',
+                                    '2'
+                                ],
+                                percentNumber: 3,
+                                divisionByZeroBlocking: false
+                            }
+                    , outData: {
+                                displayText: '-3',
+                                firstNumber: -3,
+                                lastNumber: 2,
+                                mode: 4,
+                                firstOperator: 'simplePlus',
+                                onDot: false,
+                                arrLogText: [
+                                    ' negate( 3 ) '
+                                ],
+                                percentNumber: 3
+                            }
+                }// 1, +, 2, =, +/-
+                , {
+                    inData:  {
+                                displayText: '0,3333333333333333',
+                                firstNumber: 3,
+                                lastNumber: 0.3333333333333333,
+                                mode: 3,
+                                firstOperator: 'simplePlus',
+                                onDot: false,
+                                arrLogText: [
+                                    '1',
+                                    '+',
+                                    '2',
+                                    '+',
+                                    '1/( 3 )'
+                                ],
+                                percentNumber: 3,
+                                divisionByZeroBlocking: false
+                            }
+                    , outData: {
+                                displayText: '-0,3333333333333333',
+                                firstNumber: 3,
+                                lastNumber: -0.3333333333333333,
+                                mode: 3,
+                                firstOperator: 'simplePlus',
+                                onDot: false,
+                                arrLogText: [
+                                    '1',
+                                    '+',
+                                    '2',
+                                    '+',
+                                    'negate( 1/( 3 ) )'
+                                ],
+                                percentNumber: 3
+                            }
+                }// 1, +, 2, +, 3,  =, +/-
+                , {
+                    inData:  {
+                                displayText: '0,3333333333333333',
+                                firstNumber: 3,
+                                lastNumber: 0.3333333333333333,
+                                mode: 2,
+                                firstOperator: 'simplePlus',
+                                onDot: false,
+                                arrLogText: [
+                                    '1',
+                                    '+',
+                                    '2',
+                                    '+',
+                                    '1/( 3 )'
+                                ],
+                                percentNumber: 3,
+                                divisionByZeroBlocking: false
+                            }
+                    , outData: {
+                                displayText: '-0,3333333333333333',
+                                firstNumber: 3,
+                                lastNumber: -0.3333333333333333,
+                                mode: 2,
+                                firstOperator: 'simplePlus',
+                                onDot: false,
+                                arrLogText: [
+                                    '1',
+                                    '+',
+                                    '2',
+                                    '+',
+                                    'negate( 1/( 3 ) )'
+                                ],
+                                percentNumber: 3
+                            }
+                }// 1, +, 2, +, 1/x, +/-
+
 
 
             ];
@@ -1450,6 +1550,83 @@ describe( "all indexes tests", ()=>{
                         divisionByZeroBlocking: false
                     }
                 }// 1, +, 2, =, +/-, 1/x
+                , {
+                    inData:  [{
+                        displayText: '-3',
+                        firstNumber: 3,
+                        lastNumber: -3,
+                        mode: 3,
+                        firstOperator: 'simplePlus',
+                        onDot: false,
+                        arrLogText: [
+                            '1',
+                            '+',
+                            '2',
+                            '+',
+                            'negate( 3 )'
+                        ],
+                        percentNumber: 3,
+                        divisionByZeroBlocking: false
+                    }, {
+                        type: ON_CLICK_COMPLEXES
+                        , value: COMPLEXES_DIVISION_X
+                    } ]
+                    , outData: {
+                        displayText: '-0,3333333333333333',
+                        firstNumber: 3,
+                        lastNumber: -0.3333333333333333,
+                        mode: 3,
+                        firstOperator: 'simplePlus',
+                        onDot: false,
+                        arrLogText: [
+                            '1',
+                            '+',
+                            '2',
+                            '+',
+                            '1/( negate( 3 ) )'
+                        ],
+                        percentNumber: 3,
+                        divisionByZeroBlocking: false
+                    }
+                }// 1, +, 2, +, 3, +/-, 1/x
+                , {
+                    inData:  [{
+                            displayText: '3',
+                            firstNumber: 3,
+                            lastNumber: 0,
+                            mode: 2,
+                            firstOperator: 'simplePlus',
+                            onDot: false,
+                            arrLogText: [
+                                '1',
+                                '+',
+                                '2',
+                                '+'
+                            ],
+                            percentNumber: 3,
+                        divisionByZeroBlocking: false
+                        }, {
+                        type: ON_CLICK_COMPLEXES
+                        , value: COMPLEXES_DIVISION_X
+                    } ]
+                    , outData: {
+                            displayText: '0,3333333333333333',
+                            firstNumber: 3,
+                            lastNumber: 0.3333333333333333,
+                            mode: 2,
+                            firstOperator: 'simplePlus',
+                            onDot: false,
+                            arrLogText: [
+                                '1',
+                                '+',
+                                '2',
+                                '+',
+                                '1/( 3 )'
+                            ],
+                            percentNumber: 3,
+                            divisionByZeroBlocking: false
+                        }
+                }// 1, +, 2, +, 1/x
 
             ];
 

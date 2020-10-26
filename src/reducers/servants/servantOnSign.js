@@ -1,5 +1,5 @@
 import {MODES} from "../../constants";
-import {getArrLogText, toDisplayText, toFloat, wrapperArg} from "../utils";
+import {getArrLogText, toDisplayText, toFloat, updateArrLogText, wrapperArg} from "../utils";
 
 export default ({displayText
                     , firstNumber
@@ -31,21 +31,20 @@ export default ({displayText
 
 
     } else if( mode === MODES.MULTIPLE_ACTION ) {
+        ///FIXME: 1, +, 2, +, 1/x, +/- неправильно работает надо updateArrLogText
         lastNumber = toFloat( displayText ) * -1;
-         arrLogText = getArrLogText(  arrLogText
-             ,  wrapperArg( displayText
-                 , arrLogText.length%2 ? arrLogText.pop() : '', 'negate' )  );
-
+         /*arrLogText = getArrLogText(  arrLogText
+             ,  wrapperArg( displayText, 'negate' )  );*/
+        arrLogText = updateArrLogText( arrLogText, displayText, 'negate');
         displayText = toDisplayText( lastNumber );
 
     } else if( mode === MODES.AFTER_RESULT ){
-            firstNumber = toFloat( displayText ) * -1;
-            arrLogText = getArrLogText( ` ${ wrapperArg( displayText , arrLogText.pop(), 'negate' ) } ` );
-            displayText = toDisplayText( firstNumber );
-            ///FIXME: mode = MODES.LAST_NUMBER;
+        firstNumber = toFloat( displayText ) * -1;
 
+        arrLogText = getArrLogText( ` ${ wrapperArg( displayText , 'negate' ) } ` );
+        displayText = toDisplayText( firstNumber );
     } else if( mode === MODES.LAST_NUMBER ) {
-
+        arrLogText = updateArrLogText( arrLogText, lastNumber, 'negate');
         lastNumber *= -1;
         displayText = toDisplayText( lastNumber );
     }
