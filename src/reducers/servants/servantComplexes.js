@@ -23,7 +23,6 @@ export default ({displayText
                 arrLogText = getArrLogText(
                     wrapperArg(
                         argumentOfWrap( arrLogText[ 0 ], firstNumber )
-                        , ""
                         , "1/")
                 );
 
@@ -37,18 +36,19 @@ export default ({displayText
 
             } else if( mode === MODES.FIRST_OPERATOR ){
                 lastNumber = 1 / firstNumber;
-                arrLogText = getArrLogText( arrLogText, wrapperArg( firstNumber, "", '1/'));
+                arrLogText = getArrLogText( arrLogText, wrapperArg( firstNumber,'1/'));
                 displayText = toDisplayText( lastNumber );
                 mode = MODES.LAST_NUMBER;
             } else if( mode === MODES.LAST_NUMBER ){
-                arrLogText = getArrLogText( arrLogText, wrapperArg( lastNumber, "", '1/'));
+                arrLogText = getArrLogText( arrLogText, wrapperArg( lastNumber, '1/'));
                 lastNumber = 1 / lastNumber;
                 displayText = toDisplayText( lastNumber );
             } else if( mode === MODES.AFTER_RESULT ){
-                arrLogText = [ wrapperArg( firstNumber, "", '1/') ];
+                arrLogText = arrLogText.length > 1 ? [ wrapperArg( firstNumber, '1/') ]
+                                                   : [ wrapperArg( arrLogText[ 0 ],'1/') ];
                 firstNumber = 1 / firstNumber;
                 displayText = toDisplayText( firstNumber );
-                mode = MODES.LAST_NUMBER;
+                //mode = MODES.LAST_NUMBER;
             }
             break;
         default:

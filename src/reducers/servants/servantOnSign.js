@@ -16,7 +16,7 @@ export default ({displayText
     if( mode < MODES.FIRST_OPERATOR ){
         /// если в первой ячейке массива лога содержится выражение, напр 1/(10)
         if( arrLogText[ 0 ] !== undefined && isNaN( arrLogText[ 0 ] ) ){
-            arrLogText = getArrLogText( wrapperArg( arrLogText[ 0 ], "", 'negate' ) );
+            arrLogText = getArrLogText( wrapperArg( arrLogText[ 0 ], 'negate' ) );
         }
         firstNumber *= -1;
         displayText = toDisplayText( firstNumber );
@@ -26,7 +26,7 @@ export default ({displayText
 
         mode = MODES.LAST_NUMBER;
         lastNumber = firstNumber * -1;
-        arrLogText = getArrLogText(  firstNumber, firstOperator, wrapperArg( displayText, arrLogText.pop(), 'negate' ) );
+        arrLogText = getArrLogText(  firstNumber, firstOperator, wrapperArg( displayText, 'negate' ) );
         displayText = toDisplayText( lastNumber );
 
 
@@ -42,7 +42,7 @@ export default ({displayText
             firstNumber = toFloat( displayText ) * -1;
             arrLogText = getArrLogText( ` ${ wrapperArg( displayText , arrLogText.pop(), 'negate' ) } ` );
             displayText = toDisplayText( firstNumber );
-            mode = MODES.LAST_NUMBER;
+            ///FIXME: mode = MODES.LAST_NUMBER;
 
     } else if( mode === MODES.LAST_NUMBER ) {
 

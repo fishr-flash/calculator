@@ -104,22 +104,11 @@ export const getOutput = ( base, arg, dot = false ) =>{
  *  Вызывается при необходимости обернуть число в тексте лога
  *  калькулятора в какую либо специальную текстовую контструкцию,
  *  такое "обертывание" может быть множественным
- * @param nm
- * @param log
- * @param wrapText
+ * @param expression a string expression (ex 'negate( xx )' ) or a number
+  * @param wrapText
  * @returns {string}
  */
-export const wrapperArg = ( nm, log, wrapText ) =>{
-
-    let result = `${ toDisplayText( nm ) }`;
-    if( log && log.includes( wrapText )){
-        result = `${wrapText}( ${ log } )`;
-    } else {
-        result = `${wrapText}( ${ toDisplayText( nm ) } )`;
-    }
-
-    return result;
-};
+export const wrapperArg = ( expression, wrapText ) => `${wrapText}( ${ toDisplayText( expression ).trim() } )`;
 
 export const flatDeep = ( arr, d = Infinity )=>{
     return d > 0 ? arr.reduce((acc, val) => acc.concat(Array.isArray(val) ? flatDeep(val, d - 1) : val), [])

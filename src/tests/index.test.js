@@ -1192,58 +1192,6 @@ describe( "all indexes tests", ()=>{
                 }
             });
         });
-        test( "test of reducer", ()=>{
-
-            let rnd = Math.random() * 1000;
-            if( Math.random() < .5 ) rnd *= -1;
-            const checkedData = [
-                { inData:  { state: {
-                        displayText: DIVISION_BY_ZERO_IS_NOT_POSSIBLE,
-                        firstNumber: 0,
-                        lastNumber: 0,
-                        mode: 0,
-                        firstOperator: 'notOperator',
-                        onDot: false,
-                        arrLogText: [
-                            '10',
-                            '÷'
-                        ] ,
-                        percentNumber: NaN,
-                        divisionByZeroBlocking: true
-                    }
-                    , action: {
-                        type: ON_CLICK_NUMBER
-                        , value: 7
-                    }}
-                , outData:{
-                        displayText: '7',
-                        firstNumber: 7,
-                        lastNumber: 0,
-                        mode: 0,
-                        firstOperator: 'notOperator',
-                        onDot: false,
-                        arrLogText: [],
-                        percentNumber: NaN
-                    }
-            }// DIVISION_BY_ZERO_IS_NOT_POSSIBLE
-                ];
-
-            checkedData.forEach(( v, i ) =>{
-                try{
-                    expect( reducer( v.inData.state, v.inData.action )).toStrictEqual( v.outData );
-                }catch (e) {
-                    if( true ){
-                        console.group( 'Console log in the code "INDEX_TEST_JS" line 147' );
-                        console.info( 'v: ', v );
-                        console.info( 'i: ', i );
-                        console.info( 'e: ', e );
-
-                        //console.table( this );
-                        console.groupEnd();
-                    }
-                }
-            });
-        });
         test( "test of servantComplexes complexesDivisionX", ()=>{
             let rnd = Math.random() * 1000;
             if( Math.random() < .5 ) rnd *= -1;
@@ -1430,7 +1378,7 @@ describe( "all indexes tests", ()=>{
                         displayText: '0,09950248756218905',
                         firstNumber: 0.09950248756218905,
                         lastNumber: 0.05,
-                        mode: 3,
+                        mode: 4,
                         firstOperator: 'simplePlus',
                         onDot: false,
                         arrLogText: [
@@ -1442,38 +1390,68 @@ describe( "all indexes tests", ()=>{
                 }// 10, +, 20, 1/x, =, 1/x
                 , {
                     inData:  [{
-                        displayText: '0,06666666666666667',
-                        firstNumber: 0.06666666666666667,
-                        lastNumber: 5,
-                        mode: 3,
+                        displayText: '0,03333333333333333',
+                        firstNumber: 0.03333333333333333,
+                        lastNumber: 20,
+                        mode: 4,
                         firstOperator: 'simplePlus',
                         onDot: false,
                         arrLogText: [
-                            '1/( 15 )'
+                            '1/( 30 )'
                         ],
-                        percentNumber: 15,
+                        percentNumber: 30,
                         divisionByZeroBlocking: false
                     }, {
                         type: ON_CLICK_COMPLEXES
                         , value: COMPLEXES_DIVISION_X
                     } ]
                     , outData: {
-                        displayText: '0,2',
-                        firstNumber: 0.06666666666666667,
-                        lastNumber: 0.2,
-                        mode: 3,
+                        displayText: '30',
+                        firstNumber: 30,
+                        lastNumber: 20,
+                        mode: 4,
                         firstOperator: 'simplePlus',
                         onDot: false,
                         arrLogText: [
-                            '1/( 15 )',
-                            '1/( 5 )'
+                            '1/( 1/( 30 ) )'
                         ],
-                        percentNumber: 15,
+                        percentNumber: 30,
                         divisionByZeroBlocking: false
                     }
                 }// 10, +, 20, =, 1/x, 1/x
+                , {
+                    inData:  [{
+                        displayText: '-3',
+                        firstNumber: -3,
+                        lastNumber: 2,
+                        mode: 4,
+                        firstOperator: 'simplePlus',
+                        onDot: false,
+                        arrLogText: [
+                            ' negate( 3 ) '
+                        ],
+                        percentNumber: 3,
+                        divisionByZeroBlocking: false
+                    }, {
+                        type: ON_CLICK_COMPLEXES
+                        , value: COMPLEXES_DIVISION_X
+                    } ]
+                    , outData: {
+                        displayText: '-0,3333333333333333',
+                        firstNumber: -0.3333333333333333,
+                        lastNumber: 2,
+                        mode: 4,
+                        firstOperator: 'simplePlus',
+                        onDot: false,
+                        arrLogText: [
+                            '1/( negate( 3 ) )',
+                        ],
+                        percentNumber: 3,
+                        divisionByZeroBlocking: false
+                    }
+                }// 1, +, 2, =, +/-, 1/x
 
-                ];
+            ];
 
             checkedData.forEach(( v, i ) =>{
                 try{
@@ -1491,20 +1469,73 @@ describe( "all indexes tests", ()=>{
                 }
             });
         });
+        test( "test of reducer", ()=>{
+
+            let rnd = Math.random() * 1000;
+            if( Math.random() < .5 ) rnd *= -1;
+            const checkedData = [
+                { inData:  { state: {
+                        displayText: DIVISION_BY_ZERO_IS_NOT_POSSIBLE,
+                        firstNumber: 0,
+                        lastNumber: 0,
+                        mode: 0,
+                        firstOperator: 'notOperator',
+                        onDot: false,
+                        arrLogText: [
+                            '10',
+                            '÷'
+                        ] ,
+                        percentNumber: NaN,
+                        divisionByZeroBlocking: true
+                    }
+                    , action: {
+                        type: ON_CLICK_NUMBER
+                        , value: 7
+                    }}
+                , outData:{
+                        displayText: '7',
+                        firstNumber: 7,
+                        lastNumber: 0,
+                        mode: 0,
+                        firstOperator: 'notOperator',
+                        onDot: false,
+                        arrLogText: [],
+                        percentNumber: NaN
+                    }
+            }// DIVISION_BY_ZERO_IS_NOT_POSSIBLE
+                ];
+
+            checkedData.forEach(( v, i ) =>{
+                try{
+                    expect( reducer( v.inData.state, v.inData.action )).toStrictEqual( v.outData );
+                }catch (e) {
+                    if( true ){
+                        console.group( 'Console log in the code "INDEX_TEST_JS" line 147' );
+                        console.info( 'v: ', v );
+                        console.info( 'i: ', i );
+                        console.info( 'e: ', e );
+
+                        //console.table( this );
+                        console.groupEnd();
+                    }
+                }
+            });
+        });
+
     });
 
     describe( "test functions of utils", ()=>{
         test( "test of wrapperArg", ()=>{
 
             const inData = [
-                { nm: 12, log: "", wrapText: "negate", answer: "negate( 12 )"}
-                , { nm: 0, log: "", wrapText: "negate", answer: "negate( 0 )"}
+                { nm: 12, wrapText: "negate", answer: "negate( 12 )"}
+                , { nm: 0, wrapText: "negate", answer: "negate( 0 )"}
             ];
 
             inData.forEach( ( v, i ) => {
 
                 try{
-                    expect( wrapperArg( v.nm, v.log, v.wrapText) ).toStrictEqual( v.answer );
+                    expect( wrapperArg( v.nm, v.wrapText) ).toStrictEqual( v.answer );
                 }catch (e) {
                     if( true ){
                         console.group( 'Console log in the code "INDEX_TEST_JS" line 147' );
