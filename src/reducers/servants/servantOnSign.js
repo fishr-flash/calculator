@@ -28,13 +28,8 @@ export default ({displayText
         lastNumber = firstNumber * -1;
         arrLogText = getArrLogText(  firstNumber, firstOperator, wrapperArg( displayText, 'negate' ) );
         displayText = toDisplayText( lastNumber );
-
-
     } else if( mode === MODES.MULTIPLE_ACTION ) {
-        ///FIXME: 1, +, 2, +, 1/x, +/- неправильно работает надо updateArrLogText
         lastNumber = toFloat( displayText ) * -1;
-         /*arrLogText = getArrLogText(  arrLogText
-             ,  wrapperArg( displayText, 'negate' )  );*/
         arrLogText = updateArrLogText( arrLogText, displayText, 'negate');
         displayText = toDisplayText( lastNumber );
 

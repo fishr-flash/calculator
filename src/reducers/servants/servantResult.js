@@ -71,7 +71,7 @@ export default ({displayText
             percentNumber = firstNumber;
         } else {
             firstOperator = SIMPLE_RESULT;
-            arrLogText = getArrLogText( firstNumber, SIMPLE_RESULT );
+            arrLogText = getArrLogText( firstNumber, firstNumber === 0 ? '' : SIMPLE_RESULT );
             percentNumber = firstNumber;
         }
 

@@ -35,24 +35,53 @@ export default ({displayText
                 }
 
             } else if( mode === MODES.FIRST_OPERATOR ){
-                lastNumber = 1 / firstNumber;
+
                 arrLogText = getArrLogText( arrLogText, wrapperArg( firstNumber,'1/'));
-                displayText = toDisplayText( lastNumber );
-                mode = MODES.LAST_NUMBER;
+
+                if( firstNumber === 0 ){
+                    displayText = DIVISION_BY_ZERO_IS_NOT_POSSIBLE;
+                    divisionByZeroBlocking = true;
+                } else {
+                    lastNumber = 1 / firstNumber;
+                    displayText = toDisplayText( lastNumber );
+                    mode = MODES.LAST_NUMBER;
+                }
+
             } else if( mode === MODES.LAST_NUMBER ){
                 arrLogText = updateArrLogText( arrLogText, lastNumber, '1/');
-                lastNumber = 1 / lastNumber;
-                displayText = toDisplayText( lastNumber );
+                if( lastNumber === 0 ){
+                    displayText = DIVISION_BY_ZERO_IS_NOT_POSSIBLE;
+                    divisionByZeroBlocking = true;
+                } else {
+                    lastNumber = 1 / lastNumber;
+                    displayText = toDisplayText( lastNumber );
+                }
+
             } else if( mode === MODES.MULTIPLE_ACTION ){
-                lastNumber = 1 / toFloat( displayText );
                 arrLogText = updateArrLogText( arrLogText, displayText, '1/');
-                displayText = toDisplayText( lastNumber );
+
+                if( toFloat( displayText ) === 0 ){
+                    displayText = DIVISION_BY_ZERO_IS_NOT_POSSIBLE;
+                    divisionByZeroBlocking = true;
+                } else {
+                    lastNumber = 1 / toFloat( displayText );
+                    displayText = toDisplayText( lastNumber );
+                }
+
+
 
             } else if( mode === MODES.AFTER_RESULT ){
+
                 arrLogText = arrLogText.length > 1 ? [ wrapperArg( firstNumber, '1/') ]
                                                    : [ wrapperArg( arrLogText[ 0 ],'1/') ];
-                firstNumber = 1 / firstNumber;
-                displayText = toDisplayText( firstNumber );
+                if( firstNumber === 0 ){
+                    displayText = DIVISION_BY_ZERO_IS_NOT_POSSIBLE;
+                    divisionByZeroBlocking = true;
+                } else {
+                    firstNumber = 1 / firstNumber;
+                    displayText = toDisplayText( firstNumber );
+                }
+
             }
             break;
         default:

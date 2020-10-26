@@ -1627,6 +1627,189 @@ describe( "all indexes tests", ()=>{
                             divisionByZeroBlocking: false
                         }
                 }// 1, +, 2, +, 1/x
+                , {
+                    inData:  [{
+                            displayText: '0',
+                            firstNumber: 0,
+                            lastNumber: 0,
+                            mode: 1,
+                            firstOperator: 'simplePlus',
+                            onDot: false,
+                            arrLogText: [
+                                '0',
+                                '+'
+                            ],
+                            percentNumber: 0,
+                            divisionByZeroBlocking: false
+                        }, {
+                        type: ON_CLICK_COMPLEXES
+                        , value: COMPLEXES_DIVISION_X
+                    } ]
+                        , outData:{
+                            displayText: DIVISION_BY_ZERO_IS_NOT_POSSIBLE,
+                            firstNumber: 0,
+                            lastNumber: 0,
+                            mode: 1,
+                            firstOperator: 'simplePlus',
+                            onDot: false,
+                            arrLogText: [
+                                '0',
+                                '+',
+                                '1/( 0 )'
+                            ],
+                            percentNumber: 0,
+                            divisionByZeroBlocking: true
+                        }
+                }// 0, +, 1/x
+                , {
+                    inData:  [{
+                            displayText: '0',
+                            firstNumber: 0,
+                            lastNumber: 0,
+                            mode: 1,
+                            firstOperator: 'simplePlus',
+                            onDot: false,
+                            arrLogText: [
+                                '0',
+                                '+'
+                            ],
+                            percentNumber: 0,
+                            divisionByZeroBlocking: false
+                        }, {
+                        type: ON_CLICK_COMPLEXES
+                        , value: COMPLEXES_DIVISION_X
+                    } ]
+                        , outData:{
+                            displayText: DIVISION_BY_ZERO_IS_NOT_POSSIBLE,
+                            firstNumber: 0,
+                            lastNumber: 0,
+                            mode: 1,
+                            firstOperator: 'simplePlus',
+                            onDot: false,
+                            arrLogText: [
+                                '0',
+                                '+',
+                                '1/( 0 )'
+                            ],
+                            percentNumber: 0,
+                            divisionByZeroBlocking: true
+                        }
+                }// 1, +, 0, 1/x ( ?? how? )
+                , {
+                    inData:  [{
+                            displayText: '0',
+                            firstNumber: 1,
+                            lastNumber: 0,
+                            mode: 3,
+                            firstOperator: 'simplePlus',
+                            onDot: false,
+                            arrLogText: [
+                                '1',
+                                '+'
+                            ],
+                            percentNumber: 1,
+                            divisionByZeroBlocking: false
+
+                        }, {
+                        type: ON_CLICK_COMPLEXES
+                        , value: COMPLEXES_DIVISION_X
+                    } ]
+                        , outData:{
+                            displayText: DIVISION_BY_ZERO_IS_NOT_POSSIBLE,
+                            firstNumber: 1,
+                            lastNumber: 0,
+                            mode: 3,
+                            firstOperator: 'simplePlus',
+                            onDot: false,
+                            arrLogText: [
+                                '1',
+                                '+',
+                                '1/( 0 )'
+                            ],
+                            percentNumber: 1,
+                            divisionByZeroBlocking: true
+                        }
+                }// 1, +, 0, 1/x
+                , {
+                    inData:  [{
+                            displayText: '0',
+                            firstNumber: 0,
+                            lastNumber: 3,
+                            mode: 4,
+                            firstOperator: 'simpleMinus',
+                            onDot: false,
+                            arrLogText: [
+                                '3',
+                                '-',
+                                '3',
+                                '='
+                            ],
+                            percentNumber: 0,
+                            divisionByZeroBlocking: false
+                        }, {
+                        type: ON_CLICK_COMPLEXES
+                        , value: COMPLEXES_DIVISION_X
+                    } ]
+                        , outData:{
+                            displayText: DIVISION_BY_ZERO_IS_NOT_POSSIBLE,
+                            firstNumber: 0,
+                            lastNumber: 3,
+                            mode: 4,
+                            firstOperator: 'simpleMinus',
+                            onDot: false,
+                            arrLogText: [
+                                '1/( 0 )'
+                            ],
+                            percentNumber: 0,
+                            divisionByZeroBlocking: true
+                        }
+                }// 3, -, 3, =, 1/x
+                , {
+                    inData:  [{
+                            displayText: '0',
+                            firstNumber: 0,
+                            lastNumber: 0,
+                            mode: 2,
+                            firstOperator: 'simplePlus',
+                            onDot: false,
+                            arrLogText: [
+                                '1',
+                                '+',
+                                '1',
+                                '+',
+                                '2',
+                                '-',
+                                '4',
+                                '+'
+                            ],
+                            percentNumber: 0,
+                            divisionByZeroBlocking: false
+                        }, {
+                        type: ON_CLICK_COMPLEXES
+                        , value: COMPLEXES_DIVISION_X
+                    } ]
+                        , outData:{
+                            displayText: DIVISION_BY_ZERO_IS_NOT_POSSIBLE,
+                            firstNumber: 0,
+                            lastNumber: 0,
+                            mode: 2,
+                            firstOperator: 'simplePlus',
+                            onDot: false,
+                            arrLogText: [
+                                '1',
+                                '+',
+                                '1',
+                                '+',
+                                '2',
+                                '-',
+                                '4',
+                                '+',
+                                '1/( 0 )'
+                            ],
+                            percentNumber: 0,
+                            divisionByZeroBlocking: true
+                        }
+                }// 1, +, 1, +, 2, -, 4, +, 1/x
 
             ];
 
