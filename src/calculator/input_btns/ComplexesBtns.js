@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import {COMPLEXES_DIVISION_X, ON_CLICK_COMPLEXES} from "../../constants";
+import {COMPLEXES_DIVISION_X, COMPLEXES_SQR_X, COMPLEXES_SQRT_X, ON_CLICK_COMPLEXES} from "../../constants";
 
 const ComplexesBtns = ( {
                             onClick
@@ -13,9 +13,11 @@ const ComplexesBtns = ( {
                     disabled={ divisionByZeroBlocking }
                     onClick={ () => onClick( COMPLEXES_DIVISION_X )} />
             <button className="input_btns btn_x2"
-                    disabled={ divisionByZeroBlocking || true } />
+                    disabled={ divisionByZeroBlocking  }
+                    onClick={ () => onClick( COMPLEXES_SQR_X )} />
             <button className="input_btns btn_2x"
-                    disabled={ divisionByZeroBlocking || true} />
+                    disabled={ divisionByZeroBlocking  }
+                    onClick={ () => onClick( COMPLEXES_SQRT_X )} />
         </fieldset>
     );
 };

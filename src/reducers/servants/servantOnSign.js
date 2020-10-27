@@ -36,7 +36,8 @@ export default ({displayText
     } else if( mode === MODES.AFTER_RESULT ){
         firstNumber = toFloat( displayText ) * -1;
 
-        arrLogText = getArrLogText( ` ${ wrapperArg( displayText , 'negate' ) } ` );
+        const expression = arrLogText.length > 1 ? displayText : arrLogText[ 0 ];
+        arrLogText = getArrLogText( ` ${ wrapperArg( expression, 'negate' ) } ` );
         displayText = toDisplayText( firstNumber );
     } else if( mode === MODES.LAST_NUMBER ) {
         arrLogText = updateArrLogText( arrLogText, lastNumber, 'negate');

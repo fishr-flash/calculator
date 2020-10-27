@@ -1,4 +1,11 @@
-import {SIMPLE_DIVISION, SIMPLE_MINUS, SIMPLE_MULTIPLY, SIMPLE_PLUS, SIMPLE_RESULT} from "../constants";
+import {
+    COMPLEXES_DIVISION_X, COMPLEXES_SQR_X, COMPLEXES_SQRT_X,
+    SIMPLE_DIVISION,
+    SIMPLE_MINUS,
+    SIMPLE_MULTIPLY,
+    SIMPLE_PLUS,
+    SIMPLE_RESULT
+} from "../constants";
 
 export const getArrLogText = ( ...args ) =>{
 
@@ -151,6 +158,34 @@ export const updateArrLogText = ( arrLog, nm, wrapText )=>{
     }
 
     return getArrLogText( firstArgument, secondArgument );
+
+};
+
+
+/**
+ *
+ * @param typeOperation
+ * @returns {{cOperation: (function(*): number), wrapText: string}}
+ */
+export const getComplexesAttributes = (typeOperation )=>{
+    let attributes = {};
+
+    switch ( typeOperation ) {
+        case COMPLEXES_DIVISION_X:
+            attributes = { cOperation: ( val )=> 1/val, wrapText: '1/' };
+            break;
+        case COMPLEXES_SQR_X:
+            attributes = { cOperation: ( val )=> Math.pow( val, 2 ), wrapText: 'sqr' };
+            break;
+        case COMPLEXES_SQRT_X:
+            attributes = { cOperation: ( val )=> Math.sqrt( val ), wrapText: '√' };
+            break;
+        default:
+            throw Error( 'Unknown value received');
+    }
+
+    return attributes;
+
 
 };
 

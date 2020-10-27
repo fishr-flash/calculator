@@ -67,6 +67,12 @@ describe( "all different", ()=>{
             expect( isNaN( '12.12' ) ).toBe( false );
             expect( isNaN( '12,12' ) ).toBe( true );
         });
+        test( "how work Math.pow()", ()=>{
+
+
+            expect( Math.pow( 10, 2 ) ).toBe( 100 );
+            expect( Math.pow( 9, 2 ) ).toBe( 81 );
+        });
 
 
     })

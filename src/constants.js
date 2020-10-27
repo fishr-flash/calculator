@@ -28,6 +28,8 @@ export const MAIN_CLEAR_LAST = "mainClearLast";
 
 /// complexes operators
 export const COMPLEXES_DIVISION_X = "complexesDivisionX";
+export const COMPLEXES_SQR_X = "complexesSqrX";
+export const COMPLEXES_SQRT_X = "complexesSqrtX";
 export const DIVISION_BY_ZERO_IS_NOT_POSSIBLE = "Деление на ноль невозможно";
 
 

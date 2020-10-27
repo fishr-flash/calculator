@@ -1,7 +1,15 @@
 //const DIVISION_WARNING = 'Деление на ноль невозможно';
 
 import {COMPLEXES_DIVISION_X, DIVISION_BY_ZERO_IS_NOT_POSSIBLE, MODES} from "../../constants";
-import {getArrLogText, argumentOfWrap, toDisplayText, wrapperArg, updateArrLogText, toFloat} from "../utils";
+import {
+    getArrLogText,
+    argumentOfWrap,
+    toDisplayText,
+    wrapperArg,
+    updateArrLogText,
+    toFloat,
+    getComplexesAttributes
+} from "../utils";
 
 export default ({displayText
                     , firstNumber
@@ -14,78 +22,74 @@ export default ({displayText
                     , divisionByZeroBlocking
                 }, { type, value /*action*/})=>{
 
-    switch ( value ) {
+    const { cOperation, wrapText } = getComplexesAttributes( value );
 
-        case COMPLEXES_DIVISION_X:
+    if( mode < MODES.FIRST_OPERATOR ){
 
-            if( mode < MODES.FIRST_OPERATOR ){
+        arrLogText = getArrLogText(
+            wrapperArg(
+                argumentOfWrap( arrLogText[ 0 ], firstNumber )
+                , wrapText)
+        );
 
-                arrLogText = getArrLogText(
-                    wrapperArg(
-                        argumentOfWrap( arrLogText[ 0 ], firstNumber )
-                        , "1/")
-                );
+        if( firstNumber === 0 ){
+            displayText = DIVISION_BY_ZERO_IS_NOT_POSSIBLE;
+            divisionByZeroBlocking = true;
+        } else {
+            firstNumber = cOperation( firstNumber );
+            displayText = toDisplayText( firstNumber );
+        }
 
-                if( firstNumber === 0 ){
-                    displayText = DIVISION_BY_ZERO_IS_NOT_POSSIBLE;
-                    divisionByZeroBlocking = true;
-                } else {
-                    firstNumber = 1 / firstNumber;
-                    displayText = toDisplayText( firstNumber );
-                }
+    } else if( mode === MODES.FIRST_OPERATOR ){
 
-            } else if( mode === MODES.FIRST_OPERATOR ){
+        arrLogText = getArrLogText( arrLogText, wrapperArg( firstNumber,wrapText));
 
-                arrLogText = getArrLogText( arrLogText, wrapperArg( firstNumber,'1/'));
+        if( firstNumber === 0 ){
+            displayText = DIVISION_BY_ZERO_IS_NOT_POSSIBLE;
+            divisionByZeroBlocking = true;
+        } else {
+            lastNumber = cOperation( firstNumber );
+            displayText = toDisplayText( lastNumber );
+            mode = MODES.LAST_NUMBER;
+        }
 
-                if( firstNumber === 0 ){
-                    displayText = DIVISION_BY_ZERO_IS_NOT_POSSIBLE;
-                    divisionByZeroBlocking = true;
-                } else {
-                    lastNumber = 1 / firstNumber;
-                    displayText = toDisplayText( lastNumber );
-                    mode = MODES.LAST_NUMBER;
-                }
+    } else if( mode === MODES.LAST_NUMBER ){
+        arrLogText = updateArrLogText( arrLogText, lastNumber, wrapText);
+        if( lastNumber === 0 ){
+            displayText = DIVISION_BY_ZERO_IS_NOT_POSSIBLE;
+            divisionByZeroBlocking = true;
+        } else {
+            lastNumber = cOperation( lastNumber );
+            displayText = toDisplayText( lastNumber );
+        }
 
-            } else if( mode === MODES.LAST_NUMBER ){
-                arrLogText = updateArrLogText( arrLogText, lastNumber, '1/');
-                if( lastNumber === 0 ){
-                    displayText = DIVISION_BY_ZERO_IS_NOT_POSSIBLE;
-                    divisionByZeroBlocking = true;
-                } else {
-                    lastNumber = 1 / lastNumber;
-                    displayText = toDisplayText( lastNumber );
-                }
+    } else if( mode === MODES.MULTIPLE_ACTION ){
+        arrLogText = updateArrLogText( arrLogText, displayText, wrapText);
 
-            } else if( mode === MODES.MULTIPLE_ACTION ){
-                arrLogText = updateArrLogText( arrLogText, displayText, '1/');
-
-                if( toFloat( displayText ) === 0 ){
-                    displayText = DIVISION_BY_ZERO_IS_NOT_POSSIBLE;
-                    divisionByZeroBlocking = true;
-                } else {
-                    lastNumber = 1 / toFloat( displayText );
-                    displayText = toDisplayText( lastNumber );
-                }
+        if( toFloat( displayText ) === 0 ){
+            displayText = DIVISION_BY_ZERO_IS_NOT_POSSIBLE;
+            divisionByZeroBlocking = true;
+        } else {
+            lastNumber = cOperation( toFloat( displayText ) );
+            displayText = toDisplayText( lastNumber );
+        }
 
 
 
-            } else if( mode === MODES.AFTER_RESULT ){
+    } else if( mode === MODES.AFTER_RESULT ){
 
-                arrLogText = arrLogText.length > 1 ? [ wrapperArg( firstNumber, '1/') ]
-                                                   : [ wrapperArg( arrLogText[ 0 ],'1/') ];
-                if( firstNumber === 0 ){
-                    displayText = DIVISION_BY_ZERO_IS_NOT_POSSIBLE;
-                    divisionByZeroBlocking = true;
-                } else {
-                    firstNumber = 1 / firstNumber;
-                    displayText = toDisplayText( firstNumber );
-                }
+        arrLogText = arrLogText.length > 1 ? [ wrapperArg( firstNumber, wrapText) ]
+                                           : [ wrapperArg( arrLogText[ 0 ],wrapText) ];
+        if( firstNumber === 0 ){
+            displayText = DIVISION_BY_ZERO_IS_NOT_POSSIBLE;
+            divisionByZeroBlocking = true;
+        } else {
+            firstNumber = cOperation( firstNumber );
+            displayText = toDisplayText( firstNumber );
+        }
 
-            }
-            break;
-        default:
     }
+
 
     return{ displayText
         , firstNumber

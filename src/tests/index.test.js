@@ -1,6 +1,6 @@
 import servantResult from "../reducers/servants/servantResult";
 import {
-    COMPLEXES_DIVISION_X,
+    COMPLEXES_DIVISION_X, COMPLEXES_SQR_X, COMPLEXES_SQRT_X,
     DIVISION_BY_ZERO_IS_NOT_POSSIBLE,
     MAIN_CLEAR,
     MODES,
@@ -11,7 +11,7 @@ import {
     SIMPLE_MULTIPLY,
     SIMPLE_PLUS, SIMPLE_RESULT
 } from "../constants";
-import {flatDeep, getArrLogText, getResult, roundNum, wrapperArg} from "../reducers/utils";
+import {flatDeep, getArrLogText, getComplexesAttributes, getResult, roundNum, wrapperArg} from "../reducers/utils";
 import servantOnSign from "../reducers/servants/servantOnSign";
 import servantSimpleOperator from "../reducers/servants/servantSimpleOperator";
 import servantPercentOperator from "../reducers/servants/servantPercentOperator";
@@ -481,6 +481,33 @@ describe( "all indexes tests", ()=>{
                                 percentNumber: 3
                             }
                 }// 1, +, 2, +, 1/x, +/-
+                , {
+                    inData:  {
+                                displayText: '3',
+                                firstNumber: 3,
+                                lastNumber: 2,
+                                mode: 4,
+                                firstOperator: 'simplePlus',
+                                onDot: false,
+                                arrLogText: [
+                                    '1/( 1/( 3 ) )'
+                                ],
+                                percentNumber: 3,
+                                divisionByZeroBlocking: false
+                            }
+                    , outData: {
+                                displayText: '-3',
+                                firstNumber: -3,
+                                lastNumber: 2,
+                                mode: 4,
+                                firstOperator: 'simplePlus',
+                                onDot: false,
+                                arrLogText: [
+                                    ' negate( 1/( 1/( 3 ) ) ) '
+                                ],
+                                percentNumber: 3
+                            }
+                }// 1, +, 2, =, 1/x, 1/x, +/-
 
 
 
@@ -1829,6 +1856,114 @@ describe( "all indexes tests", ()=>{
                 }
             });
         });
+        test( "test of servantComplexes complexesSqrX", ()=>{
+
+            const checkedData = [
+                {
+                    inData: [ {
+                        displayText: '10',
+                        firstNumber: 10,
+                        lastNumber: 0,
+                        mode: 0,
+                        firstOperator: 'notOperator',
+                        onDot: false,
+                        arrLogText: [],
+                        percentNumber: null,
+                        divisionByZeroBlocking: false
+                    }
+                        , {
+                            type: ON_CLICK_COMPLEXES
+                            , value: COMPLEXES_SQR_X
+                        }
+                    ]
+                    , outData:{
+                        displayText: '100',
+                        firstNumber: 100,
+                        lastNumber: 0,
+                        mode: 0,
+                        firstOperator: 'notOperator',
+                        onDot: false,
+                        arrLogText: [
+                            'sqr( 10 )'
+                        ],
+                        percentNumber: null,
+                        divisionByZeroBlocking: false
+                    }
+                }// default mode
+
+
+            ];
+
+            checkedData.forEach(( v, i ) =>{
+                try{
+                    expect( servantComplexes( ...v.inData )).toStrictEqual( v.outData );
+                }catch (e) {
+                    if( true ){
+                        console.group( 'Console log in the code "INDEX_TEST_JS" line 147' );
+                        console.info( 'v: ', v );
+                        console.info( 'i: ', i );
+                        console.info( 'e: ', e );
+
+                        //console.table( this );
+                        console.groupEnd();
+                    }
+                }
+            });
+        });
+        test( "test of servantComplexes complexesSqrtX", ()=>{
+
+            const checkedData = [
+                {
+                    inData: [ {
+                        displayText: '25',
+                        firstNumber: 25,
+                        lastNumber: 0,
+                        mode: 0,
+                        firstOperator: 'notOperator',
+                        onDot: false,
+                        arrLogText: [],
+                        percentNumber: null,
+                        divisionByZeroBlocking: false
+                    }
+                        , {
+                            type: ON_CLICK_COMPLEXES
+                            , value: COMPLEXES_SQRT_X
+                        }
+                    ]
+                    , outData:{
+                        displayText: '5',
+                        firstNumber: 5,
+                        lastNumber: 0,
+                        mode: 0,
+                        firstOperator: 'notOperator',
+                        onDot: false,
+                        arrLogText: [
+                            '√( 25 )'
+                        ],
+                        percentNumber: null,
+                        divisionByZeroBlocking: false
+                    }
+                }// default mode
+
+
+            ];
+
+            checkedData.forEach(( v, i ) =>{
+                try{
+                    expect( servantComplexes( ...v.inData )).toStrictEqual( v.outData );
+                }catch (e) {
+                    if( true ){
+                        console.group( 'Console log in the code "INDEX_TEST_JS" line 147' );
+                        console.info( 'v: ', v );
+                        console.info( 'i: ', i );
+                        console.info( 'e: ', e );
+
+                        //console.table( this );
+                        console.groupEnd();
+                    }
+                }
+            });
+        });
         test( "test of reducer", ()=>{
 
             let rnd = Math.random() * 1000;
@@ -1986,6 +2121,24 @@ describe( "all indexes tests", ()=>{
                 }
             });
         });
+        /*test( "check the function getComplexesAttributes ", ()=>{
+
+            let arr = [ COMPLEXES_DIVISION_X ];
+            arr.forEach( ( v, i ) => {
+                try{
+
+                        expect( getComplexesAttributes( v )).toEqual( {"cOperation": Function cOperation, "wrapText": "1/"} );
+                }catch (e) {
+                    if( true ){
+                        console.group( 'Console log in the code "INDEX_TEST_JS" line 147' );
+                        console.info( 'v: ', v );
+                        console.info( 'i: ', i );
+                        console.info( 'e: ', e );
+                        console.groupEnd();
+                    }
+                }
+            });
+        });*/
     });
 
 });
