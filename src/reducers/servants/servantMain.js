@@ -8,8 +8,10 @@ export default ({displayText
                     , mode
                     , firstOperator
                     , onDot
+                    , arrMemory
                     , arrLogText
                     , percentNumber
+                    , numberIsWrapped
                 }, { type, value /*action*/})=>{
 
     switch ( value ) {
@@ -70,8 +72,10 @@ export default ({displayText
         , mode
         , firstOperator
         , onDot
+        , arrMemory
         , arrLogText
         , percentNumber
+        , numberIsWrapped
     };
 
 }

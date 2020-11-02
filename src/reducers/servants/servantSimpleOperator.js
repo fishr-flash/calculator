@@ -7,7 +7,9 @@ export default ({displayText
                     , mode
                     , firstOperator
                     , onDot
+                    , arrMemory
                     , arrLogText
+                    , numberIsWrapped
                     , percentNumber
                 }, { type, value /*action*/})=>{
 
@@ -74,8 +76,10 @@ export default ({displayText
         , mode
         , firstOperator
         , onDot
+        , arrMemory
         , arrLogText
         , percentNumber
+        , numberIsWrapped
     };
 
 }

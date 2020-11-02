@@ -7,8 +7,10 @@ export default ({displayText
                     , mode
                     , firstOperator
                     , onDot
+                    , arrMemory
                     , arrLogText
                     , percentNumber
+                    , numberIsWrapped
                 })=>{
 
         onDot = false;
@@ -23,6 +25,7 @@ export default ({displayText
             arrLogText = getArrLogText( arrLogText, lastNumber );
             displayText = toDisplayText( lastNumber );
             percentNumber = firstNumber;
+            numberIsWrapped = true;
         } else if ( mode === MODES.LAST_NUMBER ){
             lastNumber = roundNum( lastNumber * ( percentNumber / 100 ) );
 
@@ -30,6 +33,7 @@ export default ({displayText
             // ее надо заменить, если первое то лог заканчивается еще пока последним оператором
             arrLogText = getArrLogText( arrLogText.length%2 ? arrLogText.slice( 0, -1 ) : arrLogText, lastNumber );
             displayText = toDisplayText( lastNumber );
+            numberIsWrapped = true;
         } else if ( mode === MODES.AFTER_RESULT ){
             displayText = toDisplayText( roundNum( toFloat( displayText ) * ( percentNumber / 100 ) ) );
             firstNumber = toFloat( displayText );
@@ -43,8 +47,10 @@ export default ({displayText
         , mode
         , firstOperator
         , onDot
+        , arrMemory
         , arrLogText
         , percentNumber
+        , numberIsWrapped
     };
 
 }

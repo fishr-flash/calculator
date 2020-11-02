@@ -6,6 +6,7 @@ export const ON_CLICK_SIMPLE_OPERATOR = "onClickSimpleOperator";
 export const ON_CLICK_RESULT = "onClickResult";
 export const ON_CLICK_MAIN = "onClickMain";
 export const ON_CLICK_COMPLEXES = "onClickComplexes";
+export const ON_CLICK_MEMORY = "onClickMemory";
 export const ON_CLICK_PERCENT = "onClickPercent";
 
 
@@ -30,8 +31,18 @@ export const MAIN_CLEAR_LAST = "mainClearLast";
 export const COMPLEXES_DIVISION_X = "complexesDivisionX";
 export const COMPLEXES_SQR_X = "complexesSqrX";
 export const COMPLEXES_SQRT_X = "complexesSqrtX";
+
+
 export const DIVISION_BY_ZERO_IS_NOT_POSSIBLE = "Деление на ноль невозможно";
 
+
+/// memory operators
+export const MEMORY_CLEAR = 'memoryClear';
+export const MEMORY_READ = 'memoryRead';
+export const MEMORY_PLUS = 'memoryPlus';
+export const MEMORY_MINUS = 'memoryMinus';
+export const MEMORY_SAVE = 'memorySave';
+export const MEMORY_LIST = 'memoryList';
 
 
 /// modes set

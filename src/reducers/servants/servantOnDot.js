@@ -7,8 +7,10 @@ export default ({displayText
                     , mode
                     , firstOperator
                     , onDot
+                    , arrMemory
                     , arrLogText
                     , percentNumber
+                    , numberIsWrapped
                 }, { type, value /*action*/})=>{
 
     if( mode === MODES.AFTER_RESULT ){
@@ -35,8 +37,10 @@ export default ({displayText
         , mode
         , firstOperator
         , onDot
+        , arrMemory
         , arrLogText
         , percentNumber
+        , numberIsWrapped
     };
 
 }

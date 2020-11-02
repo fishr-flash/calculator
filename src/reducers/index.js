@@ -5,7 +5,7 @@ import {
     NOT_OPERATOR,
     ON_CLICK_COMPLEXES,
     ON_CLICK_DOT,
-    ON_CLICK_MAIN,
+    ON_CLICK_MAIN, ON_CLICK_MEMORY,
     ON_CLICK_NUMBER,
     ON_CLICK_PERCENT,
     ON_CLICK_RESULT,
@@ -20,6 +20,7 @@ import servantResult from "./servants/servantResult";
 import servantMain from "./servants/servantMain";
 import servantComplexes from "./servants/servantComplexes";
 import servantPercentOperator from "./servants/servantPercentOperator";
+import servantMemory from "./servants/servantMemory";
 
 // export default combineReducers({ setNumber });
 
@@ -32,7 +33,9 @@ export const store = {
     , onDot: false
     , percentNumber: NaN
     , divisionByZeroBlocking: false
+    , arrMemory: []
     , arrLogText: []
+    , numberIsWrapped: false
 
 };
 
@@ -71,6 +74,9 @@ export default function reducer ( state = store, action ) {
         case ON_CLICK_PERCENT:
             state = servantPercentOperator( state );
             break;
+        case ON_CLICK_MEMORY:
+            state = servantMemory( state, action  );
+            break;
         default:
 
     }
@@ -80,7 +86,7 @@ export default function reducer ( state = store, action ) {
     ///TODO: Оригинальный калькулятор имеет бОльшую высоту
     ///TODO: Реализовать поведение панели при использовании "сложных операторов" как на 2020-10-10_14-57-46 ( в папке doc )
     ///FIXME: Кнопки сложных операторов, а также кнопка +/-  и кнопки простых операторов неправильно обрабатывают дизейбл
-
+    ///FIXME: Урезать кол-во параметров передаваемых в серванты, ограничив используемыми
     /////////////////////////////CONSOLE/////////////////////////////////////
         ///TODO: Console log in the code "INDEX_JS" line 32
         if( true ){

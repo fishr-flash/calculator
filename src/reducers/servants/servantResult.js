@@ -7,8 +7,10 @@ export default ({displayText
                     , mode
                     , firstOperator
                     , onDot
+                    , arrMemory
                     , arrLogText
                     , percentNumber
+                    , numberIsWrapped
                     , divisionByZeroBlocking
                 })=>{
 
@@ -83,9 +85,11 @@ export default ({displayText
         , mode
         , firstOperator
         , onDot
+        , arrMemory
         , arrLogText
         , percentNumber
         , divisionByZeroBlocking
+        , numberIsWrapped
     };
 
 }

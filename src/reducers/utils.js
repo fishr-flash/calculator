@@ -11,7 +11,7 @@ export const getArrLogText = ( ...args ) =>{
 
     let arr = flatDeep( args ).map( v => {
         let res ="";
-        if( typeof v === "number" )
+        if( typeof v === "number" || wasWrapped( v ) )
             res = toDisplayText( v );
         else
             res = getSimpleOperator( v );
@@ -128,7 +128,7 @@ export const flatDeep = ( arr, d = Infinity )=>{
  * @param verificationNumber
  * @returns {*} String
  */
-export const argumentOfWrap =  (argWrap, verificationNumber ) => argWrap !== undefined && isNaN( argWrap) ? argWrap : toDisplayText( verificationNumber );
+export const argumentOfWrap =  (argWrap, verificationNumber ) => wasWrapped( argWrap ) ? argWrap : toDisplayText( verificationNumber );
 
 
 /**
@@ -172,6 +172,7 @@ export const getComplexesAttributes = (typeOperation )=>{
 
     switch ( typeOperation ) {
         case COMPLEXES_DIVISION_X:
+            ///FIXME: а если имя функции указать строковым значением изменит ли это тип функции с [ Function cOperation ]?
             attributes = { cOperation: ( val )=> 1/val, wrapText: '1/' };
             break;
         case COMPLEXES_SQR_X:
@@ -181,7 +182,7 @@ export const getComplexesAttributes = (typeOperation )=>{
             attributes = { cOperation: ( val )=> Math.sqrt( val ), wrapText: '√' };
             break;
         default:
-            throw Error( 'Unknown value received');
+            throw Error( 'Unknown typeOperation received');
     }
 
     return attributes;
@@ -189,3 +190,17 @@ export const getComplexesAttributes = (typeOperation )=>{
 
 };
 
+export const wasWrapped = ( expression )=>{
+    const operators = [ '+'
+                        , '-'
+                        , '×'
+                        , '÷'
+                        , '='
+                        , 'simpleMinus'
+                        , 'simplePlus'
+                        , 'simpleMultiply'
+                        , 'simpleDivision'
+                        , 'simpleResult'
+                        ];
+    return expression !== undefined && isNaN( expression ) && operators.indexOf( expression ) === - 1;
+};

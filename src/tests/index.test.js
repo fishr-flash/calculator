@@ -2,16 +2,24 @@ import servantResult from "../reducers/servants/servantResult";
 import {
     COMPLEXES_DIVISION_X, COMPLEXES_SQR_X, COMPLEXES_SQRT_X,
     DIVISION_BY_ZERO_IS_NOT_POSSIBLE,
-    MAIN_CLEAR,
+    MAIN_CLEAR, MEMORY_MINUS, MEMORY_PLUS, MEMORY_SAVE,
     MODES,
     NOT_OPERATOR, ON_CLICK_COMPLEXES,
-    ON_CLICK_MAIN,
+    ON_CLICK_MAIN, ON_CLICK_MEMORY,
     ON_CLICK_NUMBER, ON_CLICK_SIGN,
     ON_CLICK_SIMPLE_OPERATOR, SIMPLE_DIVISION,
     SIMPLE_MULTIPLY,
     SIMPLE_PLUS, SIMPLE_RESULT
 } from "../constants";
-import {flatDeep, getArrLogText, getComplexesAttributes, getResult, roundNum, wrapperArg} from "../reducers/utils";
+import {
+    flatDeep,
+    getArrLogText,
+    getComplexesAttributes,
+    getResult,
+    roundNum,
+    wasWrapped,
+    wrapperArg
+} from "../reducers/utils";
 import servantOnSign from "../reducers/servants/servantOnSign";
 import servantSimpleOperator from "../reducers/servants/servantSimpleOperator";
 import servantPercentOperator from "../reducers/servants/servantPercentOperator";
@@ -19,6 +27,7 @@ import servantClickNumber from "../reducers/servants/servantClickNumber";
 import servantMain from "../reducers/servants/servantMain";
 import reducer from "../reducers";
 import servantComplexes from "../reducers/servants/servantComplexes";
+import servantMemory from "../reducers/servants/servantMemory";
 
 describe( "all indexes tests", ()=>{
 
@@ -26,7 +35,7 @@ describe( "all indexes tests", ()=>{
 
         /// Порядок отладки внедрения нового оператора
         /**
-         *  - реализация во всех модах последовательно
+         *  - реализация во всех сервантах последовательно
          *    - BEGIN_MODE: 0
          ,    - FIRST_OPERATOR: 1
          ,    - MULTIPLE_ACTION: 2
@@ -44,7 +53,9 @@ describe( "all indexes tests", ()=>{
                         , mode: MODES.BEGIN_MODE
                         , firstOperator: NOT_OPERATOR
                         , onDot: false
+                        , numberIsWrapped: false
                         , percentNumber: NaN
+                        , arrMemory: []
                         , arrLogText: []}
                         , {
                             type: ON_CLICK_NUMBER
@@ -58,7 +69,9 @@ describe( "all indexes tests", ()=>{
                         , mode: MODES.BEGIN_MODE
                         , firstOperator: NOT_OPERATOR
                         , onDot: false
+                        , numberIsWrapped: false
                         , percentNumber: NaN
+                        , arrMemory: []
                         , arrLogText: []
                     }
                 }// default mode
@@ -70,6 +83,8 @@ describe( "all indexes tests", ()=>{
                         mode: 4,
                         firstOperator: 'simplePlus',
                         onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                         arrLogText: [
                             '10',
                             '+',
@@ -90,6 +105,8 @@ describe( "all indexes tests", ()=>{
                         mode: 0,
                         firstOperator: NOT_OPERATOR,
                         onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                         arrLogText: [],
                         percentNumber: NaN
                     }
@@ -102,11 +119,13 @@ describe( "all indexes tests", ()=>{
                                 mode: 1,
                                 firstOperator: 'simplePlus',
                                 onDot: false,
-                                arrLogText: [
-                                    '1',
-                                    '+'
-                                ],
-                                percentNumber: NaN
+                                numberIsWrapped: false,
+                                arrMemory: [],
+                                        arrLogText: [
+                                            '1',
+                                            '+'
+                                        ],
+                                        percentNumber: NaN
                             }
                         , {
                             type: ON_CLICK_NUMBER
@@ -120,6 +139,8 @@ describe( "all indexes tests", ()=>{
                         mode: 3,
                         firstOperator: 'simplePlus',
                         onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                         arrLogText: [
                             '1',
                             '+'
@@ -135,6 +156,8 @@ describe( "all indexes tests", ()=>{
                             mode: 2,
                             firstOperator: 'simplePlus',
                             onDot: false,
+                            numberIsWrapped: false,
+                            arrMemory: [],
                             arrLogText: [
                                 '1',
                                 '+',
@@ -155,6 +178,8 @@ describe( "all indexes tests", ()=>{
                         mode: 3,
                         firstOperator: 'simplePlus',
                         onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                         arrLogText: [
                             '1',
                             '+',
@@ -172,6 +197,8 @@ describe( "all indexes tests", ()=>{
                         mode: 0,
                         firstOperator: SIMPLE_RESULT,
                         onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                         arrLogText: [
                             '10',
                             '='
@@ -190,6 +217,8 @@ describe( "all indexes tests", ()=>{
                         mode: 0,
                         firstOperator: 'notOperator',
                         onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                         arrLogText: [
                             '10',
                             '='
@@ -198,6 +227,154 @@ describe( "all indexes tests", ()=>{
 
                     }
                 } /// порядок: ввод числа, равно, ввод другого числа
+                , {
+                    inData:[ {
+                        displayText: '4',
+                        firstNumber: 4,
+                        lastNumber: 0,
+                        mode: 0,
+                        firstOperator: 'notOperator',
+                        onDot: false,
+                        numberIsWrapped: true,
+                        arrMemory: [ 4 ],
+                        arrLogText: [
+                            'sqr( 2 )'
+                        ],
+                        percentNumber: null,
+                        divisionByZeroBlocking: false
+                    },
+                    {
+                        type: 'onClickNumber',
+                        value: 2
+                    }]
+                    , outData:{
+                        displayText: '' +
+                            '2',
+                        firstNumber: 2,
+                        lastNumber: 0,
+                        mode: 0,
+                        firstOperator: 'notOperator',
+                        onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [ 4 ],
+                        arrLogText: [
+                            'sqr( 2 )'
+                        ],
+                        percentNumber: null
+                    }
+                } /// 2, x2, 2
+                , {
+                    inData:[ {
+                        displayText: '5',
+                        firstNumber: 5,
+                        lastNumber: 0,
+                        mode: 0,
+                        firstOperator: 'notOperator',
+                        onDot: false,
+                        arrMemory: [
+                            5
+                        ],
+                        arrLogText: [],
+                        percentNumber: 0,
+                        numberIsWrapped: true
+                    },
+                    {
+                        type: 'onClickNumber',
+                        value: 3
+                    }]
+                    , outData:{
+                        displayText: '3',
+                        firstNumber: 3,
+                        lastNumber: 0,
+                        mode: 0,
+                        firstOperator: 'notOperator',
+                        onDot: false,
+                        arrMemory: [
+                            5
+                        ],
+                        arrLogText: [],
+                        percentNumber: 0,
+                        numberIsWrapped: false
+                    }
+                } /// 5, MS, 3
+                , {
+                    inData:[{
+                        displayText: '2',
+                        firstNumber: 1,
+                        lastNumber: 2,
+                        mode: 3,
+                        firstOperator: 'simplePlus',
+                        onDot: false,
+                        arrMemory: [
+                            2
+                        ],
+                        arrLogText: [
+                            '1',
+                            '+'
+                        ],
+                        percentNumber: 1,
+                        numberIsWrapped: true
+                    },
+                    {
+                        type: 'onClickNumber',
+                        value: 3
+                    }]
+                    , outData:{
+                        displayText: '3',
+                        firstNumber: 1,
+                        lastNumber: 3,
+                        mode: 3,
+                        firstOperator: 'simplePlus',
+                        onDot: false,
+                        arrMemory: [
+                            2
+                        ],
+                        arrLogText: [
+                            '1',
+                            '+'
+                        ],
+                        percentNumber: 1,
+                        numberIsWrapped: false
+                    }
+                } /// 1, +, 2, MS, 3
+                , {
+                    inData:[{
+                        displayText: '151,29',
+                        firstNumber: 123,
+                        lastNumber: 151.29,
+                        mode: 3,
+                        firstOperator: 'simplePlus',
+                        onDot: false,
+                        arrMemory: [],
+                        arrLogText: [
+                            '123',
+                            '+',
+                            '151,29'
+                        ],
+                        percentNumber: 123,
+                        numberIsWrapped: true,
+                        divisionByZeroBlocking: false
+                    },
+                    {
+                        type: 'onClickNumber',
+                        value: 2
+                    }]
+                    , outData:{
+                        displayText: '2',
+                        firstNumber: 123,
+                        lastNumber: 2,
+                        mode: 3,
+                        firstOperator: 'simplePlus',
+                        onDot: false,
+                        arrMemory: [],
+                        arrLogText: [
+                            '123',
+                            '+'
+                        ],
+                        percentNumber: 123,
+                        numberIsWrapped: false
+                    }
+                } /// 123, +, %, 2
             ];
 
             checkedData.forEach(( v, i ) =>{
@@ -229,6 +406,8 @@ describe( "all indexes tests", ()=>{
                                 mode: 0,
                                 firstOperator: NOT_OPERATOR,
                                 onDot: false,
+                                numberIsWrapped: false,
+                                arrMemory: [],
                                 percentNumber: NaN,
                                 arrLogText: []
                             }
@@ -244,6 +423,8 @@ describe( "all indexes tests", ()=>{
                             mode: 0,
                             firstOperator: NOT_OPERATOR,
                             onDot: false,
+                            numberIsWrapped: false,
+                            arrMemory: [],
                             arrLogText: [],
                             percentNumber: NaN
                         }
@@ -278,7 +459,9 @@ describe( "all indexes tests", ()=>{
                         , lastNumber: 0
                         , mode: MODES.BEGIN_MODE
                         , firstOperator: NOT_OPERATOR
-                        , onDot: false,
+                        , onDot: false
+                        , numberIsWrapped: false
+                        , arrMemory: [],
                                 percentNumber: NaN,
                                 arrLogText: []
                             }
@@ -289,7 +472,9 @@ describe( "all indexes tests", ()=>{
                         , mode: MODES.BEGIN_MODE
                         , firstOperator: NOT_OPERATOR
                         , onDot: false
+                        , numberIsWrapped: false
                         , percentNumber: NaN
+                        , arrMemory: []
                         , arrLogText: []
                     }
                 }
@@ -299,7 +484,9 @@ describe( "all indexes tests", ()=>{
                         , lastNumber: 0
                         , mode: MODES.BEGIN_MODE
                         , firstOperator: NOT_OPERATOR
-                        , onDot: false,
+                        , onDot: false
+                        , numberIsWrapped: false
+                        , arrMemory: [],
                                 percentNumber: NaN,
                                 arrLogText: []
                             }
@@ -310,7 +497,9 @@ describe( "all indexes tests", ()=>{
                         , mode: MODES.BEGIN_MODE
                         , firstOperator: NOT_OPERATOR
                         , onDot: false
+                        , numberIsWrapped: false
                         , percentNumber: NaN
+                        , arrMemory: []
                         , arrLogText: []
                     }
                 }
@@ -320,7 +509,9 @@ describe( "all indexes tests", ()=>{
                         , lastNumber: 0
                         , mode: MODES.BEGIN_MODE
                         , firstOperator: NOT_OPERATOR
-                        , onDot: false,
+                        , onDot: false
+                        , numberIsWrapped: false,
+                        arrMemory: [],
                                 percentNumber: NaN,
                                 arrLogText: []
                             }
@@ -331,7 +522,9 @@ describe( "all indexes tests", ()=>{
                         , mode: MODES.BEGIN_MODE
                         , firstOperator: NOT_OPERATOR
                         , onDot: false
+                        , numberIsWrapped: false
                         , percentNumber: NaN
+                        , arrMemory: []
                         , arrLogText: []
                     }
                 }
@@ -341,7 +534,9 @@ describe( "all indexes tests", ()=>{
                         , lastNumber: 0
                         , mode: MODES.BEGIN_MODE
                         , firstOperator: NOT_OPERATOR
-                        , onDot: false,
+                        , onDot: false
+                        , numberIsWrapped: false,
+                        arrMemory: [],
                                 percentNumber: NaN,
                                 arrLogText: []
                             }
@@ -352,7 +547,9 @@ describe( "all indexes tests", ()=>{
                         , mode: MODES.BEGIN_MODE
                         , firstOperator: NOT_OPERATOR
                         , onDot: false
+                        , numberIsWrapped: false
                         , percentNumber: NaN
+                        , arrMemory: []
                         , arrLogText: []
                     }
                 }
@@ -364,6 +561,8 @@ describe( "all indexes tests", ()=>{
                         mode: 0,
                         firstOperator: 'notOperator',
                         onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                         arrLogText: [
                             '1/( 10 )'
                         ],
@@ -376,6 +575,8 @@ describe( "all indexes tests", ()=>{
                         mode: 0,
                         firstOperator: 'notOperator',
                         onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                         arrLogText: [
                             'negate( 1/( 10 ) )'
                         ],
@@ -390,6 +591,8 @@ describe( "all indexes tests", ()=>{
                                 mode: 4,
                                 firstOperator: 'simplePlus',
                                 onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                                 arrLogText: [
                                     '1',
                                     '+',
@@ -405,6 +608,8 @@ describe( "all indexes tests", ()=>{
                                 mode: 4,
                                 firstOperator: 'simplePlus',
                                 onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                                 arrLogText: [
                                     ' negate( 3 ) '
                                 ],
@@ -419,6 +624,8 @@ describe( "all indexes tests", ()=>{
                                 mode: 3,
                                 firstOperator: 'simplePlus',
                                 onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                                 arrLogText: [
                                     '1',
                                     '+',
@@ -436,6 +643,8 @@ describe( "all indexes tests", ()=>{
                                 mode: 3,
                                 firstOperator: 'simplePlus',
                                 onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                                 arrLogText: [
                                     '1',
                                     '+',
@@ -454,6 +663,8 @@ describe( "all indexes tests", ()=>{
                                 mode: 2,
                                 firstOperator: 'simplePlus',
                                 onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                                 arrLogText: [
                                     '1',
                                     '+',
@@ -471,6 +682,8 @@ describe( "all indexes tests", ()=>{
                                 mode: 2,
                                 firstOperator: 'simplePlus',
                                 onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                                 arrLogText: [
                                     '1',
                                     '+',
@@ -489,6 +702,8 @@ describe( "all indexes tests", ()=>{
                                 mode: 4,
                                 firstOperator: 'simplePlus',
                                 onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                                 arrLogText: [
                                     '1/( 1/( 3 ) )'
                                 ],
@@ -502,6 +717,8 @@ describe( "all indexes tests", ()=>{
                                 mode: 4,
                                 firstOperator: 'simplePlus',
                                 onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                                 arrLogText: [
                                     ' negate( 1/( 1/( 3 ) ) ) '
                                 ],
@@ -541,6 +758,8 @@ describe( "all indexes tests", ()=>{
                         , mode: MODES.LAST_NUMBER
                         , firstOperator: SIMPLE_PLUS
                         , onDot: false
+                        , numberIsWrapped: false
+                        , arrMemory: []
                         , percentNumber: NaN
                         , divisionByZeroBlocking: false
                         , arrLogText: [ "123", "+" ]}
@@ -551,6 +770,8 @@ describe( "all indexes tests", ()=>{
                         , mode: MODES.AFTER_RESULT
                         , firstOperator: SIMPLE_PLUS
                         , onDot: false
+                        , numberIsWrapped: false
+                        , arrMemory: []
                         , divisionByZeroBlocking: false
                         , percentNumber: 444
                         , arrLogText: [ "123", "+", "321", "=" ]
@@ -563,6 +784,8 @@ describe( "all indexes tests", ()=>{
                         , mode: MODES.LAST_NUMBER
                         , firstOperator: SIMPLE_PLUS
                         , onDot: false
+                        , numberIsWrapped: false
+                        , arrMemory: []
                         , percentNumber: NaN
                         , divisionByZeroBlocking: false
                         , arrLogText: [ "123", "+" ]}
@@ -573,6 +796,8 @@ describe( "all indexes tests", ()=>{
                         , mode: MODES.AFTER_RESULT
                         , firstOperator: SIMPLE_PLUS
                         , onDot: false
+                        , numberIsWrapped: false
+                        , arrMemory: []
                         , divisionByZeroBlocking: false
                         , percentNumber: 444
                         , arrLogText: [ "123", "+", "321", "=" ]
@@ -586,6 +811,8 @@ describe( "all indexes tests", ()=>{
                         , firstOperator: SIMPLE_PLUS
                         , percentNumber: NaN
                         , onDot: false
+                        , numberIsWrapped: false
+                        , arrMemory: []
                         , divisionByZeroBlocking: false
                         , arrLogText: [ "123", "+" ]}
                     , outData:{
@@ -595,6 +822,8 @@ describe( "all indexes tests", ()=>{
                         , mode: MODES.AFTER_RESULT
                         , firstOperator: SIMPLE_PLUS
                         , onDot: false
+                        , numberIsWrapped: false
+                        , arrMemory: []
                         , divisionByZeroBlocking: false
                         , percentNumber: 444
                         , arrLogText: [ "123", "+", "321", "=" ]
@@ -608,6 +837,8 @@ describe( "all indexes tests", ()=>{
                                 mode: 4,
                                 firstOperator: 'simplePlus',
                                 onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                                 divisionByZeroBlocking: false,
                                 percentNumber: NaN,
                                 arrLogText: [
@@ -621,6 +852,8 @@ describe( "all indexes tests", ()=>{
                         mode: 4,
                         firstOperator: 'simplePlus',
                         onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                         divisionByZeroBlocking: false,
                         percentNumber: -1,
                         arrLogText: [
@@ -639,6 +872,8 @@ describe( "all indexes tests", ()=>{
                                 mode: 3,
                                 firstOperator: 'simplePlus',
                                 onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                                 divisionByZeroBlocking: false,
                                 arrLogText: [
                                     '4',
@@ -654,6 +889,8 @@ describe( "all indexes tests", ()=>{
                                 mode: 4,
                                 firstOperator: 'simplePlus',
                                 onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                                 divisionByZeroBlocking: false,
                                 arrLogText: [
                                     '4',
@@ -672,6 +909,8 @@ describe( "all indexes tests", ()=>{
                         mode: MODES.FIRST_OPERATOR ,
                         firstOperator: 'simplePlus',
                         onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                         divisionByZeroBlocking: false,
                         arrLogText: [
                             '1',
@@ -686,6 +925,8 @@ describe( "all indexes tests", ()=>{
                         mode: MODES.AFTER_RESULT,
                         firstOperator: 'simplePlus',
                         onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                         divisionByZeroBlocking: false,
                         arrLogText: [
                             '1',
@@ -704,6 +945,8 @@ describe( "all indexes tests", ()=>{
                         mode: 0,
                         firstOperator: NOT_OPERATOR,
                         onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                         divisionByZeroBlocking: false,
                         arrLogText: [
                             '1',
@@ -718,6 +961,8 @@ describe( "all indexes tests", ()=>{
                         mode: 0,
                         firstOperator: SIMPLE_RESULT,
                         onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                         divisionByZeroBlocking: false,
                         arrLogText: [
                             '1',
@@ -734,6 +979,8 @@ describe( "all indexes tests", ()=>{
                                 mode: 3,
                                 firstOperator: 'simpleDivision',
                                 onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                                 arrLogText: [
                                     '10',
                                     '÷'
@@ -748,6 +995,8 @@ describe( "all indexes tests", ()=>{
                                 mode: MODES.LAST_NUMBER,
                                 firstOperator: SIMPLE_DIVISION,
                                 onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                                 arrLogText: [
                                     '10',
                                     '÷'
@@ -764,6 +1013,8 @@ describe( "all indexes tests", ()=>{
                                 mode: 3,
                                 firstOperator: 'simplePlus',
                                 onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                                 arrLogText: [
                                     '10',
                                     '+',
@@ -779,6 +1030,8 @@ describe( "all indexes tests", ()=>{
                                 mode: 4,
                                 firstOperator: 'simplePlus',
                                 onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                                 arrLogText: [
                                     '10',
                                     '+',
@@ -797,6 +1050,8 @@ describe( "all indexes tests", ()=>{
                                 mode: 3,
                                 firstOperator: 'simplePlus',
                                 onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                                 arrLogText: [
                                     '1/( 10,05 )'
                                 ],
@@ -810,6 +1065,8 @@ describe( "all indexes tests", ()=>{
                                 mode: 4,
                                 firstOperator: 'simplePlus',
                                 onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                                 arrLogText: [
                                     '1/( 10,05 )',
                                     '+',
@@ -820,6 +1077,38 @@ describe( "all indexes tests", ()=>{
                                 divisionByZeroBlocking: false
                             }
                 } /// 10, +, 20, 1/x, =, 1/x, =, =
+                ///FIXME: на нативном калькуляторе получается другой результат, устаканить!
+                , {
+                    inData:{
+                                displayText: '32',
+                                firstNumber: 32,
+                                lastNumber: 0,
+                                mode: 0,
+                                firstOperator: 'notOperator',
+                                onDot: false,
+                        numberIsWrapped: false,
+                                arrMemory: [],
+                                arrLogText: [],
+                                percentNumber: 444,
+                                divisionByZeroBlocking: false
+                            }
+                            , outData:{
+                                displayText: '32',
+                                firstNumber: 32,
+                                lastNumber: 0,
+                                mode: 0,
+                                firstOperator: 'simpleResult',
+                                onDot: false,
+                                numberIsWrapped: false,
+                                arrMemory: [],
+                                arrLogText: [
+                                    '32',
+                                    '='
+                                ],
+                                percentNumber: 32,
+                                divisionByZeroBlocking: false
+                            }
+                } /// 123, +, 321, =, +/-, 32, =
 
             ];
 
@@ -850,6 +1139,8 @@ describe( "all indexes tests", ()=>{
                         mode: 0,
                         firstOperator: NOT_OPERATOR,
                         onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                         percentNumber: NaN,
                         arrLogText: []
                         }
@@ -864,6 +1155,8 @@ describe( "all indexes tests", ()=>{
                         mode: 1,
                         firstOperator: 'simplePlus',
                         onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                         percentNumber: 1,
                         arrLogText: [
                             '1',
@@ -879,6 +1172,8 @@ describe( "all indexes tests", ()=>{
                             mode: 3,
                             firstOperator: 'simplePlus',
                             onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                             percentNumber: NaN,
                             arrLogText: [
                                 '1',
@@ -896,6 +1191,8 @@ describe( "all indexes tests", ()=>{
                             mode: 2,
                             firstOperator: 'simplePlus',
                             onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                             percentNumber: 4,
                             arrLogText: [
                                 '1',
@@ -913,6 +1210,8 @@ describe( "all indexes tests", ()=>{
                                 mode: 3,
                                 firstOperator: 'simplePlus',
                                 onDot: false,
+                                numberIsWrapped: false,
+                        arrMemory: [],
                                 arrLogText: [
                                     '1',
                                     '+'
@@ -929,6 +1228,8 @@ describe( "all indexes tests", ()=>{
                             mode: 2,
                             firstOperator: 'simplePlus',
                             onDot: false,
+                                numberIsWrapped: false,
+                        arrMemory: [],
                             arrLogText: [
                                 '1',
                                 '+',
@@ -945,7 +1246,9 @@ describe( "all indexes tests", ()=>{
                                 mode: 0,
                                 firstOperator: NOT_OPERATOR,
                                 onDot: true,
+                                arrMemory: [],
                                 arrLogText: [],
+                                numberIsWrapped: false,
                                 percentNumber: NaN
                             }
                             , {
@@ -959,6 +1262,8 @@ describe( "all indexes tests", ()=>{
                                 mode: 1,
                                 firstOperator: 'simplePlus',
                                 onDot: false,
+                                numberIsWrapped: false,
+                                arrMemory: [],
                                 arrLogText: [
                                     '1',
                                     '+'
@@ -974,6 +1279,8 @@ describe( "all indexes tests", ()=>{
                                 mode: 4,
                                 firstOperator: 'simplePlus',
                                 onDot: false,
+                                numberIsWrapped: false,
+                        arrMemory: [],
                                 arrLogText: [
                                     '4'
                                 ],
@@ -990,6 +1297,8 @@ describe( "all indexes tests", ()=>{
                             mode: 1,
                             firstOperator: 'simplePlus',
                             onDot: false,
+                                numberIsWrapped: false,
+                        arrMemory: [],
                             arrLogText: [
                                 '4',
                                 '+'
@@ -1005,6 +1314,8 @@ describe( "all indexes tests", ()=>{
                                 mode: 1,
                                 firstOperator: 'simpleMultiply',
                                 onDot: false,
+                                numberIsWrapped: false,
+                        arrMemory: [],
                                 arrLogText: [
                                     '1',
                                     '×'
@@ -1022,6 +1333,8 @@ describe( "all indexes tests", ()=>{
                                 mode: 1,
                                 firstOperator: 'simplePlus',
                                 onDot: false,
+                                numberIsWrapped: false,
+                        arrMemory: [],
                                 arrLogText: [
                                     '1',
                                     '+'
@@ -1037,6 +1350,8 @@ describe( "all indexes tests", ()=>{
                                 mode: 0,
                                 firstOperator: 'notOperator',
                                 onDot: false,
+                                numberIsWrapped: false,
+                        arrMemory: [],
                                 arrLogText: [
                                     '1',
                                     '='
@@ -1054,6 +1369,8 @@ describe( "all indexes tests", ()=>{
                             mode: 1,
                             firstOperator: 'simplePlus',
                             onDot: false,
+                                numberIsWrapped: false,
+                        arrMemory: [],
                             arrLogText: [
                                 '1',
                                 '+'
@@ -1069,6 +1386,8 @@ describe( "all indexes tests", ()=>{
                                 mode: 4,
                                 firstOperator: 'simplePlus',
                                 onDot: false,
+                                numberIsWrapped: false,
+                        arrMemory: [],
                                 arrLogText: [],
                                 percentNumber: 444
                             }
@@ -1083,6 +1402,8 @@ describe( "all indexes tests", ()=>{
                                 mode: 1,
                                 firstOperator: 'simplePlus',
                                 onDot: false,
+                                numberIsWrapped: false,
+                        arrMemory: [],
                                 arrLogText: [
                                         "444",
                                         "+",
@@ -1098,6 +1419,8 @@ describe( "all indexes tests", ()=>{
                                 mode: 0,
                                 firstOperator: 'notOperator',
                                 onDot: false,
+                                numberIsWrapped: false,
+                        arrMemory: [],
                                 arrLogText: [
                                     '1/( negate( 1/( 10 ) ) )'
                                 ],
@@ -1114,6 +1437,8 @@ describe( "all indexes tests", ()=>{
                                 mode: 1,
                                 firstOperator: 'simplePlus',
                                 onDot: false,
+                                numberIsWrapped: false,
+                        arrMemory: [],
                                 arrLogText: [
                                     '1/( negate( 1/( 10 ) ) )',
                                     '+'
@@ -1130,6 +1455,8 @@ describe( "all indexes tests", ()=>{
                                 mode: 3,
                                 firstOperator: 'simplePlus',
                                 onDot: false,
+                                numberIsWrapped: false,
+                        arrMemory: [],
                                 arrLogText: [
                                     '4',
                                     '+',
@@ -1149,6 +1476,8 @@ describe( "all indexes tests", ()=>{
                                 mode: 2,
                                 firstOperator: 'simplePlus',
                                 onDot: false,
+                                numberIsWrapped: false,
+                        arrMemory: [],
                                 arrLogText: [
                                     '4',
                                     '+',
@@ -1166,6 +1495,8 @@ describe( "all indexes tests", ()=>{
                                 mode: 3,
                                 firstOperator: 'simplePlus',
                                 onDot: false,
+                                numberIsWrapped: false,
+                        arrMemory: [],
                                 arrLogText: [
                                     '10',
                                     '+',
@@ -1185,6 +1516,8 @@ describe( "all indexes tests", ()=>{
                                 mode: 2,
                                 firstOperator: 'simplePlus',
                                 onDot: false,
+                                numberIsWrapped: false,
+                                arrMemory: [],
                                 arrLogText: [
                                     '10',
                                     '+',
@@ -1225,6 +1558,8 @@ describe( "all indexes tests", ()=>{
                         mode: 0,
                         firstOperator: NOT_OPERATOR,
                         onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                         percentNumber: NaN,
                         arrLogText: []
                         }
@@ -1235,6 +1570,8 @@ describe( "all indexes tests", ()=>{
                         mode: 0,
                         firstOperator: NOT_OPERATOR,
                         onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                         percentNumber: NaN,
                         arrLogText: [ "0" ]
                     }
@@ -1247,6 +1584,8 @@ describe( "all indexes tests", ()=>{
                         mode: 3,
                         firstOperator: 'simplePlus',
                         onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                         arrLogText: [
                             '10',
                             '+',
@@ -1261,6 +1600,8 @@ describe( "all indexes tests", ()=>{
                         mode: 3,
                         firstOperator: 'simplePlus',
                         onDot: false,
+                        numberIsWrapped: true,
+                        arrMemory: [],
                         arrLogText: [
                             '10',
                             '+',
@@ -1277,6 +1618,8 @@ describe( "all indexes tests", ()=>{
                         mode: 4,
                         firstOperator: 'simplePlus',
                         onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                         arrLogText: [
                             '-10',
                             '+',
@@ -1291,6 +1634,8 @@ describe( "all indexes tests", ()=>{
                             mode: 4,
                             firstOperator: 'simplePlus',
                             onDot: false,
+                                numberIsWrapped: false,
+                        arrMemory: [],
                             arrLogText: [
                                 '0,8099999999999999'
                             ],
@@ -1331,6 +1676,8 @@ describe( "all indexes tests", ()=>{
                         mode: 0,
                         firstOperator: 'notOperator',
                         onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                         arrLogText: [],
                         percentNumber: null,
                         divisionByZeroBlocking: false
@@ -1347,6 +1694,8 @@ describe( "all indexes tests", ()=>{
                         mode: 0,
                         firstOperator: 'notOperator',
                         onDot: false,
+                        numberIsWrapped: true,
+                        arrMemory: [],
                         arrLogText: [ "1/( 10 )" ],
                         percentNumber: null,
                         divisionByZeroBlocking: false
@@ -1360,6 +1709,8 @@ describe( "all indexes tests", ()=>{
                         mode: 0,
                         firstOperator: 'notOperator',
                         onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                         arrLogText: [
                             'negate( 1/( 10 ) )'
                         ],
@@ -1376,6 +1727,8 @@ describe( "all indexes tests", ()=>{
                         mode: 0,
                         firstOperator: 'notOperator',
                         onDot: false,
+                        numberIsWrapped: true,
+                        arrMemory: [],
                         arrLogText: [
                             '1/( negate( 1/( 10 ) ) )'
                         ],
@@ -1391,6 +1744,8 @@ describe( "all indexes tests", ()=>{
                         mode: 0,
                         firstOperator: 'notOperator',
                         onDot: false,
+                        numberIsWrapped: true,
+                        arrMemory: [],
                         arrLogText: [],
                         percentNumber: NaN,
                         divisionByZeroBlocking: false
@@ -1405,6 +1760,8 @@ describe( "all indexes tests", ()=>{
                         mode: 0,
                         firstOperator: 'notOperator',
                         onDot: false,
+                        numberIsWrapped: true,
+                        arrMemory: [],
                         arrLogText: [
                             '1/( 0 )'
                         ],
@@ -1421,6 +1778,8 @@ describe( "all indexes tests", ()=>{
                         mode: 1,
                         firstOperator: 'simplePlus',
                         onDot: false,
+                        numberIsWrapped: true,
+                        arrMemory: [],
                         arrLogText: [
                             '10',
                             '+'
@@ -1438,6 +1797,8 @@ describe( "all indexes tests", ()=>{
                         mode: MODES.LAST_NUMBER,
                         firstOperator: 'simplePlus',
                         onDot: false,
+                        numberIsWrapped: true,
+                        arrMemory: [],
                         arrLogText: [
                             '10',
                             '+',
@@ -1455,6 +1816,8 @@ describe( "all indexes tests", ()=>{
                         mode: 3,
                         firstOperator: 'simplePlus',
                         onDot: false,
+                        numberIsWrapped: true,
+                        arrMemory: [],
                         arrLogText: [
                             '10',
                             '+'
@@ -1472,6 +1835,8 @@ describe( "all indexes tests", ()=>{
                         mode: 3,
                         firstOperator: 'simplePlus',
                         onDot: false,
+                        numberIsWrapped: true,
+                        arrMemory: [],
                         arrLogText: [
                             '10',
                             '+',
@@ -1489,6 +1854,8 @@ describe( "all indexes tests", ()=>{
                         mode: 4,
                         firstOperator: 'simplePlus',
                         onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                         arrLogText: [
                             '10',
                             '+',
@@ -1508,6 +1875,8 @@ describe( "all indexes tests", ()=>{
                         mode: 4,
                         firstOperator: 'simplePlus',
                         onDot: false,
+                        numberIsWrapped: true,
+                        arrMemory: [],
                         arrLogText: [
                             '1/( 10,05 )'
                         ],
@@ -1523,6 +1892,8 @@ describe( "all indexes tests", ()=>{
                         mode: 4,
                         firstOperator: 'simplePlus',
                         onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                         arrLogText: [
                             '1/( 30 )'
                         ],
@@ -1539,6 +1910,8 @@ describe( "all indexes tests", ()=>{
                         mode: 4,
                         firstOperator: 'simplePlus',
                         onDot: false,
+                        numberIsWrapped: true,
+                        arrMemory: [],
                         arrLogText: [
                             '1/( 1/( 30 ) )'
                         ],
@@ -1554,6 +1927,8 @@ describe( "all indexes tests", ()=>{
                         mode: 4,
                         firstOperator: 'simplePlus',
                         onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                         arrLogText: [
                             ' negate( 3 ) '
                         ],
@@ -1570,6 +1945,8 @@ describe( "all indexes tests", ()=>{
                         mode: 4,
                         firstOperator: 'simplePlus',
                         onDot: false,
+                        numberIsWrapped: true,
+                        arrMemory: [],
                         arrLogText: [
                             '1/( negate( 3 ) )',
                         ],
@@ -1585,6 +1962,8 @@ describe( "all indexes tests", ()=>{
                         mode: 3,
                         firstOperator: 'simplePlus',
                         onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                         arrLogText: [
                             '1',
                             '+',
@@ -1605,6 +1984,8 @@ describe( "all indexes tests", ()=>{
                         mode: 3,
                         firstOperator: 'simplePlus',
                         onDot: false,
+                        numberIsWrapped: true,
+                        arrMemory: [],
                         arrLogText: [
                             '1',
                             '+',
@@ -1624,6 +2005,8 @@ describe( "all indexes tests", ()=>{
                             mode: 2,
                             firstOperator: 'simplePlus',
                             onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                             arrLogText: [
                                 '1',
                                 '+',
@@ -1643,6 +2026,8 @@ describe( "all indexes tests", ()=>{
                             mode: 2,
                             firstOperator: 'simplePlus',
                             onDot: false,
+                        numberIsWrapped: true,
+                        arrMemory: [],
                             arrLogText: [
                                 '1',
                                 '+',
@@ -1662,6 +2047,8 @@ describe( "all indexes tests", ()=>{
                             mode: 1,
                             firstOperator: 'simplePlus',
                             onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                             arrLogText: [
                                 '0',
                                 '+'
@@ -1679,6 +2066,8 @@ describe( "all indexes tests", ()=>{
                             mode: 1,
                             firstOperator: 'simplePlus',
                             onDot: false,
+                        numberIsWrapped: true,
+                        arrMemory: [],
                             arrLogText: [
                                 '0',
                                 '+',
@@ -1696,6 +2085,8 @@ describe( "all indexes tests", ()=>{
                             mode: 1,
                             firstOperator: 'simplePlus',
                             onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                             arrLogText: [
                                 '0',
                                 '+'
@@ -1713,6 +2104,8 @@ describe( "all indexes tests", ()=>{
                             mode: 1,
                             firstOperator: 'simplePlus',
                             onDot: false,
+                        numberIsWrapped: true,
+                        arrMemory: [],
                             arrLogText: [
                                 '0',
                                 '+',
@@ -1730,6 +2123,8 @@ describe( "all indexes tests", ()=>{
                             mode: 3,
                             firstOperator: 'simplePlus',
                             onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                             arrLogText: [
                                 '1',
                                 '+'
@@ -1748,6 +2143,8 @@ describe( "all indexes tests", ()=>{
                             mode: 3,
                             firstOperator: 'simplePlus',
                             onDot: false,
+                        numberIsWrapped: true,
+                        arrMemory: [],
                             arrLogText: [
                                 '1',
                                 '+',
@@ -1765,6 +2162,8 @@ describe( "all indexes tests", ()=>{
                             mode: 4,
                             firstOperator: 'simpleMinus',
                             onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                             arrLogText: [
                                 '3',
                                 '-',
@@ -1784,6 +2183,8 @@ describe( "all indexes tests", ()=>{
                             mode: 4,
                             firstOperator: 'simpleMinus',
                             onDot: false,
+                        numberIsWrapped: true,
+                        arrMemory: [],
                             arrLogText: [
                                 '1/( 0 )'
                             ],
@@ -1799,6 +2200,8 @@ describe( "all indexes tests", ()=>{
                             mode: 2,
                             firstOperator: 'simplePlus',
                             onDot: false,
+                            numberIsWrapped: false,
+                            arrMemory: [],
                             arrLogText: [
                                 '1',
                                 '+',
@@ -1822,6 +2225,8 @@ describe( "all indexes tests", ()=>{
                             mode: 2,
                             firstOperator: 'simplePlus',
                             onDot: false,
+                            numberIsWrapped: true,
+                            arrMemory: [],
                             arrLogText: [
                                 '1',
                                 '+',
@@ -1867,6 +2272,8 @@ describe( "all indexes tests", ()=>{
                         mode: 0,
                         firstOperator: 'notOperator',
                         onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                         arrLogText: [],
                         percentNumber: null,
                         divisionByZeroBlocking: false
@@ -1883,6 +2290,8 @@ describe( "all indexes tests", ()=>{
                         mode: 0,
                         firstOperator: 'notOperator',
                         onDot: false,
+                        numberIsWrapped: true,
+                        arrMemory: [],
                         arrLogText: [
                             'sqr( 10 )'
                         ],
@@ -1921,6 +2330,8 @@ describe( "all indexes tests", ()=>{
                         mode: 0,
                         firstOperator: 'notOperator',
                         onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                         arrLogText: [],
                         percentNumber: null,
                         divisionByZeroBlocking: false
@@ -1937,6 +2348,8 @@ describe( "all indexes tests", ()=>{
                         mode: 0,
                         firstOperator: 'notOperator',
                         onDot: false,
+                        numberIsWrapped: true,
+                        arrMemory: [],
                         arrLogText: [
                             '√( 25 )'
                         ],
@@ -1964,6 +2377,211 @@ describe( "all indexes tests", ()=>{
                 }
             });
         });
+        test( "test of servantMemory", ()=>{
+
+            const checkedData = [
+                    {
+                        inData: [ {
+                            displayText: '5',
+                            firstNumber: 5,
+                            lastNumber: 0,
+                            mode: 0,
+                            firstOperator: 'notOperator',
+                            onDot: false,
+                            arrMemory: [],
+                            arrLogText: [],
+                            percentNumber: 0,
+                            numberIsWrapped: false
+                        }
+                        , {
+                            type: ON_CLICK_MEMORY
+                            , value: MEMORY_SAVE
+                        }
+                    ]
+                    , outData:{
+                            displayText: '5',
+                            firstNumber: 5,
+                            lastNumber: 0,
+                            mode: 0,
+                            firstOperator: 'notOperator',
+                            onDot: false,
+                            arrMemory: [
+                                5
+                            ],
+                            arrLogText: [],
+                            percentNumber: 0,
+                            numberIsWrapped: true
+                        }
+                }// 5, MS
+                    , {
+                        inData: [ {
+                            displayText: '2',
+                            firstNumber: 1,
+                            lastNumber: 2,
+                            mode: 3,
+                            firstOperator: 'simplePlus',
+                            onDot: false,
+                            arrMemory: [],
+                            arrLogText: [
+                                '1',
+                                '+'
+                            ],
+                            percentNumber: 1,
+                            numberIsWrapped: false
+                        }
+                        , {
+                            type: ON_CLICK_MEMORY
+                            , value: MEMORY_SAVE
+                        }
+                    ]
+                    , outData:{
+                        displayText: '2',
+                        firstNumber: 1,
+                        lastNumber: 2,
+                        mode: 3,
+                        firstOperator: 'simplePlus',
+                        onDot: false,
+                        arrMemory: [
+                            2
+                        ],
+                        arrLogText: [
+                            '1',
+                            '+'
+                        ],
+                        percentNumber: 1,
+                        numberIsWrapped: true
+                    }
+                }// 1, +, 2, MS
+                    , {
+                        inData: [ {
+                            displayText: '5',
+                            firstNumber: 5,
+                            lastNumber: 0,
+                            mode: 0,
+                            firstOperator: 'notOperator',
+                            onDot: false,
+                            arrMemory: [
+                                10
+                            ],
+                            arrLogText: [],
+                            percentNumber: null,
+                            numberIsWrapped: false
+                        }
+                        , {
+                            type: ON_CLICK_MEMORY
+                            , value: MEMORY_MINUS
+                        }
+                    ]
+                    , outData:{
+                            displayText: '5',
+                            firstNumber: 5,
+                            lastNumber: 0,
+                            mode: 0,
+                            firstOperator: 'notOperator',
+                            onDot: false,
+                            arrMemory: [
+                                5
+                            ],
+                            arrLogText: [],
+                            percentNumber: null,
+                            numberIsWrapped: true
+                        }
+                }// 10, MS, 5, M-
+                    , {
+                        inData: [ {
+                            displayText: '5',
+                            firstNumber: 5,
+                            lastNumber: 0,
+                            mode: 0,
+                            firstOperator: 'notOperator',
+                            onDot: false,
+                            arrMemory: [
+                                10
+                            ],
+                            arrLogText: [],
+                            percentNumber: null,
+                            numberIsWrapped: false
+                        }
+                        , {
+                            type: ON_CLICK_MEMORY
+                            , value: MEMORY_PLUS
+                        }
+                    ]
+                    , outData:{
+                            displayText: '5',
+                            firstNumber: 5,
+                            lastNumber: 0,
+                            mode: 0,
+                            firstOperator: 'notOperator',
+                            onDot: false,
+                            arrMemory: [
+                                15
+                            ],
+                            arrLogText: [],
+                            percentNumber: null,
+                            numberIsWrapped: true
+                        }
+                }// 10, MS, 5, M+
+                    , {
+                        inData: [ {
+                            displayText: '444',
+                            firstNumber: 444,
+                            lastNumber: 321,
+                            mode: 4,
+                            firstOperator: 'simplePlus',
+                            onDot: false,
+                            arrMemory: [],
+                            arrLogText: [
+                                '123',
+                                '+',
+                                '321',
+                                '='
+                            ],
+                            percentNumber: 444,
+                            divisionByZeroBlocking: false,
+                            numberIsWrapped: false
+                        }
+                        , {
+                            type: ON_CLICK_MEMORY
+                            , value: MEMORY_SAVE
+                        }
+                    ]
+                    , outData:{
+                            displayText: '444',
+                            firstNumber: 444,
+                            lastNumber: 321,
+                            mode: 4,
+                            firstOperator: 'simplePlus',
+                            onDot: false,
+                            arrMemory: [
+                                444
+                            ],
+                            arrLogText: [
+                            ],
+                            percentNumber: 444,
+                            numberIsWrapped: true
+                        }
+                }// 123, +, 321, =, MS
+
+
+            ];
+
+            checkedData.forEach(( v, i ) =>{
+                try{
+                    expect( servantMemory( ...v.inData )).toStrictEqual( v.outData );
+                }catch (e) {
+                    if( true ){
+                        console.group( 'Console log in the code "INDEX_TEST_JS" line 147' );
+                        console.info( 'v: ', v );
+                        console.info( 'i: ', i );
+                        console.info( 'e: ', e );
+
+                        //console.table( this );
+                        console.groupEnd();
+                    }
+                }
+            });
+        });
         test( "test of reducer", ()=>{
 
             let rnd = Math.random() * 1000;
@@ -1976,6 +2594,8 @@ describe( "all indexes tests", ()=>{
                         mode: 0,
                         firstOperator: 'notOperator',
                         onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                         arrLogText: [
                             '10',
                             '÷'
@@ -1994,6 +2614,8 @@ describe( "all indexes tests", ()=>{
                         mode: 0,
                         firstOperator: 'notOperator',
                         onDot: false,
+                        numberIsWrapped: false,
+                        arrMemory: [],
                         arrLogText: [],
                         percentNumber: NaN
                     }
@@ -2110,6 +2732,31 @@ describe( "all indexes tests", ()=>{
                 try{
 
                         expect( roundNum( v ) ).toStrictEqual( v );
+                }catch (e) {
+                    if( true ){
+                        console.group( 'Console log in the code "INDEX_TEST_JS" line 147' );
+                        console.info( 'v: ', v );
+                        console.info( 'i: ', i );
+                        console.info( 'e: ', e );
+                        console.groupEnd();
+                    }
+                }
+            });
+        });
+        test( "check the function wasWrapped ", ()=>{
+
+            let arr = [
+                [ 'sqr( 2 )', true ]
+                , [ 3 , false]
+                , [ 'ab3' , true ]
+                , [ '1/( 10 )' , true ]
+                , [ '=' , false ]
+                , [ '43' , false ]
+            ];
+            arr.forEach( ( v, i ) => {
+                try{
+
+                        expect( wasWrapped( v[ 0 ] ) ).toStrictEqual( v[ 1 ] );
                 }catch (e) {
                     if( true ){
                         console.group( 'Console log in the code "INDEX_TEST_JS" line 147' );

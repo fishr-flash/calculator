@@ -1,14 +1,14 @@
 //const DIVISION_WARNING = 'Деление на ноль невозможно';
 
-import {COMPLEXES_DIVISION_X, DIVISION_BY_ZERO_IS_NOT_POSSIBLE, MODES} from "../../constants";
+import {DIVISION_BY_ZERO_IS_NOT_POSSIBLE, MODES} from "../../constants";
 import {
-    getArrLogText,
     argumentOfWrap,
+    getArrLogText,
+    getComplexesAttributes,
     toDisplayText,
-    wrapperArg,
-    updateArrLogText,
     toFloat,
-    getComplexesAttributes
+    updateArrLogText,
+    wrapperArg
 } from "../utils";
 
 export default ({displayText
@@ -17,8 +17,10 @@ export default ({displayText
                     , mode
                     , firstOperator
                     , onDot
+                    , arrMemory
                     , arrLogText
                     , percentNumber
+                    , numberIsWrapped
                     , divisionByZeroBlocking
                 }, { type, value /*action*/})=>{
 
@@ -90,6 +92,7 @@ export default ({displayText
 
     }
 
+    numberIsWrapped = true;
 
     return{ displayText
         , firstNumber
@@ -97,8 +100,10 @@ export default ({displayText
         , mode
         , firstOperator
         , onDot
+        , arrMemory
         , arrLogText
         , percentNumber
+        , numberIsWrapped
         , divisionByZeroBlocking
     };
 
