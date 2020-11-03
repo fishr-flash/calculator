@@ -1,5 +1,5 @@
 import {
-    COMPLEXES_DIVISION_X, COMPLEXES_SQR_X, COMPLEXES_SQRT_X,
+    COMPLEXES_DIVISION_X, COMPLEXES_SQR_X, COMPLEXES_SQRT_X, MAX_LENGTH_INPUT_DIGITS,
     SIMPLE_DIVISION,
     SIMPLE_MINUS,
     SIMPLE_MULTIPLY,
@@ -93,13 +93,20 @@ export const roundNum = (nm )=>{
  * @returns {string} the result is in string format
  */
 export const getOutput = ( base, arg, dot = false ) =>{
+
+    let includesDot = false;
     if( base.includes( "," )  ) {
         dot = false;
+        includesDot = true;
     }
+    if( includesDot && base.length === MAX_LENGTH_INPUT_DIGITS + 1)
+                    return base;
+    else if(  !includesDot && base.length === MAX_LENGTH_INPUT_DIGITS )
+                    return  base;
     if( dot )
-        return  `${ base.toString() },${ arg }`;
+        return  arg.toString() ?`${ base.toString() },${ arg }` : base;
     else
-        return  base === '0' ? `${ arg}` : `${base}${arg}`;
+        return  base === '0' ? `${ arg}` : arg.toString() ? `${base}${arg}` : `${ base }`;
 };
 
 
@@ -203,4 +210,39 @@ export const wasWrapped = ( expression )=>{
                         , 'simpleResult'
                         ];
     return expression !== undefined && isNaN( expression ) && operators.indexOf( expression ) === - 1;
+};
+
+/**
+ *  For Output.js input element of inputWindow name
+ * @param displayText
+ * @returns {string}
+ */
+export const formatDisplayText = ( displayText )=>{
+
+    const parts = displayText.split( ',');
+    if( isNaN( parts[ 0 ] ))
+        throw new Error( "Received data is not number");
+
+    let onMinus = false;
+
+    if( parseInt( parts[ 0 ] ) < 0 ){
+        onMinus = true;
+        parts[ 0 ] = parts[ 0 ].slice( 1 );
+    }
+
+
+    const len = parts[ 0 ].length;
+    let abs = "";
+
+    for (let i = len -1; i >= 0; i--) {
+        abs += ( len - i )%3?parts[ 0 ][ i ]: `${ parts[ 0 ][ i ] } `;
+    }
+
+    const invert = abs.split('').reverse();
+    parts[ 0 ] = invert.join('').trim();
+
+    return `${ onMinus? "-": ''}${parts.join(",")}`;
+
+
+
 };
