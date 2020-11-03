@@ -192,6 +192,7 @@ div.viewer_panel{
     width: 280px;
     display: inline-block;
     white-space: nowrap;
+
 }
 
 
@@ -212,15 +213,17 @@ div.viewer_panel{
     float: right;
 }
 
-.viewport {
+.inputWindow {
     color: initial;
-    font-size: 44px;
     font-weight: 600;
     font-family: "Segoe UI", "Arial", sans-serif;
     text-align: right;
     padding: 0 10px 4px 10px;
     margin: 0;
     white-space: nowrap;
+    width: 100%;
+    background: inherit;
+    border: none;
 }
 
 .mm_btns {

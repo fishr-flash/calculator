@@ -1,53 +1,45 @@
 import React from "react";
 import {connect} from "react-redux";
+import Input from "./Input";
+import {formatDisplayText} from "../reducers/utils";
 
 function Output( {
-                     displayText
+                     rawText
                     , logText
                  } ) {
 
-    const formatDisplayText = ( displayText )=>{
-        ///TODO: Сделать форматирование размера текста в зависимости от длинны
+    const displayText = formatDisplayText( rawText );
 
-        if( isNaN( displayText )){
-            return  displayText;
-        } else {
-            const parts = displayText.split( ',');
-            let onMinus = false;
+    const getFontSize = ( text )=>{
+        const reductionStep = 3.5;
+        const mainSize = 50;
+        const mainLength = 9;
+        const length = text.indexOf( ',') > -1 ? text.length - 1 : text.length;
+        const size = length > mainLength ? mainSize - ( ( length - mainLength ) * reductionStep ) : mainSize;
 
-            if( parseInt( parts[ 0 ] ) < 0 ){
-                onMinus = true;
-                parts[ 0 ] = parts[ 0 ].slice( 1 );
-            }
-
-
-            const len = parts[ 0 ].length;
-            let abs = "";
-
-            for (let i = len -1; i >= 0; i--) {
-                abs += ( len - i )%3?parts[ 0 ][ i ]: `${ parts[ 0 ][ i ] } `;
-            }
-
-            const invert = abs.split('').reverse();
-            parts[ 0 ] = invert.join('').trim();
-
-            return `${ onMinus? "-": ''}${parts.join(",")}`;
-        }
-
-
-
+        return {
+            fontSize: `${ size }px`
+        };
     };
 
+
+    const classProgressContent = 'progress_content';
     return(
         <section className="full_width">
             <div className="full_width story_calc">
                 <button className="progress_arrows left_progress_arrow"/>
-                <p className="progress_content">{ logText }</p>
+                <p className={ `${ classProgressContent}` } >{ logText }</p>
                 <button className="progress_arrows right_progress_arrow" />
             </div>
             <div className="full_width viewer_panel" id="viewer">
                 <blockquote>
-                    <p className="viewport">{ formatDisplayText( displayText )}</p>
+                    <input type={'text'}
+                           maxLength={ 22 }
+                           name={'inputWindow'}
+                           style={ getFontSize( rawText ) }
+                           className='inputWindow'
+                           value={ displayText }
+                    />
                 </blockquote>
             </div>
         </section>
@@ -58,7 +50,7 @@ export default connect(
     
     state => {
         return ({
-                displayText: state.displayText
+                rawText: state.displayText
                 , logText: state.arrLogText.join( ' ' )
 
         });

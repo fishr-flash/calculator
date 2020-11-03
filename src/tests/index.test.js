@@ -12,9 +12,9 @@ import {
     SIMPLE_PLUS, SIMPLE_RESULT
 } from "../constants";
 import {
-    flatDeep,
+    flatDeep, formatDisplayText,
     getArrLogText,
-    getComplexesAttributes,
+    getComplexesAttributes, getOutput,
     getResult,
     roundNum,
     wasWrapped,
@@ -375,6 +375,37 @@ describe( "all indexes tests", ()=>{
                         numberIsWrapped: false
                     }
                 } /// 123, +, %, 2
+                , {
+                    inData:[{
+                        displayText: '123,',
+                        firstNumber: 123,
+                        lastNumber: 0,
+                        mode: 0,
+                        firstOperator: 'notOperator',
+                        onDot: true,
+                        arrMemory: [],
+                        arrLogText: [],
+                        percentNumber: null,
+                        numberIsWrapped: false,
+                        divisionByZeroBlocking: false
+                    },
+                    {
+                        type: 'onClickNumber',
+                        value: 0
+                    }]
+                    , outData:{
+                        displayText: '123,0',
+                        firstNumber: 123,
+                        lastNumber: 0,
+                        mode: 0,
+                        firstOperator: 'notOperator',
+                        onDot: false,
+                        arrMemory: [],
+                        arrLogText: [],
+                        percentNumber: null,
+                        numberIsWrapped: false
+                    }
+                } /// 123, ',', 0
             ];
 
             checkedData.forEach(( v, i ) =>{
@@ -2757,6 +2788,94 @@ describe( "all indexes tests", ()=>{
                 try{
 
                         expect( wasWrapped( v[ 0 ] ) ).toStrictEqual( v[ 1 ] );
+                }catch (e) {
+                    if( true ){
+                        console.group( 'Console log in the code "INDEX_TEST_JS" line 147' );
+                        console.info( 'v: ', v );
+                        console.info( 'i: ', i );
+                        console.info( 'e: ', e );
+                        console.groupEnd();
+                    }
+                }
+            });
+        });
+        test( "check the function getFontSize ", ()=>{
+
+            let arr = [
+                [ '12345678901', 46 ]
+                , [ '1234567890', 46 ]
+                , [ '123456789012', 44 ]
+
+            ];
+
+            const getFontSize = ( text )=>{
+                const mainSize = 46;
+                const mainLength = 11;
+                const length = text.indexOf( ',') > -1 ? text.length - 1 : text.length;
+                const size = length > mainLength ? mainSize - ( ( length - mainLength ) * 2 ) : mainSize;
+
+                /*return {
+                    fontSize: `${ size }px`
+                };*/
+                return size;
+            };
+            arr.forEach( ( v, i ) => {
+                try{
+                        expect( getFontSize( v[ 0 ] ) ).toBe( v[ 1 ] );
+                }catch (e) {
+                    if( true ){
+                        console.group( 'Console log in the code "INDEX_TEST_JS" line 147' );
+                        console.info( 'v: ', v );
+                        console.info( 'i: ', i );
+                        console.info( 'e: ', e );
+                        console.groupEnd();
+                    }
+                }
+            });
+        });
+        test( "check the function formatDisplayText ", ()=>{
+
+            let arr = [
+                [ '12345678901', '12 345 678 901' ]
+                , [ '1234,5678901', '1 234,5678901' ]
+                //, [ 'sdf,5678901', 'Error: Received data is not number' ]
+
+
+            ];
+
+            arr.forEach( ( v, i ) => {
+                try{
+                        expect( formatDisplayText( v[ 0 ] ) ).toBe( v[ 1 ] );
+                }catch (e) {
+                    if( true ){
+                        console.group( 'Console log in the code "INDEX_TEST_JS" line 147' );
+                        console.info( 'v: ', v );
+                        console.info( 'i: ', i );
+                        console.info( 'e: ', e );
+                        console.groupEnd();
+                    }
+                }
+            });
+        });
+        test( "check the function getOutput ", ()=>{
+
+            let arr = [
+                [ '12345678901', '2', false, '123456789012' ]
+                , [ '12345678901', '2', true, '12345678901,2' ]
+                , [ '12345678901', '', true, '12345678901' ]
+                , [ '1234567890123456', '2', true, '1234567890123456' ]
+                , [ '1234567,890123456', '2', true, '1234567,890123456' ]
+                , [ '1234567890123456', '2', true, '1234567890123456' ]
+                , [ '123,456789012345', '6', true, '123,4567890123456' ]
+                , [ '123,456', 0, false, '123,4560' ]
+                //, [ 'sdf,5678901', 'Error: Received data is not number' ]
+
+
+            ];
+
+            arr.forEach( ( v, i ) => {
+                try{
+                        expect( getOutput( v[ 0 ], v[ 1 ], v[ 2 ] ) ).toBe( v[ 3 ] );
                 }catch (e) {
                     if( true ){
                         console.group( 'Console log in the code "INDEX_TEST_JS" line 147' );
