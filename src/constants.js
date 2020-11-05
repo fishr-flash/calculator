@@ -36,7 +36,11 @@ export const COMPLEXES_SQRT_X = "complexesSqrtX";
 export const DIVISION_BY_ZERO_IS_NOT_POSSIBLE = "Деление на ноль невозможно";
 ///TODO: Сообщение выводится при попытки вставки некорректного номера, напр. текста
 export const INVALID_DATA_ENTERED = "Введены неверные данные";
+///TODO: Обработать значение infinity напр. 1234567890123456 * х2 * х2...
+export const VALUE_IS_OVERFLOW = "Переполнение";
 export const MAX_LENGTH_INPUT_DIGITS = 16;
+export const WIDTH_OUTPUT_WINDOW = 280;
+export const FONT_SIZE_OUTPUT_WINDOW = 50;
 
 
 /// memory operators

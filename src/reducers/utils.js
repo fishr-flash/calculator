@@ -213,7 +213,7 @@ export const wasWrapped = ( expression )=>{
 };
 
 /**
- *  For Output.js input element of inputWindow name
+ *  For Output.js input element of outputWindow name
  * @param displayText
  * @returns {string}
  */

@@ -1,7 +1,7 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {connect} from "react-redux";
-import Input from "./Input";
 import {formatDisplayText} from "../reducers/utils";
+import {FONT_SIZE_OUTPUT_WINDOW, WIDTH_OUTPUT_WINDOW} from "../constants";
 
 function Output( {
                      rawText
@@ -9,21 +9,27 @@ function Output( {
                  } ) {
 
     const displayText = formatDisplayText( rawText );
-
-    const getFontSize = ( text )=>{
-        const reductionStep = 3.5;
-        const mainSize = 50;
-        const mainLength = 9;
-        const length = text.indexOf( ',') > -1 ? text.length - 1 : text.length;
-        const size = length > mainLength ? mainSize - ( ( length - mainLength ) * reductionStep ) : mainSize;
-
-        return {
-            fontSize: `${ size }px`
-        };
-    };
-
-
+    const spanOutputWindow = React.createRef();
     const classProgressContent = 'progress_content';
+
+        useEffect( ()=>{
+
+            const outputSpan = spanOutputWindow.current;
+            const parentP = spanOutputWindow.current.parentNode;
+            if( outputSpan.offsetWidth > WIDTH_OUTPUT_WINDOW ){
+                const fontSize  = parentP.style.fontSize.substr(0,2);
+                const nextSize = Math.ceil(fontSize * ( WIDTH_OUTPUT_WINDOW / outputSpan.offsetWidth ) );
+                parentP.style.fontSize = `${ nextSize }px`;
+
+            } else if( outputSpan.textContent.length > 10 && outputSpan.offsetWidth < WIDTH_OUTPUT_WINDOW){
+                const fontSize  = parentP.style.fontSize.substr(0,2);
+                const nextSize = Math.ceil(fontSize / ( outputSpan.offsetWidth / WIDTH_OUTPUT_WINDOW  ) );
+                parentP.style.fontSize = `${ nextSize < FONT_SIZE_OUTPUT_WINDOW ? nextSize : FONT_SIZE_OUTPUT_WINDOW}px`;
+            } else if( outputSpan.textContent.length < 10 ){
+                parentP.style.fontSize = `${ FONT_SIZE_OUTPUT_WINDOW }px`;
+            }
+        });
+
     return(
         <section className="full_width">
             <div className="full_width story_calc">
@@ -33,13 +39,9 @@ function Output( {
             </div>
             <div className="full_width viewer_panel" id="viewer">
                 <blockquote>
-                    <input type={'text'}
-                           maxLength={ 22 }
-                           name={'inputWindow'}
-                           style={ getFontSize( rawText ) }
-                           className='inputWindow'
-                           value={ displayText }
-                    />
+                        <p type={'text'}
+                           className='outputWindow'
+                        ><span id={'spanOutputWindow'} ref={ spanOutputWindow }>{ displayText }</span></p>
                 </blockquote>
             </div>
         </section>

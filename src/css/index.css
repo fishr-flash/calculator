@@ -213,7 +213,7 @@ div.viewer_panel{
     float: right;
 }
 
-.inputWindow {
+.outputWindow {
     color: initial;
     font-weight: 600;
     font-family: "Segoe UI", "Arial", sans-serif;
@@ -221,9 +221,9 @@ div.viewer_panel{
     padding: 0 10px 4px 10px;
     margin: 0;
     white-space: nowrap;
-    width: 100%;
     background: inherit;
-    border: none;
+    border: 1px;
+
 }
 
 .mm_btns {
