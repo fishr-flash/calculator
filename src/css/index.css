@@ -189,27 +189,32 @@ div.viewer_panel{
 .progress_content {
     margin: 3px 0 0 0;
     text-align: right;
-    width: 280px;
+    /*width: 282px;*/
     display: inline-block;
-    white-space: nowrap;
+    overflow: hidden;
+   /* white-space: nowrap;*/
 
 }
 
+.span_log_text{
+    display: inline-block;
+    position: relative;
+    text-align: right;
+    white-space: nowrap;
 
+}
 .left_progress_arrow {
     background-position: -45px -539px; width: 18px; height: 17px;
     float: left;
 }
 
 .progress_arrows {
-    height: 30px;
+    height: 23px;
     width: 20px;
-    visibility: hidden;
-
 }
 
 .right_progress_arrow {
-    background-position: -45px -558px; width: 18px; height: 17px;
+    background-position: -45px -558px; width: 18px; height: 22px;
     float: right;
 }
 

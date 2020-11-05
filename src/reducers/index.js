@@ -34,7 +34,14 @@ export const store = {
     , percentNumber: NaN
     , divisionByZeroBlocking: false
     , arrMemory: []
-    , arrLogText: []
+    , arrLogText: [
+        '1234567890'
+        ,'1234567890'
+        ,'1234567890'
+        ,'1234567890'
+        ,'1234567890'
+        ,'1234567890'
+    ]
     , numberIsWrapped: false
 
 };
