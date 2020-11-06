@@ -201,6 +201,7 @@ div.viewer_panel{
     position: relative;
     text-align: right;
     white-space: nowrap;
+    user-select: none;
 
 }
 .left_progress_arrow {
