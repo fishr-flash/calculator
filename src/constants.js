@@ -41,8 +41,6 @@ export const VALUE_IS_OVERFLOW = "Переполнение";
 export const MAX_LENGTH_INPUT_DIGITS = 16;
 export const WIDTH_OUTPUT_WINDOW = 280;
 export const FONT_SIZE_OUTPUT_WINDOW = 50;
-/// maximum length of the visible part of the log
-export const BIG_LENGTH_LOG_TEXT = 50;
 
 
 /// memory operators

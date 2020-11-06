@@ -34,13 +34,13 @@ export const store = {
     , percentNumber: NaN
     , divisionByZeroBlocking: false
     , arrMemory: []
-    , arrLogText: [
+    , arrLogText: [/*
         '1234567890'
-        ,'1234567890'
-        ,'1234567890'
-        ,'1234567890'
-        ,'1234567890'
-        ,'1234567890'
+        ,'21234567890'
+        ,'31234567890'
+        ,'41234567890'
+        ,'51234567890'
+        ,'61234567890'*/
     ]
     , numberIsWrapped: false
 
