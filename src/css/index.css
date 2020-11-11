@@ -205,7 +205,8 @@ div.viewer_panel{
 
 }
 .left_progress_arrow {
-    background-position: -45px -539px; width: 18px; height: 17px;
+    background-position: -48px -539px; width: 14px; height: 17px;
+    overflow: hidden;
     float: left;
 }
 
@@ -215,7 +216,7 @@ div.viewer_panel{
 }
 
 .right_progress_arrow {
-    background-position: -45px -558px; width: 18px; height: 22px;
+    background-position: -48px -558px; width: 18px; height: 22px;
     float: right;
 }
 

@@ -11,14 +11,15 @@ function Output( {
     const displayText = formatDisplayText( rawText );
     const outputBlock = React.createRef();
     const [ rightOffset, setRightOffset ] = useState( 0 );
+    const [ spanStyle, setSpanStyle ] = useState({
+                                                            right: 0
+                                                            , textAlign: 'right'
+                                                        });
     const [ onManualShift, setOnManualShift ] = useState( false  );
     const [ logPWidth, setLogPWidth ] = useState( 0  );
     const [ logSpanWidth, setLogSpanWidth ] = useState( 0  );
     const [ arrowLeft, setArrowLeft ] = useState( null  );
     const [ arrowRight, setArrowRight ] = useState( null  );
-
-
-
 
     useEffect( ()=>{
 
@@ -50,26 +51,32 @@ function Output( {
         setLogPWidth(  outputBlock.current.parentNode.offsetWidth - arrowLeft.offsetWidth - arrowRight.offsetWidth - 4 );
         setLogSpanWidth( logSpan.offsetWidth );
 
-
+        ///set a fixed width of the log display field, since according to the terms of
+        // relative layout, its initial width in pixels is unknown
         logP.style.width = `${ logPWidth }px`;
 
         if( !onManualShift && logSpanWidth > logPWidth ){
-            arrowLeft.style.visibility = 'visible';
-            if( onManualShift === false )setRightOffset( logSpanWidth - logPWidth );
 
+            arrowLeft.style.visibility = 'visible';
+            if( onManualShift === false ){
+                setRightOffset( logSpanWidth - logPWidth );
+                logSpan.style.right = `${ ( logSpanWidth - logPWidth ) }px`;
+                logSpan.style.textAlign = 'left';
+
+            }
         } else if( !onManualShift || logSpanWidth < logPWidth ) {
             logSpan.style.right = '0px';
+            logSpan.style.textAlign = 'right';
             arrowRight.style.visibility = 'hidden';
             arrowLeft.style.visibility = 'hidden';
+
             setOnManualShift( false );
         }
-
 
     },[ setRightOffset
             , outputBlock
             , arrowLeft
             , arrowRight
-            , logText
             , onManualShift
             , logSpanWidth
             , logPWidth
@@ -80,8 +87,9 @@ function Output( {
 
     const clickArrow = ( dirRight )=>{
 
-        const stepShift = 50;
+        const stepShift = 100;
         let rOffset = rightOffset + ( dirRight ? stepShift : -stepShift );
+
 
         if( rOffset <= 0 ){
             rOffset = 0;
@@ -99,10 +107,13 @@ function Output( {
             arrowRight.style.visibility = 'visible';
         }
 
+        setSpanStyle( { right: `${ rOffset }px`
+            , textAlign: 'left'
+            , transition: 'right 250ms cubic-bezier(.19,1,.22,1) 10ms' } );
 
 
         setRightOffset( rOffset );
-        setOnManualShift( true );
+        if( !onManualShift )setOnManualShift( true );
     };
 
     return(
@@ -113,7 +124,7 @@ function Output( {
                         onClick={ ()=>clickArrow( 0 ) }
                 />
                 <p className={ 'progress_content' } >
-                    <span className={ 'span_log_text' } style={{ textAlign: 'left', right: rightOffset}} >
+                    <span className={ 'span_log_text' } style={ spanStyle } >
                         { logText }
                     </span>
                 </p>
