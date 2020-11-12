@@ -179,7 +179,6 @@ export const getComplexesAttributes = (typeOperation )=>{
 
     switch ( typeOperation ) {
         case COMPLEXES_DIVISION_X:
-            ///FIXME: а если имя функции указать строковым значением изменит ли это тип функции с [ Function cOperation ]?
             attributes = { cOperation: ( val )=> 1/val, wrapText: '1/' };
             break;
         case COMPLEXES_SQR_X:
