@@ -108,9 +108,7 @@ function Output( {
         }
 
         setSpanStyle( { right: `${ rOffset }px`
-            , textAlign: 'left'
-            , transition: 'right 250ms cubic-bezier(.19,1,.22,1) 10ms' } );
-
+            , textAlign: 'left' } );
 
         setRightOffset( rOffset );
         if( !onManualShift )setOnManualShift( true );

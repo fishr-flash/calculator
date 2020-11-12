@@ -86,7 +86,7 @@ main{
     background: rgba(230,230,230,1.00);
     z-index: 1;
     width: 320px;
-    height: 506px;
+    height: 513px;
     border: 1px solid rgba(25,25,25,1.00);
     border-collapse: collapse;
     box-shadow: 1px 1px 32px 1px rgba(0,0,0,0.5) ;
@@ -202,7 +202,10 @@ div.viewer_panel{
     text-align: right;
     white-space: nowrap;
     user-select: none;
-
+    transition: right 250ms cubic-bezier(.19,1,.22,1) 10ms;
+    -moz-transition: right 250ms cubic-bezier(.19,1,.22,1) 10ms;
+    -webkit-transition: right 250ms cubic-bezier(.19,1,.22,1) 10ms;
+    -o-transition: right 250ms cubic-bezier(.19,1,.22,1) 10ms;
 }
 .left_progress_arrow {
     background-position: -48px -539px; width: 14px; height: 17px;
@@ -254,7 +257,7 @@ div.viewer_panel{
 }
 
 .input_btns {
-    width: 77px; height: 48.5px;
+    width: 77px; height: 50px;
     float: left;
     margin: 0 2px 2px 0;
     background-color: rgba(240,236,241, .4);
@@ -283,7 +286,7 @@ div.viewer_panel{
     background-color: rgba(241,246,247,1.00);
 }
 
-.btn_result
+/*.btn_result
 , .btn_plus
 , .btn_division
 , .btn_multiply
@@ -294,7 +297,7 @@ div.viewer_panel{
 , .btn_2x
 , .btn_backspace {
     width: 77px; height: 48.5px;
-}
+}*/
 
 .btn_plus
 , .btn_division

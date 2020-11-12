@@ -94,12 +94,13 @@ export default function reducer ( state = store, action ) {
     ///FIXME: 324234+3234324+23434, MS, MR ???
     /////////////////////////////CONSOLE/////////////////////////////////////
         ///TODO: Console log in the code "INDEX_JS" line 32
-        if( true ){
+        if( process && process.env.NODE_ENV === 'development' ){
             console.group( 'Console log in the code "INDEX_JS" line 32' );
             //console.debug( 'state: ', state );
             //console.debug( '( !buffer%1 ): ', ( !( buffer%1 ) ) );
             console.table( state );
             console.table( action );
+            console.debug( 'process.env.NODE_ENV: ', process.env.NODE_ENV );
             //console.debug( 'this: ', this );
             console.groupEnd();
         }
