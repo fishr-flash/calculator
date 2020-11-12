@@ -28,6 +28,7 @@ import servantMain from "../reducers/servants/servantMain";
 import reducer from "../reducers";
 import servantComplexes from "../reducers/servants/servantComplexes";
 import servantMemory from "../reducers/servants/servantMemory";
+import servantOnDot from "../reducers/servants/servantOnDot";
 
 describe( "all indexes tests", ()=>{
 
@@ -1160,7 +1161,6 @@ describe( "all indexes tests", ()=>{
             });
         });
         test( "test of servantSimpleOperator", ()=>{
-
             const checkedData = [
                 {
                     inData:[{
@@ -1558,6 +1558,60 @@ describe( "all indexes tests", ()=>{
                                 percentNumber: 10.05
                             },
                 } // 10, +, 20, 1/x, +
+                , {
+                    inData:[{
+                                displayText: '369',
+                                firstNumber: 492,
+                                lastNumber: 369,
+                                mode: 3,
+                                firstOperator: 'simplePlus',
+                                onDot: false,
+                                arrMemory: [
+                                    369
+                                ],
+                                arrLogText: [
+                                    '123',
+                                    '+',
+                                    '123',
+                                    '+',
+                                    '123',
+                                    '+',
+                                    '123',
+                                    '+'
+                                ],
+                                percentNumber: 492,
+                                numberIsWrapped: true
+                            }
+                            , {
+                                type: 'onClickSimpleOperator',
+                                value: 'simplePlus'
+                            }]
+                    , outData:{
+                            displayText: '861',
+                            firstNumber: 861,
+                            lastNumber: 0,
+                            mode: 2,
+                            firstOperator: 'simplePlus',
+                            onDot: false,
+                            arrMemory: [
+                                369
+                            ],
+                            arrLogText: [
+                                '123',
+                                '+',
+                                '123',
+                                '+',
+                                '123',
+                                '+',
+                                '123',
+                                '+',
+                                '369',
+                                '+'
+                            ],
+                            percentNumber: 861,
+                            numberIsWrapped: true
+                        },
+                } // 123, +, 123, +, 123, MS, +, 123, +, 123, + MR +
                 ];
 
             checkedData.forEach(( v, i ) =>{
@@ -2600,6 +2654,125 @@ describe( "all indexes tests", ()=>{
             checkedData.forEach(( v, i ) =>{
                 try{
                     expect( servantMemory( ...v.inData )).toStrictEqual( v.outData );
+                }catch (e) {
+                    if( true ){
+                        console.group( 'Console log in the code "INDEX_TEST_JS" line 147' );
+                        console.info( 'v: ', v );
+                        console.info( 'i: ', i );
+                        console.info( 'e: ', e );
+
+                        //console.table( this );
+                        console.groupEnd();
+                    }
+                }
+            });
+        });
+        test( "test of servantOnDot", ()=>{
+
+            const checkedData = [
+                    {
+                        inData:  {
+                            displayText: '0',
+                            firstNumber: 0,
+                            lastNumber: 0,
+                            mode: 0,
+                            firstOperator: 'notOperator',
+                            onDot: false,
+                            percentNumber: null,
+                            divisionByZeroBlocking: false,
+                            arrMemory: [],
+                            arrLogText: [],
+                            numberIsWrapped: false
+                        }
+                    , outData:{
+                            displayText: '0,',
+                            firstNumber: 0,
+                            lastNumber: 0,
+                            mode: 0,
+                            firstOperator: 'notOperator',
+                            onDot: true,
+                            arrMemory: [],
+                            arrLogText: [],
+                            percentNumber: null,
+                            numberIsWrapped: false
+                        }
+                }// .
+                    , {
+                        inData:  {
+                            displayText: '123',
+                            firstNumber: 123,
+                            lastNumber: 0,
+                            mode: 1,
+                            firstOperator: 'simplePlus',
+                            onDot: false,
+                            arrMemory: [],
+                            arrLogText: [
+                                '123',
+                                '+'
+                            ],
+                            percentNumber: 123,
+                            numberIsWrapped: false
+                        }
+                    , outData:{
+                            displayText: '0,',
+                            firstNumber: 123,
+                            lastNumber: 0,
+                            mode: 3,
+                            firstOperator: 'simplePlus',
+                            onDot: true,
+                            arrMemory: [],
+                            arrLogText: [
+                                '123',
+                                '+'
+                            ],
+                            percentNumber: 123,
+                            numberIsWrapped: false
+                        }
+                }// 123, +, .
+                    , {
+                        inData:  {
+                            displayText: '246',
+                            firstNumber: 246,
+                            lastNumber: 0,
+                            mode: 2,
+                            firstOperator: 'simplePlus',
+                            onDot: false,
+                            arrMemory: [],
+                            arrLogText: [
+                                '123',
+                                '+',
+                                '123',
+                                '+'
+                            ],
+                            percentNumber: 246,
+                            numberIsWrapped: false
+                        }
+                    , outData:{
+                            displayText: '0,',
+                            firstNumber: 246,
+                            lastNumber: 0,
+                            mode: 3,
+                            firstOperator: 'simplePlus',
+                            onDot: true,
+                            arrMemory: [],
+                            arrLogText: [
+                                '123',
+                                '+',
+                                '123',
+                                '+'
+                            ],
+                            percentNumber: 246,
+                            numberIsWrapped: false
+                        }
+                }// 123 + 123 + .
+
+
+
+            ];
+
+            checkedData.forEach(( v, i ) =>{
+                try{
+                    expect( servantOnDot( v.inData )).toStrictEqual( v.outData );
                 }catch (e) {
                     if( true ){
                         console.group( 'Console log in the code "INDEX_TEST_JS" line 147' );

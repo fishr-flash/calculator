@@ -24,6 +24,7 @@ export default ({displayText
             firstOperator = store.firstOperator;
             arrLogText = store.arrLogText;
             percentNumber = store.percentNumber;
+            onDot = store.onDot;
 
             break;
 

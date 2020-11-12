@@ -11,7 +11,7 @@ export default ({displayText
                     , arrLogText
                     , percentNumber
                     , numberIsWrapped
-                }, { type, value /*action*/})=>{
+                })=>{
 
     if( mode === MODES.AFTER_RESULT ){
         displayText = store.displayText;
@@ -23,6 +23,10 @@ export default ({displayText
         arrLogText = store.arrLogText;
         percentNumber = store.percentNumber;
 
+    }else if( mode === MODES.FIRST_OPERATOR || mode === MODES.MULTIPLE_ACTION ){
+        lastNumber = 0;
+        displayText = '0';
+        mode = MODES.LAST_NUMBER;
     }
 
     if( !displayText.includes( "," ) ){

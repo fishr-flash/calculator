@@ -29,6 +29,9 @@ export default ({displayText
             if( mode === MODES.BEGIN_MODE
                 || mode === MODES.AFTER_RESULT ){
                 firstNumber = val;
+            } else if(  mode === MODES.MULTIPLE_ACTION ){
+                lastNumber = val;
+                mode = MODES.LAST_NUMBER;
             } else {
                 lastNumber = val;
             }

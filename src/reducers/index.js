@@ -64,7 +64,7 @@ export default function reducer ( state = store, action ) {
             state = servantMain( state, action );
             break;
         case ON_CLICK_DOT:
-            state = servantOnDot( state, action );
+            state = servantOnDot( state );
             break;
         case ON_CLICK_SIGN:
             state = servantOnSign( state );
@@ -88,10 +88,8 @@ export default function reducer ( state = store, action ) {
 
     }
 
-    ///TODO: Оригинальный калькулятор имеет бОльшую высоту
     ///TODO: Урезать кол-во параметров передаваемых в серванты, ограничив используемыми
     ///TODO: Добавить экспоненциальный вывод после некоторого кол-ва разрядов 123456789013456+1234567890123456...
-    ///FIXME: 324234+3234324+23434, MS, MR ???
     /////////////////////////////CONSOLE/////////////////////////////////////
         ///TODO: Console log in the code "INDEX_JS" line 32
         if( process && process.env.NODE_ENV === 'development' ){

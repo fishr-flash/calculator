@@ -43,7 +43,6 @@ export default ({displayText
             firstNumber = toFloat( displayText );
 
             if( mode === MODES.LAST_NUMBER ){
-                /// в последовательности, например, 4, +, %, + сложится массив [ 4, +, 0,16, 0,16 ]
                 let firstArgument = arrLogText;
                 let secondArgument = lastNumber;
                 if( arrLogText.length%2 ){
