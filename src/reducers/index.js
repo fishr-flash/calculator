@@ -1,5 +1,3 @@
-// import { combineReducers } from 'redux';
-// import setNumber from "./setNumber";
 import {
     MODES,
     NOT_OPERATOR,
