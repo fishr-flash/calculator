@@ -2,17 +2,20 @@ import {MODES, NOT_OPERATOR, SIMPLE_RESULT} from "../../constants";
 import {getArrLogText, getOutput, toDisplayText, toFloat, wasWrapped} from "../utils";
 import {store} from "../index";
 
-export default ({displayText
-                    , firstNumber
-                    , lastNumber
-                    , mode
-                    , firstOperator
-                    , onDot
-                    , arrMemory
-                    , arrLogText
-                    , percentNumber
-                    , numberIsWrapped
-                }, { type, value /*action*/})=>{
+export default ( state, action )=>{
+
+    let {displayText
+        , firstNumber
+        , lastNumber
+        , mode
+        , firstOperator
+        , onDot
+        , arrLogText
+        , numberIsWrapped
+    } = state;
+
+    const { value } = action;
+
 
     if( mode === MODES.AFTER_RESULT ){
         firstNumber = value;
@@ -82,15 +85,15 @@ export default ({displayText
     ///FIXME: Везде отменить onDOT = false, флаг должен обнуляться только в местах изменения числа
     onDot = false;
     numberIsWrapped = false;
-    return{ displayText
+
+    return{ ...state
+        ,displayText
         , firstNumber
         , lastNumber
         , mode
         , firstOperator
         , onDot
-        , arrMemory
         , arrLogText
-        , percentNumber
         , numberIsWrapped
     };
 

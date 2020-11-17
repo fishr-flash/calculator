@@ -11,19 +11,18 @@ import {
     wrapperArg
 } from "../utils";
 
-export default ({displayText
-                    , firstNumber
-                    , lastNumber
-                    , mode
-                    , firstOperator
-                    , onDot
-                    , arrMemory
-                    , arrLogText
-                    , percentNumber
-                    , numberIsWrapped
-                    , divisionByZeroBlocking
-                }, { type, value /*action*/})=>{
+export default ( state, action )=>{
 
+    let {displayText
+        , firstNumber
+        , lastNumber
+        , mode
+        , arrLogText
+        , divisionByZeroBlocking
+        , numberIsWrapped
+    } = state;
+
+    const { value } = action;
     const { cOperation, wrapText } = getComplexesAttributes( value );
 
     if( mode < MODES.FIRST_OPERATOR ){
@@ -94,15 +93,12 @@ export default ({displayText
 
     numberIsWrapped = true;
 
-    return{ displayText
+    return{ ...state
+        ,displayText
         , firstNumber
         , lastNumber
         , mode
-        , firstOperator
-        , onDot
-        , arrMemory
         , arrLogText
-        , percentNumber
         , numberIsWrapped
         , divisionByZeroBlocking
     };

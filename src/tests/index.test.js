@@ -225,6 +225,7 @@ describe( "all indexes tests", ()=>{
                             '='
                         ],
                         percentNumber: 10,
+                        divisionByZeroBlocking: false
 
                     }
                 } /// порядок: ввод числа, равно, ввод другого числа
@@ -261,7 +262,8 @@ describe( "all indexes tests", ()=>{
                         arrLogText: [
                             'sqr( 2 )'
                         ],
-                        percentNumber: null
+                        percentNumber: null,
+                        divisionByZeroBlocking: false
                     }
                 } /// 2, x2, 2
                 , {
@@ -373,6 +375,7 @@ describe( "all indexes tests", ()=>{
                             '+'
                         ],
                         percentNumber: 123,
+                        divisionByZeroBlocking: false,
                         numberIsWrapped: false
                     }
                 } /// 123, +, %, 2
@@ -404,6 +407,7 @@ describe( "all indexes tests", ()=>{
                         arrMemory: [],
                         arrLogText: [],
                         percentNumber: null,
+                        divisionByZeroBlocking: false,
                         numberIsWrapped: false
                     }
                 } /// 123, ',', 0

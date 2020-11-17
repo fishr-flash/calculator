@@ -1,18 +1,17 @@
 import {DIVISION_BY_ZERO_IS_NOT_POSSIBLE, MODES, SIMPLE_DIVISION, SIMPLE_RESULT} from "../../constants";
 import {getArrLogText, getResult, argumentOfWrap, toFloat, toDisplayText, getSimpleOperator} from "../utils";
 
-export default ({displayText
-                    , firstNumber
-                    , lastNumber
-                    , mode
-                    , firstOperator
-                    , onDot
-                    , arrMemory
-                    , arrLogText
-                    , percentNumber
-                    , numberIsWrapped
-                    , divisionByZeroBlocking
-                })=>{
+export default ( state )=>{
+
+    let {displayText
+        , firstNumber
+        , lastNumber
+        , mode
+        , firstOperator
+        , arrLogText
+        , percentNumber
+        , divisionByZeroBlocking
+    } = state;
 
 
         if( mode > MODES.FIRST_OPERATOR && firstOperator !== SIMPLE_RESULT ){
@@ -79,17 +78,15 @@ export default ({displayText
 
 
 
-    return{ displayText
+    return{ ...state
+        , displayText
         , firstNumber
         , lastNumber
         , mode
         , firstOperator
-        , onDot
-        , arrMemory
         , arrLogText
         , percentNumber
         , divisionByZeroBlocking
-        , numberIsWrapped
     };
 
 }

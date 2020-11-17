@@ -3,17 +3,20 @@
 import {MEMORY_CLEAR, MEMORY_LIST, MEMORY_MINUS, MEMORY_PLUS, MEMORY_READ, MEMORY_SAVE, MODES} from "../../constants";
 import {toDisplayText, toFloat} from "../utils";
 
-export default ({displayText
-                    , firstNumber
-                    , lastNumber
-                    , mode
-                    , firstOperator
-                    , onDot
-                    , arrMemory
-                    , arrLogText
-                    , percentNumber
-                    , numberIsWrapped
-                }, { type, value /*action*/})=>{
+export default ( state, action, )=>{
+
+    let {displayText
+        , firstNumber
+        , lastNumber
+        , mode
+        , arrMemory
+        , arrLogText
+        , numberIsWrapped
+    } = state;
+
+    const { value } = action;
+
+
 
     numberIsWrapped = true;
 
@@ -66,15 +69,13 @@ export default ({displayText
         arrLogText = [];
     }
 
-    return{ displayText
+    return{ ...state
+        ,displayText
         , firstNumber
         , lastNumber
         , mode
-        , firstOperator
-        , onDot
         , arrMemory
         , arrLogText
-        , percentNumber
         , numberIsWrapped
     };
 

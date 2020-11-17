@@ -1,17 +1,17 @@
 import {MODES} from "../../constants";
 import {store} from "../index";
 
-export default ({displayText
-                    , firstNumber
-                    , lastNumber
-                    , mode
-                    , firstOperator
-                    , onDot
-                    , arrMemory
-                    , arrLogText
-                    , percentNumber
-                    , numberIsWrapped
-                })=>{
+export default ( state )=>{
+
+    let {displayText
+        , firstNumber
+        , lastNumber
+        , mode
+        , firstOperator
+        , onDot
+        , arrLogText
+        , percentNumber
+    } = state;
 
     if( mode === MODES.AFTER_RESULT ){
         displayText = store.displayText;
@@ -35,16 +35,15 @@ export default ({displayText
     }
 
 
-    return{ displayText
+    return{ ...state
+        , displayText
         , firstNumber
         , lastNumber
         , mode
         , firstOperator
         , onDot
-        , arrMemory
         , arrLogText
         , percentNumber
-        , numberIsWrapped
     };
 
 }

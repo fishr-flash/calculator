@@ -1,19 +1,15 @@
 import {MODES} from "../../constants";
 import {getArrLogText, toDisplayText, toFloat, updateArrLogText, wrapperArg} from "../utils";
 
-export default ({displayText
-                    , firstNumber
-                    , lastNumber
-                    , mode
-                    , firstOperator
-                    , onDot
-                    , arrMemory
-                    , arrLogText
-                    , percentNumber
-                    , numberIsWrapped
-                })=>{
+export default ( state )=>{
 
-    onDot = false;
+    let {displayText
+        , firstNumber
+        , lastNumber
+        , mode
+        , firstOperator
+        , arrLogText
+    } = state;
 
     if( mode < MODES.FIRST_OPERATOR ){
         /// если в первой ячейке массива лога содержится выражение, напр 1/(10)
@@ -47,16 +43,13 @@ export default ({displayText
         displayText = toDisplayText( lastNumber );
     }
 
-    return{ displayText
-        , firstNumber
-        , lastNumber
-        , mode
-        , firstOperator
-        , onDot
-        , arrMemory
-        , arrLogText
-        , percentNumber
-        , numberIsWrapped
+    return{ ...state
+            , displayText
+            , firstNumber
+            , lastNumber
+            , mode
+            , firstOperator
+            , arrLogText
     };
 
 }

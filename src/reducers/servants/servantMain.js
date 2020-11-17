@@ -2,17 +2,20 @@ import {MAIN_BACKSPACE, MAIN_CLEAR, MAIN_CLEAR_LAST, MODES} from "../../constant
 import {toFloat} from "../utils";
 import {store} from "../index";
 
-export default ({displayText
-                    , firstNumber
-                    , lastNumber
-                    , mode
-                    , firstOperator
-                    , onDot
-                    , arrMemory
-                    , arrLogText
-                    , percentNumber
-                    , numberIsWrapped
-                }, { type, value /*action*/})=>{
+export default ( state
+                    , action )=>{
+
+    let {displayText
+            , firstNumber
+            , lastNumber
+            , mode
+            , firstOperator
+            , onDot
+            , arrLogText
+            , percentNumber
+        } = state;
+
+    const { value } = action;
 
     switch ( value ) {
 
@@ -67,16 +70,16 @@ export default ({displayText
         default:
     }
 
-    return{ displayText
+    return{  ...state
+        ,displayText
         , firstNumber
         , lastNumber
         , mode
         , firstOperator
         , onDot
-        , arrMemory
         , arrLogText
         , percentNumber
-        , numberIsWrapped
+
     };
 
 }

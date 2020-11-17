@@ -1,19 +1,21 @@
 import {MODES} from "../../constants";
 import {argumentOfWrap, getArrLogText, getResult, toDisplayText, toFloat} from "../utils";
 
-export default ({displayText
-                    , firstNumber
-                    , lastNumber
-                    , mode
-                    , firstOperator
-                    , onDot
-                    , arrMemory
-                    , arrLogText
-                    , numberIsWrapped
-                    , percentNumber
-                }, { type, value /*action*/})=>{
+export default (state , action )=>{
 
-        onDot = false;
+    let {displayText
+        , firstNumber
+        , lastNumber
+        , mode
+        , firstOperator
+        , arrLogText
+        , percentNumber
+    } = state;
+
+    const { value } = action;
+
+
+
         if( mode < MODES.MULTIPLE_ACTION  ){
             displayText = toDisplayText( firstNumber );
 
@@ -69,16 +71,14 @@ export default ({displayText
         firstOperator = value;
 
 
-    return{ displayText
+    return{ ...state
+        , displayText
         , firstNumber
         , lastNumber
         , mode
         , firstOperator
-        , onDot
-        , arrMemory
-        , arrLogText
         , percentNumber
-        , numberIsWrapped
+        , arrLogText
     };
 
 }

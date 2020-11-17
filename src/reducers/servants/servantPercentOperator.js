@@ -1,19 +1,17 @@
 import {MODES} from "../../constants";
 import {getArrLogText, roundNum, toDisplayText, toFloat} from "../utils";
 
-export default ({displayText
-                    , firstNumber
-                    , lastNumber
-                    , mode
-                    , firstOperator
-                    , onDot
-                    , arrMemory
-                    , arrLogText
-                    , percentNumber
-                    , numberIsWrapped
-                })=>{
+export default ( state )=>{
 
-        onDot = false;
+    let  {displayText
+        , firstNumber
+        , lastNumber
+        , mode
+        , arrLogText
+        , percentNumber
+        , numberIsWrapped
+    } = state;
+
 
         if( mode === MODES.BEGIN_MODE ){
             firstNumber = 0;
@@ -41,13 +39,11 @@ export default ({displayText
             //lastNumber = 0;
         }
 
-    return{ displayText
+    return{...state
+        ,displayText
         , firstNumber
         , lastNumber
         , mode
-        , firstOperator
-        , onDot
-        , arrMemory
         , arrLogText
         , percentNumber
         , numberIsWrapped
