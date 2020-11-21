@@ -39,7 +39,7 @@ const MemoryBtns = ( {
                     onClick={ () => onClick( MEMORY_SAVE )}
                     >MS</button>
             <button className="mm_btns"
-                    disabled={ divisionByZeroBlocking || memoryEngaged || true }
+                    disabled={ divisionByZeroBlocking || memoryEngaged }
                     onClick={ () => onClick( MEMORY_LIST )}
                     >M<sup className="down_arrow">▼</sup></button>
         </fieldset>

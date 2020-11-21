@@ -2,6 +2,7 @@ import React from 'react';
 import Header from "./calculator/Header";
 import Output from "./calculator/Output";
 import Input from "./calculator/Input";
+import MemoryScreen from "./calculator/MemoryScreen";
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
                 <Header />
                 <Output />
                 <Input />
+                <MemoryScreen/>
             </main>
 
   );

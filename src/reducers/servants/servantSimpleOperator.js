@@ -9,7 +9,6 @@ export default (state , action )=>{
         , mode
         , firstOperator
         , arrLogText
-        , percentNumber
     } = state;
 
     const { value } = action;
@@ -66,18 +65,14 @@ export default (state , action )=>{
 
         }
 
-        lastNumber = 0;
-        percentNumber = firstNumber;
-        firstOperator = value;
-
-
     return{ ...state
         , displayText
         , firstNumber
-        , lastNumber
+        , lastNumber: 0
         , mode
-        , firstOperator
-        , percentNumber
+        , onDot: false
+        , firstOperator: value
+        , percentNumber: firstNumber
         , arrLogText
     };
 

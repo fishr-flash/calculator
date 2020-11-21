@@ -3,7 +3,7 @@ import {
     NOT_OPERATOR,
     ON_CLICK_COMPLEXES,
     ON_CLICK_DOT,
-    ON_CLICK_MAIN, ON_CLICK_MEMORY,
+    ON_CLICK_MAIN, ON_CLICK_MEMORY, ON_CLICK_MEMORY_LIST,
     ON_CLICK_NUMBER,
     ON_CLICK_PERCENT,
     ON_CLICK_RESULT,
@@ -19,6 +19,7 @@ import servantMain from "./servants/servantMain";
 import servantComplexes from "./servants/servantComplexes";
 import servantPercentOperator from "./servants/servantPercentOperator";
 import servantMemory from "./servants/servantMemory";
+import servantMemoryList from "./servants/servantMemoryList";
 
 // export default combineReducers({ setNumber });
 
@@ -31,6 +32,7 @@ export const store = {
     , onDot: false
     , percentNumber: NaN
     , divisionByZeroBlocking: false
+    , memoryListOnOpen: false
     , arrMemory: []
     , arrLogText: [
         /*'1234567890'
@@ -81,6 +83,20 @@ export default function reducer ( state = store, action ) {
             break;
         case ON_CLICK_MEMORY:
             state = servantMemory( state, action  );
+            break;
+
+        case ON_CLICK_MEMORY_LIST:
+            /////////////////////////////CONSOLE/////////////////////////////////////
+                ///TODO: Console log in the code "INDEX_JS" line 90
+                if( process && process.env.NODE_ENV === 'development' ){
+                    console.group( 'Console log in the code "INDEX_JS" line 90' );
+                    console.info( 'action: ', action );
+                    console.info( 'this: ', this );
+                    //console.table( this );
+                    console.groupEnd();
+                }
+            /////////////////////////////END CONSOLE/////////////////////////////////
+            state = servantMemoryList( state, action  );
             break;
         default:
 

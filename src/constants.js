@@ -7,6 +7,7 @@ export const ON_CLICK_RESULT = "onClickResult";
 export const ON_CLICK_MAIN = "onClickMain";
 export const ON_CLICK_COMPLEXES = "onClickComplexes";
 export const ON_CLICK_MEMORY = "onClickMemory";
+export const ON_CLICK_MEMORY_LIST = "onClickMemoryList";
 export const ON_CLICK_PERCENT = "onClickPercent";
 
 
@@ -50,6 +51,7 @@ export const MEMORY_PLUS = 'memoryPlus';
 export const MEMORY_MINUS = 'memoryMinus';
 export const MEMORY_SAVE = 'memorySave';
 export const MEMORY_LIST = 'memoryList';
+export const MEMORY_LIST_CLOSE = 'memoryListClose';
 
 
 /// modes set

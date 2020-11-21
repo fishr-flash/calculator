@@ -12,11 +12,10 @@ export default ( state, action, )=>{
         , arrMemory
         , arrLogText
         , numberIsWrapped
+        , memoryListOnOpen
     } = state;
 
     const { value } = action;
-
-
 
     numberIsWrapped = true;
 
@@ -58,7 +57,7 @@ export default ( state, action, )=>{
             arrMemory.push( toFloat( displayText ));
             break;
         case MEMORY_LIST:
-
+            memoryListOnOpen = true;
             break;
 
         default:
@@ -76,7 +75,8 @@ export default ( state, action, )=>{
         , mode
         , arrMemory
         , arrLogText
-        , numberIsWrapped
+        , numberIsWrapped: numberIsWrapped
+        , memoryListOnOpen
     };
 
 }
