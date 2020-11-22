@@ -40,6 +40,25 @@ function MemoryScreen({
             <div className="memory_field" style={{ marginTop: marginTop }}>
                 <div className={'memory_list'}>
                     <MemoryEntity/>
+                    {/*<div className={'memory_entity'} onMouseOver={( e )=>{
+                        /////////////////////////////CONSOLE/////////////////////////////////////
+                            ///TODO: Console log in the code "MEMORY_SCREEN_JS" line 43
+                            if( process && process.env.NODE_ENV === 'development' ){
+                                console.group( 'Console log in the code "MEMORY_SCREEN_JS" line 43' );
+                                console.info( 'e: ', e );
+                                console.info( 'this: ', this );
+                                //console.table( this );
+                                console.groupEnd();
+                            }
+                        /////////////////////////////END CONSOLE/////////////////////////////////
+                    }} >
+                        <p className={'outputWindow memoryP'}>225</p>
+                        <div className={'memory_list_buttons'}>
+                            <button className={'memory_list_one_button'}>MC</button>
+                            <button className={'memory_list_one_button'}>M+</button>
+                            <button className={'memory_list_one_button'}>M-</button>
+                        </div>
+                    </div>*/}
                 </div>
                 <div className="delete_memory_button_wrapper" >
                     <button className="delete_memory_button" title={'trash'}/>
