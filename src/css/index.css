@@ -375,8 +375,8 @@ div.viewer_panel{
 }
 
 /**************MEMORY LIST*************************/
-.memory_list {
-    height: 315px;
+.memory_field {
+    height: 312px;
     background-color: rgba(208,214,215,1.00);
     margin-top: 515px;
     transition: margin-top 300ms cubic-bezier(.19,1,.22,1) 10ms;
@@ -401,12 +401,51 @@ div.viewer_panel{
     width: 40px;
     position: relative;
     display: block;
-    top: 276px;
+    top: 174px;
     left: 280px;
     text-align: center;
 
 }
 
+
+
+.memory_list{
+    padding-top: 15px;
+    padding-bottom: 10px;
+}
+
+.memory_entity:hover{
+    background-color: #bdbdbd;
+}
+.memory_entity{
+    text-align: right;
+    margin-bottom: 10px;
+
+}
+
+.memoryP{
+    font-size: 24px;
+    padding-right: 20px;
+    padding-top: 5px;
+}
+
+.memory_list_buttons{
+ margin-right: 20px;
+ visibility: hidden;
+
+}
+
+.memory_list_one_button:hover{
+
+}
+.memory_list_one_button{
+    width: 34px;
+    height: 28px;
+    background-color: #ffffff;
+    border: 1px solid #ffffff;
+    margin-right: 1px;
+    margin-bottom: 3px;
+}
 
 /********************** BEHAVIOR **********************/
 
@@ -459,7 +498,7 @@ button:active
 , .btn_multiply:active
 , .btn_minus:active
 , .btn_plus_minus:active
-, button:hover
+/*, button:hover*/
 , .btn_plus:hover
 , .btn_backspace:hover
 , .btn_one_x:hover

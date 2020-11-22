@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
-import {MEMORY_LIST_ON_CLOSE, ON_CLICK_MEMORY_LIST} from "../constants";
+import {MEMORY_LIST_ON_CLOSE, ON_CLICK_MEMORY_LIST} from "../../constants";
+import MemoryEntity from "./MemoryEntity";
 
 function MemoryScreen({
                         onClick,
@@ -8,7 +9,7 @@ function MemoryScreen({
                       }){
 
     const CLOSE_MARGIN_TOP = '515px';
-    const OPEN_MARGIN_TOP = '199px';
+    const OPEN_MARGIN_TOP = '201px';
 
     const onClickClose = ( e )=>{
         if( e.target.id === 'memory_screen'){
@@ -36,7 +37,10 @@ function MemoryScreen({
             onClick={ onClickClose }
         >
 
-            <div className="memory_list" style={{ marginTop: marginTop }}>
+            <div className="memory_field" style={{ marginTop: marginTop }}>
+                <div className={'memory_list'}>
+                    <MemoryEntity/>
+                </div>
                 <div className="delete_memory_button_wrapper" >
                     <button className="delete_memory_button" title={'trash'}/>
                 </div>

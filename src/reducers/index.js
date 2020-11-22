@@ -32,7 +32,7 @@ export const store = {
     , onDot: false
     , percentNumber: NaN
     , divisionByZeroBlocking: false
-    , memoryListOnOpen: false
+    , memoryListOnOpen: true
     , arrMemory: []
     , arrLogText: [
         /*'1234567890'
