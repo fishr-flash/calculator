@@ -86,16 +86,6 @@ export default function reducer ( state = store, action ) {
             break;
 
         case ON_CLICK_MEMORY_LIST:
-            /////////////////////////////CONSOLE/////////////////////////////////////
-                ///TODO: Console log in the code "INDEX_JS" line 90
-                if( process && process.env.NODE_ENV === 'development' ){
-                    console.group( 'Console log in the code "INDEX_JS" line 90' );
-                    console.info( 'action: ', action );
-                    console.info( 'this: ', this );
-                    //console.table( this );
-                    console.groupEnd();
-                }
-            /////////////////////////////END CONSOLE/////////////////////////////////
             state = servantMemoryList( state, action  );
             break;
         default:
@@ -112,7 +102,7 @@ export default function reducer ( state = store, action ) {
             //console.debug( '( !buffer%1 ): ', ( !( buffer%1 ) ) );
             console.table( state );
             console.table( action );
-            console.debug( 'process.env.NODE_ENV: ', process.env.NODE_ENV );
+            console.info( 'process.env.NODE_ENV: ', process.env.NODE_ENV );
             //console.debug( 'this: ', this );
             console.groupEnd();
         }

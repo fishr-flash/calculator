@@ -51,7 +51,7 @@ export const MEMORY_PLUS = 'memoryPlus';
 export const MEMORY_MINUS = 'memoryMinus';
 export const MEMORY_SAVE = 'memorySave';
 export const MEMORY_LIST = 'memoryList';
-export const MEMORY_LIST_CLOSE = 'memoryListClose';
+export const MEMORY_LIST_ON_CLOSE = 'memoryListOnClose';
 
 
 /// modes set

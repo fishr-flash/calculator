@@ -1,5 +1,4 @@
-import {MEMORY_CLEAR, MEMORY_LIST, MEMORY_MINUS, MEMORY_PLUS, MEMORY_READ, MEMORY_SAVE, MODES} from "../../constants";
-import {toDisplayText, toFloat} from "../utils";
+import {MEMORY_LIST_ON_CLOSE} from "../../constants";
 
 export default ( state, action, )=>{
 
@@ -15,6 +14,20 @@ export default ( state, action, )=>{
 
     const { value } = action;
 
+
+    /////////////////////////////CONSOLE/////////////////////////////////////
+        ///TODO: Console log in the code "SERVANT_MEMORY_LIST_JS" line 17
+        if( process && process.env.NODE_ENV === 'development' ){
+            console.group( 'Console log in the code "SERVANT_MEMORY_LIST_JS" line 17' );
+            console.info( 'value: ', value );
+            console.info( 'this: ', this );
+            //console.table( this );
+            console.groupEnd();
+        }
+    /////////////////////////////END CONSOLE/////////////////////////////////
+    if( value === MEMORY_LIST_ON_CLOSE ){
+        memoryListOnOpen = false;
+    }
 
     return{ ...state
         ,displayText

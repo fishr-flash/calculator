@@ -2,7 +2,7 @@ import servantResult from "../reducers/servants/servantResult";
 import {
     COMPLEXES_DIVISION_X, COMPLEXES_SQR_X, COMPLEXES_SQRT_X,
     DIVISION_BY_ZERO_IS_NOT_POSSIBLE,
-    MAIN_CLEAR, MEMORY_LIST_CLOSE, MEMORY_MINUS, MEMORY_PLUS, MEMORY_SAVE,
+    MAIN_CLEAR, MEMORY_LIST_ON_CLOSE, MEMORY_MINUS, MEMORY_PLUS, MEMORY_SAVE,
     MODES,
     NOT_OPERATOR, ON_CLICK_COMPLEXES,
     ON_CLICK_MAIN, ON_CLICK_MEMORY, ON_CLICK_MEMORY_LIST,
@@ -2830,7 +2830,7 @@ describe( "all indexes tests", ()=>{
                             numberIsWrapped: true
                         }, {
                             type: ON_CLICK_MEMORY_LIST
-                            , value: MEMORY_LIST_CLOSE
+                            , value: MEMORY_LIST_ON_CLOSE
                         }]
                     , outData:{
                             displayText: '125',
@@ -2841,7 +2841,7 @@ describe( "all indexes tests", ()=>{
                             onDot: false,
                             percentNumber: null,
                             divisionByZeroBlocking: false,
-                            memoryListOnOpen: true,
+                            memoryListOnOpen: false,
                             arrMemory: [
                                 125
                             ],

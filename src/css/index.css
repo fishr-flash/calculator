@@ -374,6 +374,39 @@ div.viewer_panel{
     float: left;
 }
 
+/**************MEMORY LIST*************************/
+.memory_list {
+    height: 315px;
+    background-color: rgba(208,214,215,1.00);
+    margin-top: 515px;
+    transition: margin-top 300ms cubic-bezier(.19,1,.22,1) 10ms;
+    -moz-transition: margin-top 300ms cubic-bezier(.19,1,.22,1) 10ms;
+    -webkit-transition: margin-top 300ms cubic-bezier(.19,1,.22,1) 10ms;
+    -o-transition: margin-top 300ms cubic-bezier(.19,1,.22,1) 10ms;
+}
+
+.delete_memory_button {
+    width: 40px;
+    height: 41px;
+    vertical-align: middle;
+    background-image: url("../assets/trash@1.png");
+    background-repeat: no-repeat;
+    background-position: center;
+
+
+}
+
+.delete_memory_button_wrapper {
+    height: 41px;
+    width: 40px;
+    position: relative;
+    display: block;
+    top: 276px;
+    left: 280px;
+    text-align: center;
+
+}
+
 
 /********************** BEHAVIOR **********************/
 
@@ -490,30 +523,5 @@ button:disabled
 }
 
 /****************END OF BEHAVIOR **********************/
-.memory_list {
-    height: 315px;
-    background-color: rgba(208,214,215,1.00);
-    margin-top: 199px;
-}
-
-.delete_memory_button {
-    width: 40px;
-    height: 41px;
-    vertical-align: middle;
-    background-image: url("../assets/trash@1.png");
-    background-repeat: no-repeat;
-    background-position: center;
 
 
-}
-
-.delete_memory_button_wrapper {
-    height: 41px;
-    width: 40px;
-    position: relative;
-    display: block;
-    top: 276px;
-    left: 280px;
-    text-align: center;
-
-}
