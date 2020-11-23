@@ -2669,6 +2669,45 @@ describe( "all indexes tests", ()=>{
                             numberIsWrapped: true
                         }
                 }// 123, +, 321, =, MS
+                    , {
+                        inData: [ {
+                            displayText: '0',
+                            firstNumber: 0,
+                            lastNumber: 0,
+                            mode: 0,
+                            firstOperator: 'notOperator',
+                            onDot: false,
+                            percentNumber: null,
+                            divisionByZeroBlocking: false,
+                            memoryListOnOpen: false,
+                            arrMemory: [
+                                0
+                            ],
+                            arrLogText: [],
+                            numberIsWrapped: true
+                        }
+                        , {
+                            type: ON_CLICK_MEMORY
+                            , value: 'memoryList'
+                        }
+                    ]
+                    , outData:{
+                            displayText: '0',
+                            firstNumber: 0,
+                            lastNumber: 0,
+                            mode: 0,
+                            firstOperator: 'notOperator',
+                            onDot: false,
+                            percentNumber: null,
+                            divisionByZeroBlocking: false,
+                            memoryListOnOpen: true,
+                            arrMemory: [
+                                0
+                            ],
+                            arrLogText: [],
+                            numberIsWrapped: true
+                        }
+                }// M open
 
 
             ];
@@ -2848,7 +2887,160 @@ describe( "all indexes tests", ()=>{
                             arrLogText: [],
                             numberIsWrapped: true
                         }
-                }
+                }/// MEMORY_LIST_ON_CLOSE
+                    , {
+                        inData:[  {
+                            displayText: '10',
+                            firstNumber: 10,
+                            lastNumber: 0,
+                            mode: 0,
+                            firstOperator: 'notOperator',
+                            onDot: false,
+                            percentNumber: null,
+                            divisionByZeroBlocking: false,
+                            memoryListOnOpen: true,
+                            arrMemory: [
+                                10
+                            ],
+                            arrLogText: [],
+                            numberIsWrapped: true
+                        }, {
+                            type: 'onClickMemoryElement'
+                            , value: {
+                                die: 'memoryElementClear',
+                                id: 0
+                            }
+                        }]
+                    , outData:{
+                            displayText: '10',
+                            firstNumber: 10,
+                            lastNumber: 0,
+                            mode: 0,
+                            firstOperator: 'notOperator',
+                            onDot: false,
+                            percentNumber: null,
+                            divisionByZeroBlocking: false,
+                            memoryListOnOpen: true,
+                            arrMemory: [],
+                            arrLogText: [],
+                            numberIsWrapped: true
+                        }
+                }/// memoryElementClear
+                    , {
+                        inData:[  {
+                            displayText: '10',
+                            firstNumber: 10,
+                            lastNumber: 0,
+                            mode: 0,
+                            firstOperator: 'notOperator',
+                            onDot: false,
+                            percentNumber: null,
+                            divisionByZeroBlocking: false,
+                            memoryListOnOpen: true,
+                            arrMemory: [
+                                10
+                            ],
+                            arrLogText: [],
+                            numberIsWrapped: true
+                        }, {
+                            type: 'onClickMemoryElement'
+                            , value: {
+                                die: 'memoryElementPlus',
+                                id: 0
+                            }
+                        }]
+                    , outData:{
+                        displayText: '10',
+                        firstNumber: 10,
+                        lastNumber: 0,
+                        mode: 0,
+                        firstOperator: 'notOperator',
+                        onDot: false,
+                        percentNumber: null,
+                        divisionByZeroBlocking: false,
+                        memoryListOnOpen: true,
+                        arrMemory: [
+                            20
+                        ],
+                        arrLogText: [],
+                        numberIsWrapped: true
+                    }
+                }/// memoryElementPlus
+                    , {
+                        inData:[ {
+                            displayText: '10',
+                            firstNumber: 10,
+                            lastNumber: 0,
+                            mode: 0,
+                            firstOperator: 'notOperator',
+                            onDot: false,
+                            percentNumber: null,
+                            divisionByZeroBlocking: false,
+                            memoryListOnOpen: true,
+                            arrMemory: [
+                                20
+                            ],
+                            arrLogText: [],
+                            numberIsWrapped: true
+                        }, {
+                            type: 'onClickMemoryElement'
+                            , value: {
+                                die: 'memoryElementMinus',
+                                id: 0
+                            }
+                        }]
+                    , outData:{
+                        displayText: '10',
+                        firstNumber: 10,
+                        lastNumber: 0,
+                        mode: 0,
+                        firstOperator: 'notOperator',
+                        onDot: false,
+                        percentNumber: null,
+                        divisionByZeroBlocking: false,
+                        memoryListOnOpen: true,
+                        arrMemory: [
+                            10
+                        ],
+                        arrLogText: [],
+                        numberIsWrapped: true
+                    }
+                }/// memoryElementMinus
+                    , {
+                        inData:[ {
+                            displayText: '10',
+                            firstNumber: 10,
+                            lastNumber: 0,
+                            mode: 0,
+                            firstOperator: 'notOperator',
+                            onDot: false,
+                            percentNumber: null,
+                            divisionByZeroBlocking: false,
+                            memoryListOnOpen: true,
+                            arrMemory: [
+                                10
+                            ],
+                            arrLogText: [],
+                            numberIsWrapped: true
+                        }, {
+                            type: 'onClickMemoryList',
+                            value: 'onMemoryListClear'
+                        }]
+                    , outData:{
+                        displayText: '10',
+                        firstNumber: 10,
+                        lastNumber: 0,
+                        mode: 0,
+                        firstOperator: 'notOperator',
+                        onDot: false,
+                        percentNumber: null,
+                        divisionByZeroBlocking: false,
+                        memoryListOnOpen: true,
+                        arrMemory: [],
+                        arrLogText: [],
+                        numberIsWrapped: true
+                    }
+                }/// onMemoryListClear
             ];
 
             checkedData.forEach(( v, i ) =>{

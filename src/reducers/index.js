@@ -24,7 +24,7 @@ import servantMemoryList from "./servants/servantMemoryList";
 // export default combineReducers({ setNumber });
 
 export const store = {
-     displayText: "100"
+     displayText: '0'
     , firstNumber: 0
     , lastNumber: 0
     , mode: MODES.BEGIN_MODE
@@ -32,8 +32,8 @@ export const store = {
     , onDot: false
     , percentNumber: NaN
     , divisionByZeroBlocking: false
-    , memoryListOnOpen: true
-    , arrMemory: [ 123, 10, 32, 1234564897987546 ]
+    , memoryListOnOpen: false
+    , arrMemory: []
     , arrLogText: []
     , numberIsWrapped: false
 

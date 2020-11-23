@@ -39,6 +39,7 @@ export const DIVISION_BY_ZERO_IS_NOT_POSSIBLE = "Деление на ноль н
 export const INVALID_DATA_ENTERED = "Введены неверные данные";
 ///TODO: Обработать значение infinity напр. 1234567890123456 * х2 * х2...
 export const VALUE_IS_OVERFLOW = "Переполнение";
+export const NOTHING_IS_SAVED_IN_MEMORY = 'В памяти ничего не сохранено.'
 export const MAX_LENGTH_INPUT_DIGITS = 16;
 export const WIDTH_OUTPUT_WINDOW = 280;
 export const FONT_SIZE_OUTPUT_WINDOW = 50;
@@ -53,6 +54,7 @@ export const MEMORY_SAVE = 'memorySave';
 /// memory list operations
 export const MEMORY_LIST = 'memoryList';
 export const MEMORY_LIST_ON_CLOSE = 'memoryListOnClose';
+export const ON_MEMORY_LIST_CLEAR = 'onMemoryListClear';
 export const ON_CLICK_MEMORY_ELEMENT = 'onClickMemoryElement';
 
 export const MEMORY_ELEMENT_CLEAR = 'memoryElementClear';

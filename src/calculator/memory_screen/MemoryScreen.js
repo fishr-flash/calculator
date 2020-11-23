@@ -1,6 +1,11 @@
 import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
-import {MEMORY_LIST_ON_CLOSE, ON_CLICK_MEMORY_ELEMENT, ON_CLICK_MEMORY_LIST} from "../../constants";
+import {
+    MEMORY_LIST_ON_CLOSE, NOTHING_IS_SAVED_IN_MEMORY,
+    ON_CLICK_MEMORY_ELEMENT,
+    ON_CLICK_MEMORY_LIST,
+    ON_MEMORY_LIST_CLEAR
+} from "../../constants";
 import MemoryEntity from "./MemoryEntity";
 
 function MemoryScreen({
@@ -21,10 +26,16 @@ function MemoryScreen({
                     id={ i } />;
     });
 
+    const mockOfBlankScreen = ( <p className={'full_width'}>{ NOTHING_IS_SAVED_IN_MEMORY}</p>);
+
     const onClickClose = ( e )=>{
         if( e.target.id === 'memory_screen'){
             onClick( MEMORY_LIST_ON_CLOSE )
         }
+    };
+
+    const onClickClearList = ()=>{
+            onClick( ON_MEMORY_LIST_CLEAR );
     };
 
     const [ marginTop, setMarginTop ] = useState( CLOSE_MARGIN_TOP );
@@ -49,10 +60,14 @@ function MemoryScreen({
 
             <div className="memory_field" style={{ marginTop: marginTop }}>
                 <div className={'memory_list'}>
-                    { memList.reverse() }
+                    { arrMemory.length ? memList.reverse() : mockOfBlankScreen }
                 </div>
                 <div className="delete_memory_button_wrapper" >
-                    <button className="delete_memory_button" title={'trash'}/>
+                    <button
+                            onClick={ onClickClearList }
+                            style={{ visibility: arrMemory.length === 0 ? 'hidden' : 'visible'}  }
+                            className="delete_memory_button"
+                            title={'trash'}/>
                 </div>
 
             </div>
@@ -75,5 +90,6 @@ export default connect(
         , onClickElement: ( v ) =>{
             dispatch( { type: ON_CLICK_MEMORY_ELEMENT, value: v })
         }
+
     })
 )( MemoryScreen );
