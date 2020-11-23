@@ -89,7 +89,6 @@ export default function reducer ( state = store, action ) {
     ///TODO: Урезать кол-во параметров передаваемых в серванты, ограничив используемыми
     ///TODO: Добавить экспоненциальный вывод после некоторого кол-ва разрядов 123456789013456+1234567890123456...
     ///TODO: Добавить propTypes
-    ///FIXME: в мемори лист есть разделитель чисел
     /////////////////////////////CONSOLE/////////////////////////////////////
         ///TODO: Console log in the code "INDEX_JS" line 32
         if( process && process.env.NODE_ENV === 'development' ){
