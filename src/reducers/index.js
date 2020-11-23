@@ -3,7 +3,7 @@ import {
     NOT_OPERATOR,
     ON_CLICK_COMPLEXES,
     ON_CLICK_DOT,
-    ON_CLICK_MAIN, ON_CLICK_MEMORY, ON_CLICK_MEMORY_LIST,
+    ON_CLICK_MAIN, ON_CLICK_MEMORY, ON_CLICK_MEMORY_ELEMENT, ON_CLICK_MEMORY_LIST,
     ON_CLICK_NUMBER,
     ON_CLICK_PERCENT,
     ON_CLICK_RESULT,
@@ -24,7 +24,7 @@ import servantMemoryList from "./servants/servantMemoryList";
 // export default combineReducers({ setNumber });
 
 export const store = {
-     displayText: "0"
+     displayText: "100"
     , firstNumber: 0
     , lastNumber: 0
     , mode: MODES.BEGIN_MODE
@@ -33,15 +33,8 @@ export const store = {
     , percentNumber: NaN
     , divisionByZeroBlocking: false
     , memoryListOnOpen: true
-    , arrMemory: []
-    , arrLogText: [
-        /*'1234567890'
-        ,'21234567890'
-        ,'31234567890'
-        ,'41234567890'
-        ,'51234567890'
-        ,'61234567890'*/
-    ]
+    , arrMemory: [ 123, 10, 32, 1234564897987546 ]
+    , arrLogText: []
     , numberIsWrapped: false
 
 };
@@ -86,6 +79,7 @@ export default function reducer ( state = store, action ) {
             break;
 
         case ON_CLICK_MEMORY_LIST:
+        case ON_CLICK_MEMORY_ELEMENT:
             state = servantMemoryList( state, action  );
             break;
         default:
@@ -94,6 +88,8 @@ export default function reducer ( state = store, action ) {
 
     ///TODO: Урезать кол-во параметров передаваемых в серванты, ограничив используемыми
     ///TODO: Добавить экспоненциальный вывод после некоторого кол-ва разрядов 123456789013456+1234567890123456...
+    ///TODO: Добавить propTypes
+    ///FIXME: в мемори лист есть разделитель чисел
     /////////////////////////////CONSOLE/////////////////////////////////////
         ///TODO: Console log in the code "INDEX_JS" line 32
         if( process && process.env.NODE_ENV === 'development' ){

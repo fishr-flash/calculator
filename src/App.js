@@ -10,7 +10,7 @@ function App() {
                 <Header />
                 <Output />
                 <Input />
-                <MemoryScreen/>
+                <MemoryScreen />
             </main>
 
   );

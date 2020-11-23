@@ -1,42 +1,32 @@
-import {MEMORY_LIST_ON_CLOSE} from "../../constants";
+import {MEMORY_ELEMENT_CLEAR, MEMORY_ELEMENT_MINUS, MEMORY_ELEMENT_PLUS, MEMORY_LIST_ON_CLOSE} from "../../constants";
+import {toFloat} from "../utils";
 
 export default ( state, action, )=>{
 
-    let {displayText
-        , firstNumber
-        , lastNumber
-        , mode
+    let {
+        displayText
         , arrMemory
-        , arrLogText
-        , numberIsWrapped
         , memoryListOnOpen
     } = state;
 
     const { value } = action;
 
 
-    /////////////////////////////CONSOLE/////////////////////////////////////
-        ///TODO: Console log in the code "SERVANT_MEMORY_LIST_JS" line 17
-        if( process && process.env.NODE_ENV === 'development' ){
-            console.group( 'Console log in the code "SERVANT_MEMORY_LIST_JS" line 17' );
-            console.info( 'value: ', value );
-            console.info( 'this: ', this );
-            //console.table( this );
-            console.groupEnd();
-        }
-    /////////////////////////////END CONSOLE/////////////////////////////////
+
     if( value === MEMORY_LIST_ON_CLOSE ){
         memoryListOnOpen = false;
+    } else {
+        if( value.die === MEMORY_ELEMENT_CLEAR ){
+            arrMemory.splice( value.id, 1 );
+        } else if ( value.die === MEMORY_ELEMENT_PLUS ){
+            arrMemory[ value.id ] += toFloat( displayText );
+        } else if ( value.die === MEMORY_ELEMENT_MINUS ){
+            arrMemory[ value.id ] -= toFloat( displayText );
+        }
     }
 
     return{ ...state
-        ,displayText
-        , firstNumber
-        , lastNumber
-        , mode
-        , arrMemory
-        , arrLogText
-        , numberIsWrapped
+        , arrMemory: [ ...arrMemory ]
         , memoryListOnOpen
     };
 

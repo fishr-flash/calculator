@@ -1,15 +1,25 @@
 import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
-import {MEMORY_LIST_ON_CLOSE, ON_CLICK_MEMORY_LIST} from "../../constants";
+import {MEMORY_LIST_ON_CLOSE, ON_CLICK_MEMORY_ELEMENT, ON_CLICK_MEMORY_LIST} from "../../constants";
 import MemoryEntity from "./MemoryEntity";
 
 function MemoryScreen({
-                        onClick,
-                        memoryListOnOpen
+                        onClick
+                        , onClickElement
+                        , memoryListOnOpen
+                        , arrMemory
                       }){
 
     const CLOSE_MARGIN_TOP = '515px';
     const OPEN_MARGIN_TOP = '201px';
+
+    const memList = arrMemory.map( ( v, i )=>{
+       return  <MemoryEntity
+                    onClickElement={ onClickElement }
+                    value={ v }
+                    key={ `em${i}` }
+                    id={ i } />;
+    });
 
     const onClickClose = ( e )=>{
         if( e.target.id === 'memory_screen'){
@@ -28,7 +38,7 @@ function MemoryScreen({
         , memoryListOnOpen
     ]);
 
-    
+    ///TODO: Custom scrollbar https://habr.com/ru/company/2gis/blog/169359/
     return (
         <section
             style={{ visibility: memoryListOnOpen ? 'visible' : "hidden" }}
@@ -39,26 +49,7 @@ function MemoryScreen({
 
             <div className="memory_field" style={{ marginTop: marginTop }}>
                 <div className={'memory_list'}>
-                    <MemoryEntity/>
-                    {/*<div className={'memory_entity'} onMouseOver={( e )=>{
-                        /////////////////////////////CONSOLE/////////////////////////////////////
-                            ///TODO: Console log in the code "MEMORY_SCREEN_JS" line 43
-                            if( process && process.env.NODE_ENV === 'development' ){
-                                console.group( 'Console log in the code "MEMORY_SCREEN_JS" line 43' );
-                                console.info( 'e: ', e );
-                                console.info( 'this: ', this );
-                                //console.table( this );
-                                console.groupEnd();
-                            }
-                        /////////////////////////////END CONSOLE/////////////////////////////////
-                    }} >
-                        <p className={'outputWindow memoryP'}>225</p>
-                        <div className={'memory_list_buttons'}>
-                            <button className={'memory_list_one_button'}>MC</button>
-                            <button className={'memory_list_one_button'}>M+</button>
-                            <button className={'memory_list_one_button'}>M-</button>
-                        </div>
-                    </div>*/}
+                    { memList.reverse() }
                 </div>
                 <div className="delete_memory_button_wrapper" >
                     <button className="delete_memory_button" title={'trash'}/>
@@ -74,12 +65,15 @@ export default connect(
     state => {
         return ({
             memoryListOnOpen: state.memoryListOnOpen
-
+            , arrMemory: state.arrMemory
         });
     },
     dispatch => ({
         onClick: ( v ) => {
             dispatch( {type: ON_CLICK_MEMORY_LIST, value: v })
+        }
+        , onClickElement: ( v ) =>{
+            dispatch( { type: ON_CLICK_MEMORY_ELEMENT, value: v })
         }
     })
 )( MemoryScreen );

@@ -401,7 +401,8 @@ div.viewer_panel{
     width: 40px;
     position: relative;
     display: block;
-    top: 174px;
+    /*top: 174px;*/
+    bottom: -5px;
     left: 280px;
     text-align: center;
 
@@ -412,6 +413,8 @@ div.viewer_panel{
 .memory_list{
     padding-top: 15px;
     padding-bottom: 10px;
+    overflow: auto;
+    height: 245px;
 }
 
 .memory_entity:hover{
@@ -425,6 +428,7 @@ div.viewer_panel{
 
 .memoryP{
     font-size: 24px;
+
     padding-right: 20px;
     padding-top: 5px;
 }
@@ -436,7 +440,8 @@ div.viewer_panel{
 }
 
 .memory_list_one_button:hover{
-
+ background-color: rgba(139,195,4, .4 );
+    border: 1px rgba(40, 79, 4, 0.48) solid;
 }
 .memory_list_one_button{
     width: 34px;
@@ -498,8 +503,8 @@ button:active
 , .btn_multiply:active
 , .btn_minus:active
 , .btn_plus_minus:active
-/*, button:hover*/
 , .btn_plus:hover
+, .input_btns:hover
 , .btn_backspace:hover
 , .btn_one_x:hover
 , .btn_2x:hover
